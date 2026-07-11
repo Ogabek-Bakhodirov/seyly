@@ -94,9 +94,11 @@
   .yg{margin-top:12px;display:none}
   .yg.open{display:block}
   .ygslot{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-  .ytwrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}
-  .ytwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
   .ph{padding:16px;text-align:center;color:var(--muted);font-size:12px;background:var(--card-2);line-height:1.6}
+  .ygctrl{display:flex;gap:7px;margin-top:9px}
+  .cbtn{flex:1;border:1px solid var(--line);background:var(--card-2);color:var(--text);
+        border-radius:10px;padding:9px 6px;font-size:12px;font-weight:600;cursor:pointer}
+  .cbtn:active{transform:scale(.97)}
   .ygbtn{
     display:flex;align-items:center;justify-content:center;gap:7px;
     margin-top:9px;padding:11px 12px;border-radius:12px;
@@ -136,15 +138,15 @@
     </div>
   </div>
 
-  <div class="intro">Bugungi dars — pastdagi har bir gap uchun <b>“Videoni ko‘rish”</b> tugmasi YouTube’dan aynan shu ibora aytilgan lahzani ochadi. 🔊 tugmasi talaffuzni o‘qib beradi.</div>
+  <div class="intro">Bugungi dars — pastdagi har bir so‘z uchun <b>“Videoni ko‘rish”</b> tugmasi aynan shu so‘z aytilgan real videolarni ko‘rsatadi. 🔊 tugmasi talaffuzni o‘qib beradi.</div>
 
   <div id="cards"></div>
 
   <div class="done" id="doneMsg" style="display:none">Bugungi 5 gapni tugatdingiz! Ertaga yangi 5 tasi keladi. 💪</div>
 
   <div class="footer">
-    Namuna sifatida 5 ta gap ko‘rsatilmoqda. Haqiqiy versiyada sizning 1000 ta gap ro‘yxatingiz bo‘ladi.<br>
-    Videolar YouTube’dan — aynan gap aytilgan lahzadan boshlanadi.
+    Har kuni 5 ta yangi so‘z — 1000 tagacha.<br>
+    Powered by <a class="yglink" href="https://youglish.com" target="_blank" rel="noopener">YouGlish.com</a>
   </div>
 
 <script>
@@ -169,7 +171,7 @@ var LESSON = SAMPLE;
 function getDay(){
   var p=new URLSearchParams(location.search);
   if(p.get('day')) return Math.max(1, parseInt(p.get('day'),10)||1);
-  var start=new Date(2026,0,1), today=new Date();
+  var start=new Date(2026,6,11), today=new Date();   // boshlanish: 2026-07-11 = 1-kun
   return Math.max(1, Math.floor((today-start)/86400000)+1);
 }
 
@@ -201,21 +203,62 @@ function renderCards(list){
   });
 }
 
-/* ---------- Video: to'g'ridan-to'g'ri YouTube, kerakli soniyadan ----------
-   YouGlish qilgan ishning aynan o'zi: subtitr vaqti (start) + YouTube embed. */
+/* ---------- Video: YouGlish Widget API ----------
+   widget.fetch(so'z,'russian') -> aynan shu so'z aytilgan real videolar ilova ichida.
+   Indeks qurish shart emas: YouGlish'ning tayyor bazasidan foydalanamiz. */
+var ygState="idle", ygQueue=[];
+function ensureYG(cb){
+  if(ygState==="ready") return cb();
+  if(ygState==="error") return cb("err");
+  ygQueue.push(cb);
+  if(ygState==="loading") return;
+  ygState="loading";
+  var s=document.createElement('script');
+  s.src="https://youglish.com/public/emb/widget.js"; s.async=true; s.charset="utf-8";
+  s.onerror=function(){ ygState="error"; flushYG("err"); };
+  document.head.appendChild(s);
+  setTimeout(function(){ if(ygState!=="ready"){ ygState="error"; flushYG("err"); } }, 7000);
+}
+window.onYouglishAPIReady=function(){ ygState="ready"; flushYG(); };
+function flushYG(err){ var q=ygQueue.slice(); ygQueue=[]; q.forEach(function(fn){fn(err);}); }
+
+var widgets={};
 function openVideo(i){
   var item=LESSON[i];
   document.getElementById('yg-'+i).classList.add('open');
   var slot=document.getElementById('ygw-'+i);
   if(slot.dataset.loaded) return;
   slot.dataset.loaded='1';
-  if(item.yt && item.yt.id){
-    var s=Math.max(0, parseInt(item.yt.start||0,10));
-    var src="https://www.youtube-nocookie.com/embed/"+item.yt.id+"?start="+s+"&autoplay=1&rel=0&modestbranding=1&playsinline=1";
-    slot.innerHTML='<div class="ytwrap"><iframe src="'+src+'" allow="autoplay; encrypted-media; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
-  } else {
-    slot.innerHTML='<div class="ph">🎬 Bu gap uchun video hali indekslanmagan.<br>build_lessons.py ishga tushgach, aynan shu ibora aytilgan lahza shu yerda o‘ynaydi.</div>';
-  }
+  slot.innerHTML=
+    '<div id="ygw-inner-'+i+'"></div>'+
+    '<div class="ygctrl">'+
+      '<button class="cbtn" data-act="prev" data-i="'+i+'">⏮ Oldingi</button>'+
+      '<button class="cbtn" data-act="slow" data-i="'+i+'">🐢 Sekin</button>'+
+      '<button class="cbtn" data-act="next" data-i="'+i+'">Keyingi ⏭</button>'+
+    '</div>'+
+    '<div class="ph" id="ph-'+i+'">Video yuklanmoqda…</div>';
+  ensureYG(function(err){
+    var ph=document.getElementById('ph-'+i);
+    if(err || !window.YG){ if(ph) ph.textContent="🎬 Video Telegram/brauzerda ochiladi."; return; }
+    try{
+      widgets[i]=new YG.Widget("ygw-inner-"+i, {
+        width: slot.clientWidth||320, components: 9,
+        events: {
+          onFetchDone: function(d){
+            if(!ph) return;
+            if(d && d.totalResult===0){ ph.style.display='block'; ph.textContent="Bu so‘z uchun video topilmadi."; }
+            else { ph.style.display='none'; }
+          },
+          onError: function(){ if(ph){ ph.style.display='block'; ph.textContent="Video yuklashda xatolik."; } }
+        }
+      });
+      widgets[i].fetch(item.ru, "russian");
+    }catch(e){ if(ph) ph.textContent="🎬 Video Telegram/brauzerda ochiladi."; }
+  });
+}
+function ygCtrl(i, act){
+  var w=widgets[i]; if(!w) return;
+  try{ if(act==="next") w.next(); else if(act==="prev") w.previous(); else if(act==="slow") w.setSpeed(0.5); }catch(e){}
 }
 
 /* ---------- Talaffuz (TTS) ---------- */
@@ -231,8 +274,10 @@ function speak(text){
 document.addEventListener('click', function(e){
   var play=e.target.closest('.btn.play');
   var say=e.target.closest('.btn.speak');
+  var ctrl=e.target.closest('.cbtn');
   if(play){ openVideo(parseInt(play.dataset.i,10)); if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(_){}} }
   if(say){ speak(decodeURIComponent(say.dataset.say)); }
+  if(ctrl){ ygCtrl(parseInt(ctrl.dataset.i,10), ctrl.dataset.act); }
 });
 
 /* ---------- Ishga tushirish: hostingda lessons.json bo'lsa o'shani oladi ---------- */
