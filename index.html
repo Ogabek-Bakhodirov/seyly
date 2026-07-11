@@ -9,7 +9,7 @@
   :root{
     --bg: #0f1115;
     --card: #1a1d24;
-    --card-2:#20242d;
+    --card-2:#040508;
     --text:#eef1f6;
     --muted:#9aa3b2;
     --accent:#5b8cff;
@@ -34,6 +34,277 @@
     padding:16px 14px 40px;
     max-width:560px;margin:0 auto;
     line-height:1.45;
+  }
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{
+    width:38px;height:38px;border-radius:11px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;font-size:20px;
+  }
+  .brand h1{font-size:17px;margin:0;font-weight:700}
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
+  .daybadge{
+    background:var(--card-2);border:1px solid var(--line);
+    padding:7px 12px;border-radius:12px;text-align:center;
+  }
+  .daybadge b{display:block;font-size:15px}
+  .daybadge span{font-size:11px;color:var(--muted)}
+
+  .progress-wrap{margin:14px 0 4px}
+  .progress{height:8px;background:var(--card-2);border-radius:99px;overflow:hidden}
+  .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--ok));border-radius:99px;transition:width .6s ease}
+  .progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+
+  .intro{color:var(--muted);font-size:13px;margin:16px 2px 10px}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:16px 15px;
+    margin-bottom:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+    animation:pop .35s ease both;
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:700;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;margin-bottom:10px;
+  }
+  .ru{font-size:22px;font-weight:700;letter-spacing:.2px;margin:2px 0 4px}
+  .translit{font-size:13px;color:var(--accent);margin:0 0 6px}
+  .en{font-size:15px;color:var(--text);opacity:.9;margin:0 0 12px}
+  .tr-line{font-size:14px;color:var(--text);opacity:.92;margin:0 0 5px;display:flex;gap:8px;align-items:baseline}
+  .tr-line:last-of-type{margin-bottom:12px}
+  .tag{font-size:10px;font-weight:700;color:var(--accent);border:1px solid var(--line);border-radius:5px;padding:1px 5px;flex:0 0 auto}
+
+  .row{display:flex;gap:9px;flex-wrap:wrap}
+  .btn{
+    flex:1;min-width:120px;
+    border:none;cursor:pointer;
+    padding:11px 12px;border-radius:12px;font-size:13px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;gap:7px;
+  }
+  .btn.play{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+  .btn.speak{background:var(--card-2);color:var(--text);border:1px solid var(--line)}
+  .btn:active{transform:scale(.97)}
+
+  .yg{margin-top:12px;display:none}
+  .yg.open{display:block}
+  .ygslot{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ph{padding:16px;text-align:center;color:var(--muted);font-size:12px;background:var(--card-2);line-height:1.6}
+  .ygctrl{display:flex;gap:7px;margin-top:9px}
+  .cbtn{flex:1;border:1px solid var(--line);background:var(--card-2);color:var(--text);
+        border-radius:10px;padding:9px 6px;font-size:12px;font-weight:600;cursor:pointer}
+  .cbtn:active{transform:scale(.97)}
+  .ygbtn{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    margin-top:9px;padding:11px 12px;border-radius:12px;
+    background:var(--card-2);border:1px solid var(--line);
+    color:var(--accent);text-decoration:none;font-weight:600;font-size:13px;
+  }
+  .ygbtn:active{transform:scale(.98)}
+
+  .footer{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;line-height:1.6}
+  .footer .yglink{color:var(--muted);text-decoration:underline}
+  .done{
+    text-align:center;background:linear-gradient(135deg,rgba(55,211,155,.15),rgba(91,140,255,.12));
+    border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:6px;font-size:14px;
+  }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">
+      <div class="logo">🇷🇺</div>
+      <div>
+        <h1>Ruscha Ustoz</h1>
+        <p>Har kuni 5 ta muhim gap</p>
+      </div>
+    </div>
+    <div class="daybadge">
+      <b id="dayNum">1</b>
+      <span>kun / 200</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress"><i id="bar" style="width:0.5%"></i></div>
+    <div class="progress-info">
+      <span id="learned">5 / 1000 gap</span>
+      <span id="pct">0.5%</span>
+    </div>
+  </div>
+
+  <div class="intro">Bugungi dars — pastdagi har bir so‘z uchun <b>“Videoni ko‘rish”</b> tugmasi aynan shu so‘z aytilgan real videolarni ko‘rsatadi. 🔊 tugmasi talaffuzni o‘qib beradi.</div>
+
+  <div id="cards"></div>
+
+  <div class="done" id="doneMsg" style="display:none">Bugungi 5 gapni tugatdingiz! Ertaga yangi 5 tasi keladi. 💪</div>
+
+  <div class="footer">
+    Har kuni 5 ta yangi so‘z — 1000 tagacha.<br>
+    Powered by <a class="yglink" href="https://youglish.com" target="_blank" rel="noopener">YouGlish.com</a>
+  </div>
+
+<script>
+/* ---------- Telegram Web App integ ---------- */
+var tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+if (tg) {
+  try { tg.ready(); tg.expand(); document.body.classList.add('tg-theme'); } catch(e){}
+}
+
+/* ---------- Namuna ma'lumot (lessons.json bo'lmasa ishlatiladi) ----------
+   Har element: { ru, tr, en, yt:{id,start} }.  yt maydonini build_lessons.py to'ldiradi. */
+var SAMPLE = [
+  { ru:"Здравствуйте!",      tr:"Zdravstvuyte!",       en:"Hello! (formal)",         uz:"Assalomu alaykum! (rasmiy)", yt:null },
+  { ru:"Как у вас дела?",    tr:"Kak u vas dela?",     en:"How are you?",            uz:"Ishlaringiz qalay?",         yt:null },
+  { ru:"Меня зовут…",        tr:"Menya zovut…",        en:"My name is…",             uz:"Mening ismim…",              yt:null },
+  { ru:"Сколько это стоит?", tr:"Skolko eto stoit?",   en:"How much does it cost?",  uz:"Bu qancha turadi?",          yt:null },
+  { ru:"Я вас не понимаю.",  tr:"Ya vas ne ponimayu.", en:"I don't understand you.", uz:"Men sizni tushunmayapman.",  yt:null }
+];
+var LESSON = SAMPLE;
+
+/* ---------- Kun raqami: bot ?day=N bersa o'shani, aks holda sanadan ---------- */
+function getDay(){
+  var p=new URLSearchParams(location.search);
+  if(p.get('day')) return Math.max(1, parseInt(p.get('day'),10)||1);
+  var start=new Date(2026,6,11), today=new Date();   // boshlanish: 2026-07-11 = 1-kun
+  return Math.max(1, Math.floor((today-start)/86400000)+1);
+}
+
+function renderHeader(day){
+  document.getElementById('dayNum').textContent=day;
+  document.getElementById('learned').textContent=Math.min(day*5,1000)+" / 1000 gap";
+  var pct=Math.min(100, day/200*100);
+  document.getElementById('bar').style.width=pct.toFixed(1)+"%";
+  document.getElementById('pct').textContent=pct.toFixed(1)+"%";
+}
+
+/* ---------- Kartalar ---------- */
+function renderCards(list){
+  var wrap=document.getElementById('cards'); wrap.innerHTML='';
+  list.forEach(function(item,i){
+    var card=document.createElement('div'); card.className='card';
+    card.innerHTML=
+      '<div class="num">'+(i+1)+'</div>'+
+      '<div class="ru">'+item.ru+'</div>'+
+      '<div class="translit">'+(item.tr||'')+'</div>'+
+      (item.en?'<div class="tr-line"><span class="tag">EN</span>'+item.en+'</div>':'')+
+      (item.uz?'<div class="tr-line"><span class="tag">UZ</span>'+item.uz+'</div>':'')+
+      '<div class="row">'+
+        '<button class="btn play" data-i="'+i+'">▶ Videoni ko‘rish</button>'+
+        '<button class="btn speak" data-say="'+encodeURIComponent(item.ru)+'">🔊 Talaffuz</button>'+
+      '</div>'+
+      '<div class="yg" id="yg-'+i+'"><div class="ygslot" id="ygw-'+i+'"></div></div>';
+    wrap.appendChild(card);
+  });
+}
+
+/* ---------- Video: YouGlish Widget API ----------
+   widget.fetch(so'z,'russian') -> aynan shu so'z aytilgan real videolar ilova ichida.
+   Indeks qurish shart emas: YouGlish'ning tayyor bazasidan foydalanamiz. */
+var ygState="idle", ygQueue=[];
+function ensureYG(cb){
+  if(ygState==="ready") return cb();
+  if(ygState==="error") return cb("err");
+  ygQueue.push(cb);
+  if(ygState==="loading") return;
+  ygState="loading";
+  var s=document.createElement('script');
+  s.src="https://youglish.com/public/emb/widget.js"; s.async=true; s.charset="utf-8";
+  s.onerror=function(){ ygState="error"; flushYG("err"); };
+  document.head.appendChild(s);
+  setTimeout(function(){ if(ygState!=="ready"){ ygState="error"; flushYG("err"); } }, 7000);
+}
+window.onYouglishAPIReady=function(){ ygState="ready"; flushYG(); };
+function flushYG(err){ var q=ygQueue.slice(); ygQueue=[]; q.forEach(function(fn){fn(err);}); }
+
+var widgets={};
+function openVideo(i){
+  var item=LESSON[i];
+  document.getElementById('yg-'+i).classList.add('open');
+  var slot=document.getElementById('ygw-'+i);
+  if(slot.dataset.loaded) return;
+  slot.dataset.loaded='1';
+  slot.innerHTML=
+    '<div id="ygw-inner-'+i+'"></div>'+
+    '<div class="ygctrl">'+
+      '<button class="cbtn" data-act="prev" data-i="'+i+'">⏮ Oldingi</button>'+
+      '<button class="cbtn" data-act="slow" data-i="'+i+'">🐢 Sekin</button>'+
+      '<button class="cbtn" data-act="next" data-i="'+i+'">Keyingi ⏭</button>'+
+    '</div>'+
+    '<div class="ph" id="ph-'+i+'">Video yuklanmoqda…</div>';
+  ensureYG(function(err){
+    var ph=document.getElementById('ph-'+i);
+    if(err || !window.YG){ if(ph) ph.textContent="🎬 Video Telegram/brauzerda ochiladi."; return; }
+    try{
+      widgets[i]=new YG.Widget("ygw-inner-"+i, {
+        width: slot.clientWidth||320, components: 8,   /* 8=subtitr; qidiruv paneli (1) o'chirilgan */
+        events: {
+          onFetchDone: function(d){
+            if(!ph) return;
+            if(d && d.totalResult===0){ ph.style.display='block'; ph.textContent="Bu so‘z uchun video topilmadi."; }
+            else { ph.style.display='none'; }
+          },
+          onError: function(){ if(ph){ ph.style.display='block'; ph.textContent="Video yuklashda xatolik."; } }
+        }
+      });
+      widgets[i].fetch(item.ru, "russian");
+    }catch(e){ if(ph) ph.textContent="🎬 Video Telegram/brauzerda ochiladi."; }
+  });
+}
+function ygCtrl(i, act){
+  var w=widgets[i]; if(!w) return;
+  try{ if(act==="next") w.next(); else if(act==="prev") w.previous(); else if(act==="slow") w.setSpeed(0.5); }catch(e){}
+}
+
+/* ---------- Talaffuz (TTS) ---------- */
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang='ru-RU'; u.rate=.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+/* ---------- Tugmalar ---------- */
+document.addEventListener('click', function(e){
+  var play=e.target.closest('.btn.play');
+  var say=e.target.closest('.btn.speak');
+  var ctrl=e.target.closest('.cbtn');
+  if(play){ openVideo(parseInt(play.dataset.i,10)); if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(_){}} }
+  if(say){ speak(decodeURIComponent(say.dataset.say)); }
+  if(ctrl){ ygCtrl(parseInt(ctrl.dataset.i,10), ctrl.dataset.act); }
+});
+
+/* ---------- Ishga tushirish: hostingda lessons.json bo'lsa o'shani oladi ---------- */
+function boot(list){
+  LESSON=list;
+  renderHeader(getDay());
+  renderCards(list);
+  document.getElementById('doneMsg').style.display='block';
+}
+(function(){
+  var day=getDay();
+  function pick(all){
+    var i=(day-1)*5, slice=all.slice(i, i+5);
+    boot(slice.length ? slice : all.slice(0,5));
+  }
+  // 1) lessons.json (videoli) -> 2) sentences.json (so'zlar) -> 3) namuna
+  fetch('lessons.json',{cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(pick)
+    .catch(function(){
+      fetch('sentences.json',{cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(pick)
+        .catch(function(){ boot(SAMPLE); });
+    });
+})();
+</script>
+</body>
+</html>
   }
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
   .brand{display:flex;align-items:center;gap:10px}
