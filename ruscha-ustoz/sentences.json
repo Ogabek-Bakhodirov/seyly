@@ -1,0 +1,7002 @@
+[
+ {
+  "n": 1,
+  "ru": "брат",
+  "tr": "brat",
+  "uz": "aka",
+  "en": ""
+ },
+ {
+  "n": 2,
+  "ru": "буква",
+  "tr": "bukva",
+  "uz": "harf",
+  "en": ""
+ },
+ {
+  "n": 3,
+  "ru": "бумага",
+  "tr": "bumaga",
+  "uz": "qog’oz",
+  "en": ""
+ },
+ {
+  "n": 4,
+  "ru": "вода",
+  "tr": "voda",
+  "uz": "suv",
+  "en": ""
+ },
+ {
+  "n": 5,
+  "ru": "вопрос",
+  "tr": "vopros",
+  "uz": "savol",
+  "en": ""
+ },
+ {
+  "n": 6,
+  "ru": "враг",
+  "tr": "vrag",
+  "uz": "dushman",
+  "en": ""
+ },
+ {
+  "n": 7,
+  "ru": "глаз",
+  "tr": "glaz",
+  "uz": "ko’z",
+  "en": ""
+ },
+ {
+  "n": 8,
+  "ru": "голова",
+  "tr": "golova",
+  "uz": "bosh",
+  "en": ""
+ },
+ {
+  "n": 9,
+  "ru": "город",
+  "tr": "gorod",
+  "uz": "shaxar",
+  "en": ""
+ },
+ {
+  "n": 10,
+  "ru": "да",
+  "tr": "da",
+  "uz": "ha",
+  "en": ""
+ },
+ {
+  "n": 11,
+  "ru": "дом (дома, домой)",
+  "tr": "dom (doma, domoy)",
+  "uz": "uy (uyda, uyga)",
+  "en": ""
+ },
+ {
+  "n": 12,
+  "ru": "дорога",
+  "tr": "doroga",
+  "uz": "yo’l",
+  "en": ""
+ },
+ {
+  "n": 13,
+  "ru": "дорого",
+  "tr": "dorogo",
+  "uz": "qimmat",
+  "en": ""
+ },
+ {
+  "n": 14,
+  "ru": "друг",
+  "tr": "drug",
+  "uz": "do’st",
+  "en": ""
+ },
+ {
+  "n": 15,
+  "ru": "звук",
+  "tr": "zvuk",
+  "uz": "ovoz",
+  "en": ""
+ },
+ {
+  "n": 16,
+  "ru": "зонт",
+  "tr": "zont",
+  "uz": "soyabon",
+  "en": ""
+ },
+ {
+  "n": 17,
+  "ru": "комната",
+  "tr": "komnata",
+  "uz": "hona",
+  "en": ""
+ },
+ {
+  "n": 18,
+  "ru": "ложка",
+  "tr": "lozhka",
+  "uz": "qoshiq",
+  "en": ""
+ },
+ {
+  "n": 19,
+  "ru": "мама (мать)",
+  "tr": "mama (mat)",
+  "uz": "oyi (ona)",
+  "en": ""
+ },
+ {
+  "n": 20,
+  "ru": "масло",
+  "tr": "maslo",
+  "uz": "yog’",
+  "en": ""
+ },
+ {
+  "n": 21,
+  "ru": "молоко",
+  "tr": "moloko",
+  "uz": "sut",
+  "en": ""
+ },
+ {
+  "n": 22,
+  "ru": "нога",
+  "tr": "noga",
+  "uz": "oyoq",
+  "en": ""
+ },
+ {
+  "n": 23,
+  "ru": "нож",
+  "tr": "nozh",
+  "uz": "pichoq",
+  "en": ""
+ },
+ {
+  "n": 24,
+  "ru": "окно",
+  "tr": "okno",
+  "uz": "oyna",
+  "en": ""
+ },
+ {
+  "n": 25,
+  "ru": "он",
+  "tr": "on",
+  "uz": "u (o’gil bola)",
+  "en": ""
+ },
+ {
+  "n": 26,
+  "ru": "она",
+  "tr": "ona",
+  "uz": "u (qiz bola)",
+  "en": ""
+ },
+ {
+  "n": 27,
+  "ru": "ошибка",
+  "tr": "oshibka",
+  "uz": "xato",
+  "en": ""
+ },
+ {
+  "n": 28,
+  "ru": "папа (отец)",
+  "tr": "papa (otets)",
+  "uz": "dada (ota)",
+  "en": ""
+ },
+ {
+  "n": 29,
+  "ru": "подруга",
+  "tr": "podruga",
+  "uz": "qiz o’rtoq",
+  "en": ""
+ },
+ {
+  "n": 30,
+  "ru": "полка",
+  "tr": "polka",
+  "uz": "tokcha",
+  "en": ""
+ },
+ {
+  "n": 31,
+  "ru": "рубашка",
+  "tr": "rubashka",
+  "uz": "ko’ylak (erkaklarni)",
+  "en": ""
+ },
+ {
+  "n": 32,
+  "ru": "рыба",
+  "tr": "ryba",
+  "uz": "baliq",
+  "en": ""
+ },
+ {
+  "n": 33,
+  "ru": "слово",
+  "tr": "slovo",
+  "uz": "so’z",
+  "en": ""
+ },
+ {
+  "n": 34,
+  "ru": "собака",
+  "tr": "sobaka",
+  "uz": "it",
+  "en": ""
+ },
+ {
+  "n": 35,
+  "ru": "страна",
+  "tr": "strana",
+  "uz": "davlat",
+  "en": ""
+ },
+ {
+  "n": 36,
+  "ru": "приём",
+  "tr": "priyom",
+  "uz": "qabul",
+  "en": ""
+ },
+ {
+  "n": 37,
+  "ru": "суп",
+  "tr": "sup",
+  "uz": "suyuq ovqat",
+  "en": ""
+ },
+ {
+  "n": 38,
+  "ru": "сын",
+  "tr": "syn",
+  "uz": "o’g’il",
+  "en": ""
+ },
+ {
+  "n": 39,
+  "ru": "урок",
+  "tr": "urok",
+  "uz": "dars",
+  "en": ""
+ },
+ {
+  "n": 40,
+  "ru": "школа",
+  "tr": "shkola",
+  "uz": "maktab",
+  "en": ""
+ },
+ {
+  "n": 41,
+  "ru": "этаж",
+  "tr": "etazh",
+  "uz": "qavat",
+  "en": ""
+ },
+ {
+  "n": 42,
+  "ru": "это",
+  "tr": "eto",
+  "uz": "bu",
+  "en": ""
+ },
+ {
+  "n": 43,
+  "ru": "бабушка",
+  "tr": "babushka",
+  "uz": "buvi",
+  "en": ""
+ },
+ {
+  "n": 44,
+  "ru": "вилка",
+  "tr": "vilka",
+  "uz": "sanchqi",
+  "en": ""
+ },
+ {
+  "n": 45,
+  "ru": "вот",
+  "tr": "vot",
+  "uz": "mana",
+  "en": ""
+ },
+ {
+  "n": 46,
+  "ru": "время",
+  "tr": "vremya",
+  "uz": "vaqt",
+  "en": ""
+ },
+ {
+  "n": 47,
+  "ru": "вы",
+  "tr": "vy",
+  "uz": "siz",
+  "en": ""
+ },
+ {
+  "n": 48,
+  "ru": "где",
+  "tr": "gde",
+  "uz": "qayerda",
+  "en": ""
+ },
+ {
+  "n": 49,
+  "ru": "господин (госпожа)",
+  "tr": "gospodin (gospozha)",
+  "uz": "janob (bekam)",
+  "en": ""
+ },
+ {
+  "n": 50,
+  "ru": "дополнительный",
+  "tr": "dopolnitelnyy",
+  "uz": "qo’shimcha",
+  "en": ""
+ },
+ {
+  "n": 51,
+  "ru": "девочка",
+  "tr": "devochka",
+  "uz": "qiz bola",
+  "en": ""
+ },
+ {
+  "n": 52,
+  "ru": "девушка",
+  "tr": "devushka",
+  "uz": "qiz",
+  "en": ""
+ },
+ {
+  "n": 53,
+  "ru": "дедушка",
+  "tr": "dedushka",
+  "uz": "bobo",
+  "en": ""
+ },
+ {
+  "n": 54,
+  "ru": "деревня",
+  "tr": "derevnya",
+  "uz": "qishloq",
+  "en": ""
+ },
+ {
+  "n": 55,
+  "ru": "дочь",
+  "tr": "doch",
+  "uz": "qiz farzand",
+  "en": ""
+ },
+ {
+  "n": 56,
+  "ru": "жена",
+  "tr": "zhena",
+  "uz": "xotin",
+  "en": ""
+ },
+ {
+  "n": 57,
+  "ru": "здание",
+  "tr": "zdanie",
+  "uz": "bino",
+  "en": ""
+ },
+ {
+  "n": 58,
+  "ru": "здесь",
+  "tr": "zdes",
+  "uz": "shu yerda",
+  "en": ""
+ },
+ {
+  "n": 59,
+  "ru": "зеркало",
+  "tr": "zerkalo",
+  "uz": "ko’zgu",
+  "en": ""
+ },
+ {
+  "n": 60,
+  "ru": "или",
+  "tr": "ili",
+  "uz": "yoki",
+  "en": ""
+ },
+ {
+  "n": 61,
+  "ru": "имя",
+  "tr": "imya",
+  "uz": "ism",
+  "en": ""
+ },
+ {
+  "n": 62,
+  "ru": "квартира",
+  "tr": "kvartira",
+  "uz": "xonadon",
+  "en": ""
+ },
+ {
+  "n": 63,
+  "ru": "книга",
+  "tr": "kniga",
+  "uz": "kitob",
+  "en": ""
+ },
+ {
+  "n": 64,
+  "ru": "кто",
+  "tr": "kto",
+  "uz": "kim",
+  "en": ""
+ },
+ {
+  "n": 65,
+  "ru": "мальчик",
+  "tr": "malchik",
+  "uz": "bola",
+  "en": ""
+ },
+ {
+  "n": 66,
+  "ru": "мой (моя, моё, мои)",
+  "tr": "moy (moya, moyo, moi)",
+  "uz": "meniki",
+  "en": ""
+ },
+ {
+  "n": 67,
+  "ru": "море",
+  "tr": "more",
+  "uz": "dengiz",
+  "en": ""
+ },
+ {
+  "n": 68,
+  "ru": "муж",
+  "tr": "muzh",
+  "uz": "er",
+  "en": ""
+ },
+ {
+  "n": 69,
+  "ru": "мы",
+  "tr": "my",
+  "uz": "biz",
+  "en": ""
+ },
+ {
+  "n": 70,
+  "ru": "мясо",
+  "tr": "myaso",
+  "uz": "go’sht",
+  "en": ""
+ },
+ {
+  "n": 71,
+  "ru": "мяч",
+  "tr": "myach",
+  "uz": "to’p",
+  "en": ""
+ },
+ {
+  "n": 72,
+  "ru": "не",
+  "tr": "ne",
+  "uz": "inkor",
+  "en": ""
+ },
+ {
+  "n": 73,
+  "ru": "нет",
+  "tr": "net",
+  "uz": "yo’q",
+  "en": ""
+ },
+ {
+  "n": 74,
+  "ru": "они",
+  "tr": "oni",
+  "uz": "ular",
+  "en": ""
+ },
+ {
+  "n": 75,
+  "ru": "оно",
+  "tr": "ono",
+  "uz": "u (средний род)",
+  "en": ""
+ },
+ {
+  "n": 76,
+  "ru": "отчество",
+  "tr": "otchestvo",
+  "uz": "sharif",
+  "en": ""
+ },
+ {
+  "n": 77,
+  "ru": "пастух",
+  "tr": "pastukh",
+  "uz": "cho'pon",
+  "en": ""
+ },
+ {
+  "n": 78,
+  "ru": "перерыв",
+  "tr": "pereryv",
+  "uz": "tanaffus",
+  "en": ""
+ },
+ {
+  "n": 79,
+  "ru": "преподаватель",
+  "tr": "prepodavatel",
+  "uz": "o'qituvchi",
+  "en": ""
+ },
+ {
+  "n": 80,
+  "ru": "проспект",
+  "tr": "prospekt",
+  "uz": "prospekt",
+  "en": ""
+ },
+ {
+  "n": 81,
+  "ru": "приятно",
+  "tr": "priyatno",
+  "uz": "yoqimli",
+  "en": ""
+ },
+ {
+  "n": 82,
+  "ru": "река",
+  "tr": "reka",
+  "uz": "daryo",
+  "en": ""
+ },
+ {
+  "n": 83,
+  "ru": "родной",
+  "tr": "rodnoy",
+  "uz": "qondosh",
+  "en": ""
+ },
+ {
+  "n": 84,
+  "ru": "сестра",
+  "tr": "sestra",
+  "uz": "opa",
+  "en": ""
+ },
+ {
+  "n": 85,
+  "ru": "слева",
+  "tr": "sleva",
+  "uz": "chapdan",
+  "en": ""
+ },
+ {
+  "n": 86,
+  "ru": "справа",
+  "tr": "sprava",
+  "uz": "o’ngdan",
+  "en": ""
+ },
+ {
+  "n": 87,
+  "ru": "там",
+  "tr": "tam",
+  "uz": "u yerda",
+  "en": ""
+ },
+ {
+  "n": 88,
+  "ru": "тарелка",
+  "tr": "tarelka",
+  "uz": "likopcha",
+  "en": ""
+ },
+ {
+  "n": 89,
+  "ru": "тут",
+  "tr": "tut",
+  "uz": "shu yerda",
+  "en": ""
+ },
+ {
+  "n": 90,
+  "ru": "я",
+  "tr": "ya",
+  "uz": "men",
+  "en": ""
+ },
+ {
+  "n": 91,
+  "ru": "что",
+  "tr": "chto",
+  "uz": "nima",
+  "en": ""
+ },
+ {
+  "n": 92,
+  "ru": "яблоко",
+  "tr": "yabloko",
+  "uz": "olma",
+  "en": ""
+ },
+ {
+  "n": 93,
+  "ru": "очень приятно!",
+  "tr": "ochen priyatno!",
+  "uz": "judayam yoqimli",
+  "en": ""
+ },
+ {
+  "n": 94,
+  "ru": "ваш",
+  "tr": "vash",
+  "uz": "sizniki(sizlarniki)",
+  "en": ""
+ },
+ {
+  "n": 95,
+  "ru": "вечер",
+  "tr": "vecher",
+  "uz": "oqshom",
+  "en": ""
+ },
+ {
+  "n": 96,
+  "ru": "всё",
+  "tr": "vsyo",
+  "uz": "hammasi",
+  "en": ""
+ },
+ {
+  "n": 97,
+  "ru": "вход",
+  "tr": "vkhod",
+  "uz": "kirish",
+  "en": ""
+ },
+ {
+  "n": 98,
+  "ru": "выход",
+  "tr": "vykhod",
+  "uz": "chiqish",
+  "en": ""
+ },
+ {
+  "n": 99,
+  "ru": "глагол",
+  "tr": "glagol",
+  "uz": "fe'l",
+  "en": ""
+ },
+ {
+  "n": 100,
+  "ru": "дверь",
+  "tr": "dver",
+  "uz": "eshik",
+  "en": ""
+ },
+ {
+  "n": 101,
+  "ru": "день",
+  "tr": "den",
+  "uz": "kun",
+  "en": ""
+ },
+ {
+  "n": 102,
+  "ru": "деньги",
+  "tr": "dengi",
+  "uz": "pul",
+  "en": ""
+ },
+ {
+  "n": 103,
+  "ru": "дерево",
+  "tr": "derevo",
+  "uz": "daraxt",
+  "en": ""
+ },
+ {
+  "n": 104,
+  "ru": "дети",
+  "tr": "deti",
+  "uz": "bolalar",
+  "en": ""
+ },
+ {
+  "n": 105,
+  "ru": "дождь",
+  "tr": "dozhd",
+  "uz": "yomg'ir",
+  "en": ""
+ },
+ {
+  "n": 106,
+  "ru": "домохозяйка",
+  "tr": "domokhozyayka",
+  "uz": "uy bekasi",
+  "en": ""
+ },
+ {
+  "n": 107,
+  "ru": "дядя",
+  "tr": "dyadya",
+  "uz": "amaki",
+  "en": ""
+ },
+ {
+  "n": 108,
+  "ru": "его",
+  "tr": "ego",
+  "uz": "uning (o’gil bola)",
+  "en": ""
+ },
+ {
+  "n": 109,
+  "ru": "её",
+  "tr": "eyo",
+  "uz": "uni (qiz bola)",
+  "en": ""
+ },
+ {
+  "n": 110,
+  "ru": "ещё",
+  "tr": "eshchyo",
+  "uz": "ko'proq",
+  "en": ""
+ },
+ {
+  "n": 111,
+  "ru": "женат",
+  "tr": "zhenat",
+  "uz": "uylangan",
+  "en": ""
+ },
+ {
+  "n": 112,
+  "ru": "женщина",
+  "tr": "zhenshchina",
+  "uz": "ayol",
+  "en": ""
+ },
+ {
+  "n": 113,
+  "ru": "замужем",
+  "tr": "zamuzhem",
+  "uz": "erga tekkan",
+  "en": ""
+ },
+ {
+  "n": 114,
+  "ru": "знать",
+  "tr": "znat",
+  "uz": "bilmoq",
+  "en": ""
+ },
+ {
+  "n": 115,
+  "ru": "иностранец (иностранка)",
+  "tr": "inostranets (inostranka)",
+  "uz": "chet ellik",
+  "en": ""
+ },
+ {
+  "n": 116,
+  "ru": "туча",
+  "tr": "tucha",
+  "uz": "bulut",
+  "en": ""
+ },
+ {
+  "n": 117,
+  "ru": "их",
+  "tr": "ikh",
+  "uz": "ularning",
+  "en": ""
+ },
+ {
+  "n": 118,
+  "ru": "ключ",
+  "tr": "klyuch",
+  "uz": "kalit",
+  "en": ""
+ },
+ {
+  "n": 119,
+  "ru": "лист",
+  "tr": "list",
+  "uz": "varoq",
+  "en": ""
+ },
+ {
+  "n": 120,
+  "ru": "лицо",
+  "tr": "litso",
+  "uz": "yuz",
+  "en": ""
+ },
+ {
+  "n": 121,
+  "ru": "люди",
+  "tr": "lyudi",
+  "uz": "odamlar",
+  "en": ""
+ },
+ {
+  "n": 122,
+  "ru": "мужчина",
+  "tr": "muzhchina",
+  "uz": "erkak kishi",
+  "en": ""
+ },
+ {
+  "n": 123,
+  "ru": "мыло",
+  "tr": "mylo",
+  "uz": "sovun",
+  "en": ""
+ },
+ {
+  "n": 124,
+  "ru": "мышь",
+  "tr": "mysh",
+  "uz": "sichqon",
+  "en": ""
+ },
+ {
+  "n": 125,
+  "ru": "ночь",
+  "tr": "noch",
+  "uz": "tun",
+  "en": ""
+ },
+ {
+  "n": 126,
+  "ru": "плохо",
+  "tr": "plokho",
+  "uz": "yomon",
+  "en": ""
+ },
+ {
+  "n": 127,
+  "ru": "понятно",
+  "tr": "ponyatno",
+  "uz": "tushunarli",
+  "en": ""
+ },
+ {
+  "n": 128,
+  "ru": "по-русски",
+  "tr": "po-russki",
+  "uz": "rus tilida",
+  "en": ""
+ },
+ {
+  "n": 129,
+  "ru": "правильно",
+  "tr": "pravilno",
+  "uz": "to'g'ri",
+  "en": ""
+ },
+ {
+  "n": 130,
+  "ru": "проблема",
+  "tr": "problema",
+  "uz": "muammo",
+  "en": ""
+ },
+ {
+  "n": 131,
+  "ru": "рассказ",
+  "tr": "rasskaz",
+  "uz": "hikoya",
+  "en": ""
+ },
+ {
+  "n": 132,
+  "ru": "ребёнок",
+  "tr": "rebyonok",
+  "uz": "bola",
+  "en": ""
+ },
+ {
+  "n": 133,
+  "ru": "родители",
+  "tr": "roditeli",
+  "uz": "ota-onalar",
+  "en": ""
+ },
+ {
+  "n": 134,
+  "ru": "сад",
+  "tr": "sad",
+  "uz": "bog'",
+  "en": ""
+ },
+ {
+  "n": 135,
+  "ru": "сахар",
+  "tr": "sakhar",
+  "uz": "shakar",
+  "en": ""
+ },
+ {
+  "n": 136,
+  "ru": "сегодня",
+  "tr": "segodnya",
+  "uz": "bugun",
+  "en": ""
+ },
+ {
+  "n": 137,
+  "ru": "семья",
+  "tr": "semya",
+  "uz": "oila",
+  "en": ""
+ },
+ {
+  "n": 138,
+  "ru": "утро (утром)",
+  "tr": "utro (utrom)",
+  "uz": "tong (ertalab)",
+  "en": ""
+ },
+ {
+  "n": 139,
+  "ru": "снег",
+  "tr": "sneg",
+  "uz": "qor",
+  "en": ""
+ },
+ {
+  "n": 140,
+  "ru": "соль",
+  "tr": "sol",
+  "uz": "tuz",
+  "en": ""
+ },
+ {
+  "n": 141,
+  "ru": "страница",
+  "tr": "stranitsa",
+  "uz": "sahifa",
+  "en": ""
+ },
+ {
+  "n": 142,
+  "ru": "твой",
+  "tr": "tvoy",
+  "uz": "seniki",
+  "en": ""
+ },
+ {
+  "n": 143,
+  "ru": "тепло",
+  "tr": "teplo",
+  "uz": "issiq",
+  "en": ""
+ },
+ {
+  "n": 144,
+  "ru": "тоже",
+  "tr": "tozhe",
+  "uz": "ham, bir xil",
+  "en": ""
+ },
+ {
+  "n": 145,
+  "ru": "трудно",
+  "tr": "trudno",
+  "uz": "qiyin",
+  "en": ""
+ },
+ {
+  "n": 146,
+  "ru": "уже",
+  "tr": "uzhe",
+  "uz": "allaqachon",
+  "en": ""
+ },
+ {
+  "n": 147,
+  "ru": "улица",
+  "tr": "ulitsa",
+  "uz": "ko'cha",
+  "en": ""
+ },
+ {
+  "n": 148,
+  "ru": "фрукты",
+  "tr": "frukty",
+  "uz": "mevalar",
+  "en": ""
+ },
+ {
+  "n": 149,
+  "ru": "овощи",
+  "tr": "ovoshchi",
+  "uz": "sabzavotlar",
+  "en": ""
+ },
+ {
+  "n": 150,
+  "ru": "холодно",
+  "tr": "kholodno",
+  "uz": "sovuq",
+  "en": ""
+ },
+ {
+  "n": 151,
+  "ru": "хорошо",
+  "tr": "khorosho",
+  "uz": "yaxshi",
+  "en": ""
+ },
+ {
+  "n": 152,
+  "ru": "часы",
+  "tr": "chasy",
+  "uz": "soat",
+  "en": ""
+ },
+ {
+  "n": 153,
+  "ru": "чей (чья? чьё? чьи?)",
+  "tr": "chey (chya? chyo? chi?)",
+  "uz": "kimning",
+  "en": ""
+ },
+ {
+  "n": 154,
+  "ru": "человек",
+  "tr": "chelovek",
+  "uz": "inson",
+  "en": ""
+ },
+ {
+  "n": 155,
+  "ru": "школьник, школьница",
+  "tr": "shkolnik, shkolnitsa",
+  "uz": "talaba, o'quvchi",
+  "en": ""
+ },
+ {
+  "n": 156,
+  "ru": "Доброе утро!",
+  "tr": "Dobroe utro!",
+  "uz": "xayrli tong!",
+  "en": ""
+ },
+ {
+  "n": 157,
+  "ru": "Добрый вечер!",
+  "tr": "Dobryy vecher!",
+  "uz": "hayrli kech!",
+  "en": ""
+ },
+ {
+  "n": 158,
+  "ru": "Добрый день!",
+  "tr": "Dobryy den!",
+  "uz": "hayrli kun!",
+  "en": ""
+ },
+ {
+  "n": 159,
+  "ru": "До завтра!",
+  "tr": "Do zavtra!",
+  "uz": "ertagacha!",
+  "en": ""
+ },
+ {
+  "n": 160,
+  "ru": "До свидания!",
+  "tr": "Do svidaniya!",
+  "uz": "ko’rishguncha!",
+  "en": ""
+ },
+ {
+  "n": 161,
+  "ru": "Здравствуйте!",
+  "tr": "Zdravstvuyte!",
+  "uz": "salom!",
+  "en": ""
+ },
+ {
+  "n": 162,
+  "ru": "Извините!",
+  "tr": "Izvinite!",
+  "uz": "kechirasiz!",
+  "en": ""
+ },
+ {
+  "n": 163,
+  "ru": "Как дела?",
+  "tr": "Kak dela?",
+  "uz": "ishlaringiz qalay?",
+  "en": ""
+ },
+ {
+  "n": 164,
+  "ru": "Как по-русски?",
+  "tr": "Kak po-russki?",
+  "uz": "rus tilida qanday?",
+  "en": ""
+ },
+ {
+  "n": 165,
+  "ru": "Пожалуйста!",
+  "tr": "Pozhaluysta!",
+  "uz": "iltimos!",
+  "en": ""
+ },
+ {
+  "n": 166,
+  "ru": "Спасибо!",
+  "tr": "Spasibo!",
+  "uz": "rahmat!",
+  "en": ""
+ },
+ {
+  "n": 167,
+  "ru": "арбуз",
+  "tr": "arbuz",
+  "uz": "tarvuz",
+  "en": ""
+ },
+ {
+  "n": 168,
+  "ru": "белый",
+  "tr": "belyy",
+  "uz": "oq",
+  "en": ""
+ },
+ {
+  "n": 169,
+  "ru": "блюдо",
+  "tr": "blyudo",
+  "uz": "taom",
+  "en": ""
+ },
+ {
+  "n": 170,
+  "ru": "век",
+  "tr": "vek",
+  "uz": "asr",
+  "en": ""
+ },
+ {
+  "n": 171,
+  "ru": "виноград",
+  "tr": "vinograd",
+  "uz": "uzum",
+  "en": ""
+ },
+ {
+  "n": 172,
+  "ru": "вкусный",
+  "tr": "vkusnyy",
+  "uz": "mazali",
+  "en": ""
+ },
+ {
+  "n": 173,
+  "ru": "вместе",
+  "tr": "vmeste",
+  "uz": "birga",
+  "en": ""
+ },
+ {
+  "n": 174,
+  "ru": "улыбка",
+  "tr": "ulybka",
+  "uz": "tabassum",
+  "en": ""
+ },
+ {
+  "n": 175,
+  "ru": "восьмой",
+  "tr": "vosmoy",
+  "uz": "sakkizinchi",
+  "en": ""
+ },
+ {
+  "n": 176,
+  "ru": "второй",
+  "tr": "vtoroy",
+  "uz": "ikkinchi",
+  "en": ""
+ },
+ {
+  "n": 177,
+  "ru": "девятый",
+  "tr": "devyatyy",
+  "uz": "to'qqizinchi",
+  "en": ""
+ },
+ {
+  "n": 178,
+  "ru": "десятый",
+  "tr": "desyatyy",
+  "uz": "o'ninchi",
+  "en": ""
+ },
+ {
+  "n": 179,
+  "ru": "дешёвый",
+  "tr": "deshyovyy",
+  "uz": "arzon",
+  "en": ""
+ },
+ {
+  "n": 180,
+  "ru": "домашнее задание",
+  "tr": "domashnee zadanie",
+  "uz": "uy vazifasi",
+  "en": ""
+ },
+ {
+  "n": 181,
+  "ru": "дорогой",
+  "tr": "dorogoy",
+  "uz": "qimmat",
+  "en": ""
+ },
+ {
+  "n": 182,
+  "ru": "из",
+  "tr": "iz",
+  "uz": "dan",
+  "en": ""
+ },
+ {
+  "n": 183,
+  "ru": "иностранный",
+  "tr": "inostrannyy",
+  "uz": "xorijiy",
+  "en": ""
+ },
+ {
+  "n": 184,
+  "ru": "интересный",
+  "tr": "interesnyy",
+  "uz": "qiziq",
+  "en": ""
+ },
+ {
+  "n": 185,
+  "ru": "какой? (какая? какое? какие?)",
+  "tr": "kakoy? (kakaya? kakoe? kakie?)",
+  "uz": "qaysi, qanaqa?",
+  "en": ""
+ },
+ {
+  "n": 186,
+  "ru": "когда",
+  "tr": "kogda",
+  "uz": "qachon",
+  "en": ""
+ },
+ {
+  "n": 187,
+  "ru": "конечно",
+  "tr": "konechno",
+  "uz": "albatta",
+  "en": ""
+ },
+ {
+  "n": 188,
+  "ru": "красивый",
+  "tr": "krasivyy",
+  "uz": "chiroyli",
+  "en": ""
+ },
+ {
+  "n": 189,
+  "ru": "красный",
+  "tr": "krasnyy",
+  "uz": "qizil",
+  "en": ""
+ },
+ {
+  "n": 190,
+  "ru": "лучше (чем)",
+  "tr": "luchshe (chem)",
+  "uz": "ko'ra yaxshiroq",
+  "en": ""
+ },
+ {
+  "n": 191,
+  "ru": "маленький",
+  "tr": "malenkiy",
+  "uz": "kichik",
+  "en": ""
+ },
+ {
+  "n": 192,
+  "ru": "место",
+  "tr": "mesto",
+  "uz": "joy",
+  "en": ""
+ },
+ {
+  "n": 193,
+  "ru": "мороженое",
+  "tr": "morozhenoe",
+  "uz": "muzqaymoq",
+  "en": ""
+ },
+ {
+  "n": 194,
+  "ru": "немного",
+  "tr": "nemnogo",
+  "uz": "ozgina",
+  "en": ""
+ },
+ {
+  "n": 195,
+  "ru": "ничего (не)",
+  "tr": "nichego (ne)",
+  "uz": "hech narsa (inkor)",
+  "en": ""
+ },
+ {
+  "n": 196,
+  "ru": "но",
+  "tr": "no",
+  "uz": "lekin",
+  "en": ""
+ },
+ {
+  "n": 197,
+  "ru": "новый",
+  "tr": "novyy",
+  "uz": "yangi",
+  "en": ""
+ },
+ {
+  "n": 198,
+  "ru": "нормально",
+  "tr": "normalno",
+  "uz": "yaxshi",
+  "en": ""
+ },
+ {
+  "n": 199,
+  "ru": "откуда",
+  "tr": "otkuda",
+  "uz": "qayerda",
+  "en": ""
+ },
+ {
+  "n": 200,
+  "ru": "отлично",
+  "tr": "otlichno",
+  "uz": "ajoyib",
+  "en": ""
+ },
+ {
+  "n": 201,
+  "ru": "первый",
+  "tr": "pervyy",
+  "uz": "birinchi",
+  "en": ""
+ },
+ {
+  "n": 202,
+  "ru": "песня",
+  "tr": "pesnya",
+  "uz": "qo'shiq",
+  "en": ""
+ },
+ {
+  "n": 203,
+  "ru": "плохой",
+  "tr": "plokhoy",
+  "uz": "yomon",
+  "en": ""
+ },
+ {
+  "n": 204,
+  "ru": "по-английски",
+  "tr": "po-angliyski",
+  "uz": "ingliz tilida",
+  "en": ""
+ },
+ {
+  "n": 205,
+  "ru": "погода",
+  "tr": "pogoda",
+  "uz": "ob-havo",
+  "en": ""
+ },
+ {
+  "n": 206,
+  "ru": "по-немецки",
+  "tr": "po-nemetski",
+  "uz": "nemis tilida",
+  "en": ""
+ },
+ {
+  "n": 207,
+  "ru": "потому что",
+  "tr": "potomu chto",
+  "uz": "chunki",
+  "en": ""
+ },
+ {
+  "n": 208,
+  "ru": "по-французски",
+  "tr": "po-frantsuzski",
+  "uz": "frantsuz tilida",
+  "en": ""
+ },
+ {
+  "n": 209,
+  "ru": "по-узбекски",
+  "tr": "po-uzbekski",
+  "uz": "o'zbek tilida",
+  "en": ""
+ },
+ {
+  "n": 210,
+  "ru": "почему",
+  "tr": "pochemu",
+  "uz": "nima uchun",
+  "en": ""
+ },
+ {
+  "n": 211,
+  "ru": "по-японски",
+  "tr": "po-yaponski",
+  "uz": "yapon tilida",
+  "en": ""
+ },
+ {
+  "n": 212,
+  "ru": "правильно",
+  "tr": "pravilno",
+  "uz": "to'g'ri",
+  "en": ""
+ },
+ {
+  "n": 213,
+  "ru": "пятый",
+  "tr": "pyatyy",
+  "uz": "beshinchi",
+  "en": ""
+ },
+ {
+  "n": 214,
+  "ru": "раз (ещё раз)",
+  "tr": "raz (eshchyo raz)",
+  "uz": "marta (yana bir marta)",
+  "en": ""
+ },
+ {
+  "n": 215,
+  "ru": "рис",
+  "tr": "ris",
+  "uz": "guruch",
+  "en": ""
+ },
+ {
+  "n": 216,
+  "ru": "русский",
+  "tr": "russkiy",
+  "uz": "rus",
+  "en": ""
+ },
+ {
+  "n": 217,
+  "ru": "ряд",
+  "tr": "ryad",
+  "uz": "qator",
+  "en": ""
+ },
+ {
+  "n": 218,
+  "ru": "светло",
+  "tr": "svetlo",
+  "uz": "yorug'lik",
+  "en": ""
+ },
+ {
+  "n": 219,
+  "ru": "седьмой",
+  "tr": "sedmoy",
+  "uz": "yettinchi",
+  "en": ""
+ },
+ {
+  "n": 220,
+  "ru": "сейчас",
+  "tr": "seychas",
+  "uz": "hozir",
+  "en": ""
+ },
+ {
+  "n": 221,
+  "ru": "синий",
+  "tr": "siniy",
+  "uz": "ko'k",
+  "en": ""
+ },
+ {
+  "n": 222,
+  "ru": "старый",
+  "tr": "staryy",
+  "uz": "eski",
+  "en": ""
+ },
+ {
+  "n": 223,
+  "ru": "сувенир",
+  "tr": "suvenir",
+  "uz": "suvenir",
+  "en": ""
+ },
+ {
+  "n": 224,
+  "ru": "так себе",
+  "tr": "tak sebe",
+  "uz": "boladi",
+  "en": ""
+ },
+ {
+  "n": 225,
+  "ru": "темно",
+  "tr": "temno",
+  "uz": "qorong'i",
+  "en": ""
+ },
+ {
+  "n": 226,
+  "ru": "только",
+  "tr": "tolko",
+  "uz": "faqat",
+  "en": ""
+ },
+ {
+  "n": 227,
+  "ru": "третий",
+  "tr": "tretiy",
+  "uz": "uchinchi",
+  "en": ""
+ },
+ {
+  "n": 228,
+  "ru": "француз",
+  "tr": "frantsuz",
+  "uz": "fransuz",
+  "en": ""
+ },
+ {
+  "n": 229,
+  "ru": "хороший",
+  "tr": "khoroshiy",
+  "uz": "yaxshi",
+  "en": ""
+ },
+ {
+  "n": 230,
+  "ru": "цветы",
+  "tr": "tsvety",
+  "uz": "gullar",
+  "en": ""
+ },
+ {
+  "n": 231,
+  "ru": "чем",
+  "tr": "chem",
+  "uz": "ko’ra, dan",
+  "en": ""
+ },
+ {
+  "n": 232,
+  "ru": "четвёртый",
+  "tr": "chetvyortyy",
+  "uz": "to'rtinchi",
+  "en": ""
+ },
+ {
+  "n": 233,
+  "ru": "чёрный",
+  "tr": "chyornyy",
+  "uz": "qora",
+  "en": ""
+ },
+ {
+  "n": 234,
+  "ru": "чуть-чуть",
+  "tr": "chut-chut",
+  "uz": "ozgina",
+  "en": ""
+ },
+ {
+  "n": 235,
+  "ru": "шестой",
+  "tr": "shestoy",
+  "uz": "oltinchi",
+  "en": ""
+ },
+ {
+  "n": 236,
+  "ru": "шоколад",
+  "tr": "shokolad",
+  "uz": "shokolad",
+  "en": ""
+ },
+ {
+  "n": 237,
+  "ru": "язык",
+  "tr": "yazyk",
+  "uz": "til",
+  "en": ""
+ },
+ {
+  "n": 238,
+  "ru": "японец",
+  "tr": "yaponets",
+  "uz": "yapon",
+  "en": ""
+ },
+ {
+  "n": 239,
+  "ru": "узбек",
+  "tr": "uzbek",
+  "uz": "o'zbek",
+  "en": ""
+ },
+ {
+  "n": 240,
+  "ru": "узбекский",
+  "tr": "uzbekskiy",
+  "uz": "o'zbekcha",
+  "en": ""
+ },
+ {
+  "n": 241,
+  "ru": "японский",
+  "tr": "yaponskiy",
+  "uz": "yaponcha",
+  "en": ""
+ },
+ {
+  "n": 242,
+  "ru": "говорить",
+  "tr": "govorit",
+  "uz": "gapirmoq",
+  "en": ""
+ },
+ {
+  "n": 243,
+  "ru": "есть",
+  "tr": "est",
+  "uz": "mavjud",
+  "en": ""
+ },
+ {
+  "n": 244,
+  "ru": "знать",
+  "tr": "znat",
+  "uz": "bilmoq",
+  "en": ""
+ },
+ {
+  "n": 245,
+  "ru": "изучать",
+  "tr": "izuchat",
+  "uz": "o'rganmoq",
+  "en": ""
+ },
+ {
+  "n": 246,
+  "ru": "пить",
+  "tr": "pit",
+  "uz": "ichmoq",
+  "en": ""
+ },
+ {
+  "n": 247,
+  "ru": "повторить",
+  "tr": "povtorit",
+  "uz": "takrorlamoq",
+  "en": ""
+ },
+ {
+  "n": 248,
+  "ru": "понимать",
+  "tr": "ponimat",
+  "uz": "tushunmoq",
+  "en": ""
+ },
+ {
+  "n": 249,
+  "ru": "сказать",
+  "tr": "skazat",
+  "uz": "demoq",
+  "en": ""
+ },
+ {
+  "n": 250,
+  "ru": "спать",
+  "tr": "spat",
+  "uz": "uxlamoq",
+  "en": ""
+ },
+ {
+  "n": 251,
+  "ru": "хотеть",
+  "tr": "khotet",
+  "uz": "istamoq",
+  "en": ""
+ },
+ {
+  "n": 252,
+  "ru": "Повторите!",
+  "tr": "Povtorite!",
+  "uz": "takrorlang!",
+  "en": ""
+ },
+ {
+  "n": 253,
+  "ru": "Познакомьтесь!",
+  "tr": "Poznakomtes!",
+  "uz": "tanishing!",
+  "en": ""
+ },
+ {
+  "n": 254,
+  "ru": "Привет!",
+  "tr": "Privet!",
+  "uz": "salom!",
+  "en": ""
+ },
+ {
+  "n": 255,
+  "ru": "Скажите пожалуйста!",
+  "tr": "Skazhite pozhaluysta!",
+  "uz": "iltimos ayting!",
+  "en": ""
+ },
+ {
+  "n": 256,
+  "ru": "Что значит…?",
+  "tr": "CHto znachit…?",
+  "uz": "nimani anglatadi…?",
+  "en": ""
+ },
+ {
+  "n": 257,
+  "ru": "Что такое …?",
+  "tr": "CHto takoe …?",
+  "uz": "nima bo'ldi …?",
+  "en": ""
+ },
+ {
+  "n": 258,
+  "ru": "апельсиновый сок",
+  "tr": "apelsinovyy sok",
+  "uz": "apelsin sharbati",
+  "en": ""
+ },
+ {
+  "n": 259,
+  "ru": "брюки",
+  "tr": "bryuki",
+  "uz": "shim",
+  "en": ""
+ },
+ {
+  "n": 260,
+  "ru": "ботинки",
+  "tr": "botinki",
+  "uz": "etiklar",
+  "en": ""
+ },
+ {
+  "n": 261,
+  "ru": "важно",
+  "tr": "vazhno",
+  "uz": "muhim",
+  "en": ""
+ },
+ {
+  "n": 262,
+  "ru": "весь",
+  "tr": "ves",
+  "uz": "butun",
+  "en": ""
+ },
+ {
+  "n": 263,
+  "ru": "ветер",
+  "tr": "veter",
+  "uz": "shamol",
+  "en": ""
+ },
+ {
+  "n": 264,
+  "ru": "вкусно",
+  "tr": "vkusno",
+  "uz": "mazali",
+  "en": ""
+ },
+ {
+  "n": 265,
+  "ru": "вторник",
+  "tr": "vtornik",
+  "uz": "seshanba",
+  "en": ""
+ },
+ {
+  "n": 266,
+  "ru": "восемьсот",
+  "tr": "vosemsot",
+  "uz": "sakkiz yuz",
+  "en": ""
+ },
+ {
+  "n": 267,
+  "ru": "воскресенье",
+  "tr": "voskresene",
+  "uz": "yakshanba",
+  "en": ""
+ },
+ {
+  "n": 268,
+  "ru": "год",
+  "tr": "god",
+  "uz": "yil",
+  "en": ""
+ },
+ {
+  "n": 269,
+  "ru": "груша",
+  "tr": "grusha",
+  "uz": "nok",
+  "en": ""
+ },
+ {
+  "n": 270,
+  "ru": "двести",
+  "tr": "dvesti",
+  "uz": "ikki yuz",
+  "en": ""
+ },
+ {
+  "n": 271,
+  "ru": "девятьсот",
+  "tr": "devyatsot",
+  "uz": "to'qqiz yuz",
+  "en": ""
+ },
+ {
+  "n": 272,
+  "ru": "дело",
+  "tr": "delo",
+  "uz": "ish uzoq vaqt davomida;",
+  "en": ""
+ },
+ {
+  "n": 273,
+  "ru": "долго",
+  "tr": "dolgo",
+  "uz": "anchadan beri",
+  "en": ""
+ },
+ {
+  "n": 274,
+  "ru": "достаточно",
+  "tr": "dostatochno",
+  "uz": "yetarli",
+  "en": ""
+ },
+ {
+  "n": 275,
+  "ru": "жарко",
+  "tr": "zharko",
+  "uz": "issiq",
+  "en": ""
+ },
+ {
+  "n": 276,
+  "ru": "индийский",
+  "tr": "indiyskiy",
+  "uz": "hind",
+  "en": ""
+ },
+ {
+  "n": 277,
+  "ru": "интересно",
+  "tr": "interesno",
+  "uz": "qiziqarli",
+  "en": ""
+ },
+ {
+  "n": 278,
+  "ru": "каникулы",
+  "tr": "kanikuly",
+  "uz": "bayramlar",
+  "en": ""
+ },
+ {
+  "n": 279,
+  "ru": "капуста",
+  "tr": "kapusta",
+  "uz": "karam",
+  "en": ""
+ },
+ {
+  "n": 280,
+  "ru": "картофель",
+  "tr": "kartofel",
+  "uz": "kartoshka",
+  "en": ""
+ },
+ {
+  "n": 281,
+  "ru": "килограмм",
+  "tr": "kilogramm",
+  "uz": "kilo",
+  "en": ""
+ },
+ {
+  "n": 282,
+  "ru": "конфета",
+  "tr": "konfeta",
+  "uz": "shirinlik",
+  "en": ""
+ },
+ {
+  "n": 283,
+  "ru": "копейка",
+  "tr": "kopeyka",
+  "uz": "tiyin",
+  "en": ""
+ },
+ {
+  "n": 284,
+  "ru": "котлета",
+  "tr": "kotleta",
+  "uz": "kotlet",
+  "en": ""
+ },
+ {
+  "n": 285,
+  "ru": "курица",
+  "tr": "kuritsa",
+  "uz": "tovuq",
+  "en": ""
+ },
+ {
+  "n": 286,
+  "ru": "лук",
+  "tr": "luk",
+  "uz": "piyoz",
+  "en": ""
+ },
+ {
+  "n": 287,
+  "ru": "мало",
+  "tr": "malo",
+  "uz": "oz",
+  "en": ""
+ },
+ {
+  "n": 288,
+  "ru": "много",
+  "tr": "mnogo",
+  "uz": "juda ko'p",
+  "en": ""
+ },
+ {
+  "n": 289,
+  "ru": "морковь",
+  "tr": "morkov",
+  "uz": "sabzi",
+  "en": ""
+ },
+ {
+  "n": 290,
+  "ru": "носки",
+  "tr": "noski",
+  "uz": "paypoq",
+  "en": ""
+ },
+ {
+  "n": 291,
+  "ru": "обувь",
+  "tr": "obuv",
+  "uz": "poyabzal",
+  "en": ""
+ },
+ {
+  "n": 292,
+  "ru": "огурец",
+  "tr": "ogurets",
+  "uz": "bodring",
+  "en": ""
+ },
+ {
+  "n": 293,
+  "ru": "одежда",
+  "tr": "odezhda",
+  "uz": "kiyim",
+  "en": ""
+ },
+ {
+  "n": 294,
+  "ru": "пельмени",
+  "tr": "pelmeni",
+  "uz": "chuchvara",
+  "en": ""
+ },
+ {
+  "n": 295,
+  "ru": "перчатки",
+  "tr": "perchatki",
+  "uz": "qo'lqop",
+  "en": ""
+ },
+ {
+  "n": 296,
+  "ru": "платье",
+  "tr": "plate",
+  "uz": "ko’ylak",
+  "en": ""
+ },
+ {
+  "n": 297,
+  "ru": "по телевизору",
+  "tr": "po televizoru",
+  "uz": "televizorda",
+  "en": ""
+ },
+ {
+  "n": 298,
+  "ru": "по телефону",
+  "tr": "po telefonu",
+  "uz": "telefonda",
+  "en": ""
+ },
+ {
+  "n": 299,
+  "ru": "покупатель",
+  "tr": "pokupatel",
+  "uz": "xaridor",
+  "en": ""
+ },
+ {
+  "n": 300,
+  "ru": "полкило",
+  "tr": "polkilo",
+  "uz": "yarim kilo",
+  "en": ""
+ },
+ {
+  "n": 301,
+  "ru": "полтора",
+  "tr": "poltora",
+  "uz": "bir yarim",
+  "en": ""
+ },
+ {
+  "n": 302,
+  "ru": "понедельник",
+  "tr": "ponedelnik",
+  "uz": "dushanba",
+  "en": ""
+ },
+ {
+  "n": 303,
+  "ru": "посуда",
+  "tr": "posuda",
+  "uz": "idishlar",
+  "en": ""
+ },
+ {
+  "n": 304,
+  "ru": "продавец",
+  "tr": "prodavets",
+  "uz": "sotuvchi",
+  "en": ""
+ },
+ {
+  "n": 305,
+  "ru": "продукты",
+  "tr": "produkty",
+  "uz": "mahsulotlar",
+  "en": ""
+ },
+ {
+  "n": 306,
+  "ru": "пятница",
+  "tr": "pyatnitsa",
+  "uz": "juma",
+  "en": ""
+ },
+ {
+  "n": 307,
+  "ru": "пятьсот",
+  "tr": "pyatsot",
+  "uz": "besh yuz",
+  "en": ""
+ },
+ {
+  "n": 308,
+  "ru": "сапоги",
+  "tr": "sapogi",
+  "uz": "etiklar",
+  "en": ""
+ },
+ {
+  "n": 309,
+  "ru": "свёкла",
+  "tr": "svyokla",
+  "uz": "lavlagi",
+  "en": ""
+ },
+ {
+  "n": 310,
+  "ru": "свитер",
+  "tr": "sviter",
+  "uz": "sviter",
+  "en": ""
+ },
+ {
+  "n": 311,
+  "ru": "семьсот",
+  "tr": "semsot",
+  "uz": "yetti yuz",
+  "en": ""
+ },
+ {
+  "n": 312,
+  "ru": "собрание",
+  "tr": "sobranie",
+  "uz": "uchrashuv",
+  "en": ""
+ },
+ {
+  "n": 313,
+  "ru": "солнце",
+  "tr": "solntse",
+  "uz": "quyosh",
+  "en": ""
+ },
+ {
+  "n": 314,
+  "ru": "среда",
+  "tr": "sreda",
+  "uz": "chorshanba",
+  "en": ""
+ },
+ {
+  "n": 315,
+  "ru": "сто",
+  "tr": "sto",
+  "uz": "yuz",
+  "en": ""
+ },
+ {
+  "n": 316,
+  "ru": "суббота",
+  "tr": "subbota",
+  "uz": "shanba",
+  "en": ""
+ },
+ {
+  "n": 317,
+  "ru": "триста",
+  "tr": "trista",
+  "uz": "uch yuz",
+  "en": ""
+ },
+ {
+  "n": 318,
+  "ru": "туфли",
+  "tr": "tufli",
+  "uz": "poyabzal",
+  "en": ""
+ },
+ {
+  "n": 319,
+  "ru": "цена",
+  "tr": "tsena",
+  "uz": "narx",
+  "en": ""
+ },
+ {
+  "n": 320,
+  "ru": "тысяча",
+  "tr": "tysyacha",
+  "uz": "ming",
+  "en": ""
+ },
+ {
+  "n": 321,
+  "ru": "чайник",
+  "tr": "chaynik",
+  "uz": "choynak",
+  "en": ""
+ },
+ {
+  "n": 322,
+  "ru": "четверг",
+  "tr": "chetverg",
+  "uz": "payshanba",
+  "en": ""
+ },
+ {
+  "n": 323,
+  "ru": "четыреста",
+  "tr": "chetyresta",
+  "uz": "to'rt yuz",
+  "en": ""
+ },
+ {
+  "n": 324,
+  "ru": "шестьсот",
+  "tr": "shestsot",
+  "uz": "olti yuz",
+  "en": ""
+ },
+ {
+  "n": 325,
+  "ru": "штука",
+  "tr": "shtuka",
+  "uz": "narsa",
+  "en": ""
+ },
+ {
+  "n": 326,
+  "ru": "этот (эта, это, эти)",
+  "tr": "etot (eta, eto, eti)",
+  "uz": "bu (bu, bu, bu)",
+  "en": ""
+ },
+ {
+  "n": 327,
+  "ru": "яйцо",
+  "tr": "yaytso",
+  "uz": "tuxum",
+  "en": ""
+ },
+ {
+  "n": 328,
+  "ru": "быть",
+  "tr": "byt",
+  "uz": "bo'lmoq",
+  "en": ""
+ },
+ {
+  "n": 329,
+  "ru": "заболеть",
+  "tr": "zabolet",
+  "uz": "kasal bo'lmoq",
+  "en": ""
+ },
+ {
+  "n": 330,
+  "ru": "забыть",
+  "tr": "zabyt",
+  "uz": "unutmoq",
+  "en": ""
+ },
+ {
+  "n": 331,
+  "ru": "звонить",
+  "tr": "zvonit",
+  "uz": "qo'ng'iroq qilmoq",
+  "en": ""
+ },
+ {
+  "n": 332,
+  "ru": "купить",
+  "tr": "kupit",
+  "uz": "sotib olmoq",
+  "en": ""
+ },
+ {
+  "n": 333,
+  "ru": "называться",
+  "tr": "nazyvatsya",
+  "uz": "nom bermoq",
+  "en": ""
+ },
+ {
+  "n": 334,
+  "ru": "объяснять",
+  "tr": "obyasnyat",
+  "uz": "tushuntiring",
+  "en": ""
+ },
+ {
+  "n": 335,
+  "ru": "писать",
+  "tr": "pisat",
+  "uz": "yozmoq",
+  "en": ""
+ },
+ {
+  "n": 336,
+  "ru": "показать",
+  "tr": "pokazat",
+  "uz": "ko'rsatmoq",
+  "en": ""
+ },
+ {
+  "n": 337,
+  "ru": "стоить",
+  "tr": "stoit",
+  "uz": "narxi",
+  "en": ""
+ },
+ {
+  "n": 338,
+  "ru": "устать",
+  "tr": "ustat",
+  "uz": "charchamoq",
+  "en": ""
+ },
+ {
+  "n": 339,
+  "ru": "учить",
+  "tr": "uchit",
+  "uz": "o'rganing",
+  "en": ""
+ },
+ {
+  "n": 340,
+  "ru": "дайте!",
+  "tr": "dayte!",
+  "uz": "bering!",
+  "en": ""
+ },
+ {
+  "n": 341,
+  "ru": "покажите!",
+  "tr": "pokazhite!",
+  "uz": "ko'rsatish!",
+  "en": ""
+ },
+ {
+  "n": 342,
+  "ru": "какой год?",
+  "tr": "kakoy god?",
+  "uz": "qaysi yil?",
+  "en": ""
+ },
+ {
+  "n": 343,
+  "ru": "сколько стоит?",
+  "tr": "skolko stoit?",
+  "uz": "qancha?",
+  "en": ""
+ },
+ {
+  "n": 344,
+  "ru": "банкир",
+  "tr": "bankir",
+  "uz": "bankir",
+  "en": ""
+ },
+ {
+  "n": 345,
+  "ru": "берег",
+  "tr": "bereg",
+  "uz": "qirg'oq",
+  "en": ""
+ },
+ {
+  "n": 346,
+  "ru": "богатый",
+  "tr": "bogatyy",
+  "uz": "boy",
+  "en": ""
+ },
+ {
+  "n": 347,
+  "ru": "весна (весной)",
+  "tr": "vesna (vesnoy)",
+  "uz": "bahor (bahor)",
+  "en": ""
+ },
+ {
+  "n": 348,
+  "ru": "лето (летом)",
+  "tr": "leto (letom)",
+  "uz": "yoz (yoz)",
+  "en": ""
+ },
+ {
+  "n": 349,
+  "ru": "весь (вся, всё, все)",
+  "tr": "ves (vsya, vsyo, vse)",
+  "uz": "hammasi (hammasi, hammasi, hammasi)",
+  "en": ""
+ },
+ {
+  "n": 350,
+  "ru": "вещь",
+  "tr": "veshch",
+  "uz": "narsa",
+  "en": ""
+ },
+ {
+  "n": 351,
+  "ru": "война",
+  "tr": "voyna",
+  "uz": "urush",
+  "en": ""
+ },
+ {
+  "n": 352,
+  "ru": "восток",
+  "tr": "vostok",
+  "uz": "sharq",
+  "en": ""
+ },
+ {
+  "n": 353,
+  "ru": "выставка",
+  "tr": "vystavka",
+  "uz": "ko'rgazma",
+  "en": ""
+ },
+ {
+  "n": 354,
+  "ru": "гид",
+  "tr": "gid",
+  "uz": "hidoyat",
+  "en": ""
+ },
+ {
+  "n": 355,
+  "ru": "градус",
+  "tr": "gradus",
+  "uz": "daraja",
+  "en": ""
+ },
+ {
+  "n": 356,
+  "ru": "должен (должна, должно, должны)",
+  "tr": "dolzhen (dolzhna, dolzhno, dolzhny)",
+  "uz": "kerak",
+  "en": ""
+ },
+ {
+  "n": 357,
+  "ru": "другой",
+  "tr": "drugoy",
+  "uz": "boshqa",
+  "en": ""
+ },
+ {
+  "n": 358,
+  "ru": "жизнь",
+  "tr": "zhizn",
+  "uz": "hayot",
+  "en": ""
+ },
+ {
+  "n": 359,
+  "ru": "занятие (занятия)",
+  "tr": "zanyatie (zanyatiya)",
+  "uz": "mashg’ulot",
+  "en": ""
+ },
+ {
+  "n": 360,
+  "ru": "запад",
+  "tr": "zapad",
+  "uz": "g'arb",
+  "en": ""
+ },
+ {
+  "n": 361,
+  "ru": "зима (зимой)",
+  "tr": "zima (zimoy)",
+  "uz": "qish (qishda)",
+  "en": ""
+ },
+ {
+  "n": 362,
+  "ru": "и так далее (и т. д.)",
+  "tr": "i tak dalee (i t. d.)",
+  "uz": "va boshqalar",
+  "en": ""
+ },
+ {
+  "n": 363,
+  "ru": "история",
+  "tr": "istoriya",
+  "uz": "hikoya, tarix",
+  "en": ""
+ },
+ {
+  "n": 364,
+  "ru": "класс",
+  "tr": "klass",
+  "uz": "sinf",
+  "en": ""
+ },
+ {
+  "n": 365,
+  "ru": "командировка",
+  "tr": "komandirovka",
+  "uz": "ish safari",
+  "en": ""
+ },
+ {
+  "n": 366,
+  "ru": "консульство",
+  "tr": "konsulstvo",
+  "uz": "konsullik",
+  "en": ""
+ },
+ {
+  "n": 367,
+  "ru": "лекарство",
+  "tr": "lekarstvo",
+  "uz": "dori",
+  "en": ""
+ },
+ {
+  "n": 368,
+  "ru": "лес",
+  "tr": "les",
+  "uz": "o'rmon",
+  "en": ""
+ },
+ {
+  "n": 369,
+  "ru": "любовь",
+  "tr": "lyubov",
+  "uz": "sevgi",
+  "en": ""
+ },
+ {
+  "n": 370,
+  "ru": "месяц",
+  "tr": "mesyats",
+  "uz": "oy",
+  "en": ""
+ },
+ {
+  "n": 371,
+  "ru": "назад",
+  "tr": "nazad",
+  "uz": "orqaga",
+  "en": ""
+ },
+ {
+  "n": 372,
+  "ru": "например",
+  "tr": "naprimer",
+  "uz": "masalan",
+  "en": ""
+ },
+ {
+  "n": 373,
+  "ru": "недавно",
+  "tr": "nedavno",
+  "uz": "yaqinda",
+  "en": ""
+ },
+ {
+  "n": 374,
+  "ru": "осень (осенью)",
+  "tr": "osen (osenyu)",
+  "uz": "kuz (kuzda)",
+  "en": ""
+ },
+ {
+  "n": 375,
+  "ru": "остров",
+  "tr": "ostrov",
+  "uz": "orol",
+  "en": ""
+ },
+ {
+  "n": 376,
+  "ru": "передача",
+  "tr": "peredacha",
+  "uz": "efirga uzatish",
+  "en": ""
+ },
+ {
+  "n": 377,
+  "ru": "поездка",
+  "tr": "poezdka",
+  "uz": "yo’l",
+  "en": ""
+ },
+ {
+  "n": 378,
+  "ru": "политика",
+  "tr": "politika",
+  "uz": "siyosat",
+  "en": ""
+ },
+ {
+  "n": 379,
+  "ru": "почти",
+  "tr": "pochti",
+  "uz": "deyarli",
+  "en": ""
+ },
+ {
+  "n": 380,
+  "ru": "праздник",
+  "tr": "prazdnik",
+  "uz": "bayram",
+  "en": ""
+ },
+ {
+  "n": 381,
+  "ru": "работа",
+  "tr": "rabota",
+  "uz": "ish",
+  "en": ""
+ },
+ {
+  "n": 382,
+  "ru": "природа",
+  "tr": "priroda",
+  "uz": "tabiat",
+  "en": ""
+ },
+ {
+  "n": 383,
+  "ru": "раз (первый раз)",
+  "tr": "raz (pervyy raz)",
+  "uz": "marta (birinchi marta)",
+  "en": ""
+ },
+ {
+  "n": 384,
+  "ru": "раньше",
+  "tr": "ranshe",
+  "uz": "ilgari",
+  "en": ""
+ },
+ {
+  "n": 385,
+  "ru": "родина",
+  "tr": "rodina",
+  "uz": "vatan",
+  "en": ""
+ },
+ {
+  "n": 386,
+  "ru": "рынок",
+  "tr": "rynok",
+  "uz": "bozor",
+  "en": ""
+ },
+ {
+  "n": 387,
+  "ru": "север",
+  "tr": "sever",
+  "uz": "shimol",
+  "en": ""
+ },
+ {
+  "n": 388,
+  "ru": "сильный",
+  "tr": "silnyy",
+  "uz": "kuchli",
+  "en": ""
+ },
+ {
+  "n": 389,
+  "ru": "собор",
+  "tr": "sobor",
+  "uz": "ibodathona",
+  "en": ""
+ },
+ {
+  "n": 390,
+  "ru": "статья",
+  "tr": "statya",
+  "uz": "maqola",
+  "en": ""
+ },
+ {
+  "n": 391,
+  "ru": "угол",
+  "tr": "ugol",
+  "uz": "burchak",
+  "en": ""
+ },
+ {
+  "n": 392,
+  "ru": "умный",
+  "tr": "umnyy",
+  "uz": "aqlli",
+  "en": ""
+ },
+ {
+  "n": 393,
+  "ru": "учёба",
+  "tr": "uchyoba",
+  "uz": "o’qish",
+  "en": ""
+ },
+ {
+  "n": 394,
+  "ru": "экзамен",
+  "tr": "ekzamen",
+  "uz": "imtihon",
+  "en": ""
+ },
+ {
+  "n": 395,
+  "ru": "юг",
+  "tr": "yug",
+  "uz": "janub",
+  "en": ""
+ },
+ {
+  "n": 396,
+  "ru": "взять",
+  "tr": "vzyat",
+  "uz": "olmoq",
+  "en": ""
+ },
+ {
+  "n": 397,
+  "ru": "думать",
+  "tr": "dumat",
+  "uz": "o'ylamoq",
+  "en": ""
+ },
+ {
+  "n": 398,
+  "ru": "жить",
+  "tr": "zhit",
+  "uz": "yashamoq",
+  "en": ""
+ },
+ {
+  "n": 399,
+  "ru": "мечтать",
+  "tr": "mechtat",
+  "uz": "orzu qilmoq",
+  "en": ""
+ },
+ {
+  "n": 400,
+  "ru": "мочь",
+  "tr": "moch",
+  "uz": "qodir",
+  "en": ""
+ },
+ {
+  "n": 401,
+  "ru": "находится",
+  "tr": "nakhoditsya",
+  "uz": "joylashgan",
+  "en": ""
+ },
+ {
+  "n": 402,
+  "ru": "начать",
+  "tr": "nachat",
+  "uz": "boshlamoq",
+  "en": ""
+ },
+ {
+  "n": 403,
+  "ru": "окончить (что?)",
+  "tr": "okonchit (chto?)",
+  "uz": "nima tugatish?",
+  "en": ""
+ },
+ {
+  "n": 404,
+  "ru": "получить",
+  "tr": "poluchit",
+  "uz": "olmoq",
+  "en": ""
+ },
+ {
+  "n": 405,
+  "ru": "приехать",
+  "tr": "priekhat",
+  "uz": "kelmoq",
+  "en": ""
+ },
+ {
+  "n": 406,
+  "ru": "разговаривать",
+  "tr": "razgovarivat",
+  "uz": "gaplashmoq",
+  "en": ""
+ },
+ {
+  "n": 407,
+  "ru": "рассказать",
+  "tr": "rasskazat",
+  "uz": "aytib bermoq",
+  "en": ""
+ },
+ {
+  "n": 408,
+  "ru": "родиться",
+  "tr": "roditsya",
+  "uz": "tug'ilmoq",
+  "en": ""
+ },
+ {
+  "n": 409,
+  "ru": "танцевать",
+  "tr": "tantsevat",
+  "uz": "raqsga tushmoq",
+  "en": ""
+ },
+ {
+  "n": 410,
+  "ru": "учиться (где?)",
+  "tr": "uchitsya (gde?)",
+  "uz": "qayerda o'qish?",
+  "en": ""
+ },
+ {
+  "n": 411,
+  "ru": "Всё в порядке!",
+  "tr": "Vsyo v poryadke!",
+  "uz": "hammasi joyida!",
+  "en": ""
+ },
+ {
+  "n": 412,
+  "ru": "в гости",
+  "tr": "v gosti",
+  "uz": "mehmonga",
+  "en": ""
+ },
+ {
+  "n": 413,
+  "ru": "в гостях",
+  "tr": "v gostyakh",
+  "uz": "mehmonda",
+  "en": ""
+ },
+ {
+  "n": 414,
+  "ru": "выходной день (выходные дни)",
+  "tr": "vykhodnoy den (vykhodnye dni)",
+  "uz": "dam olish kuni (hafta oxiri)",
+  "en": ""
+ },
+ {
+  "n": 415,
+  "ru": "готов (готова, готово, готовы)",
+  "tr": "gotov (gotova, gotovo, gotovy)",
+  "uz": "tayyor",
+  "en": ""
+ },
+ {
+  "n": 416,
+  "ru": "давно",
+  "tr": "davno",
+  "uz": "uzoq vaqt davomida; anchadan beri",
+  "en": ""
+ },
+ {
+  "n": 417,
+  "ru": "день рождения",
+  "tr": "den rozhdeniya",
+  "uz": "tug'ilgan kun",
+  "en": ""
+ },
+ {
+  "n": 418,
+  "ru": "друг друга",
+  "tr": "drug druga",
+  "uz": "bir birini",
+  "en": ""
+ },
+ {
+  "n": 419,
+  "ru": "за город (за городом)",
+  "tr": "za gorod (za gorodom)",
+  "uz": "shahar tashqarisida (shahardan tashqarida)",
+  "en": ""
+ },
+ {
+  "n": 420,
+  "ru": "занят (занята, занято, заняты)",
+  "tr": "zanyat (zanyata, zanyato, zanyaty)",
+  "uz": "band",
+  "en": ""
+ },
+ {
+  "n": 421,
+  "ru": "куда",
+  "tr": "kuda",
+  "uz": "qayerda",
+  "en": ""
+ },
+ {
+  "n": 422,
+  "ru": "любимый",
+  "tr": "lyubimyy",
+  "uz": "sevimli",
+  "en": ""
+ },
+ {
+  "n": 423,
+  "ru": "москвич(ка)",
+  "tr": "moskvich(ka)",
+  "uz": "moskvalik",
+  "en": ""
+ },
+ {
+  "n": 424,
+  "ru": "узбек(чка)",
+  "tr": "uzbek(chka)",
+  "uz": "o'zbek",
+  "en": ""
+ },
+ {
+  "n": 425,
+  "ru": "никуда (не)",
+  "tr": "nikuda (ne)",
+  "uz": "hech qayerga (inkor)",
+  "en": ""
+ },
+ {
+  "n": 426,
+  "ru": "обратно",
+  "tr": "obratno",
+  "uz": "orqaga",
+  "en": ""
+ },
+ {
+  "n": 427,
+  "ru": "пешком",
+  "tr": "peshkom",
+  "uz": "piyoda",
+  "en": ""
+ },
+ {
+  "n": 428,
+  "ru": "поэтому",
+  "tr": "poetomu",
+  "uz": "shunung uchun",
+  "en": ""
+ },
+ {
+  "n": 429,
+  "ru": "рад (рада, рады)",
+  "tr": "rad (rada, rady)",
+  "uz": "xursand",
+  "en": ""
+ },
+ {
+  "n": 430,
+  "ru": "сам (сама, само, сами)",
+  "tr": "sam (sama, samo, sami)",
+  "uz": "o'zim",
+  "en": ""
+ },
+ {
+  "n": 431,
+  "ru": "слишком",
+  "tr": "slishkom",
+  "uz": "judayam",
+  "en": ""
+ },
+ {
+  "n": 432,
+  "ru": "сюда",
+  "tr": "syuda",
+  "uz": "bu yerga",
+  "en": ""
+ },
+ {
+  "n": 433,
+  "ru": "так как",
+  "tr": "tak kak",
+  "uz": "chunki",
+  "en": ""
+ },
+ {
+  "n": 434,
+  "ru": "туда",
+  "tr": "tuda",
+  "uz": "u yerda",
+  "en": ""
+ },
+ {
+  "n": 435,
+  "ru": "видеть (кого? что?)",
+  "tr": "videt (kogo? chto?)",
+  "uz": "ko’rmoq kimni? nimani?",
+  "en": ""
+ },
+ {
+  "n": 436,
+  "ru": "встретить (кого?)",
+  "tr": "vstretit (kogo?)",
+  "uz": "kimni uchratmoq?",
+  "en": ""
+ },
+ {
+  "n": 437,
+  "ru": "готовить (что?)",
+  "tr": "gotovit (chto?)",
+  "uz": "tayyorlamoq?",
+  "en": ""
+ },
+ {
+  "n": 438,
+  "ru": "ездить, ехать (куда?)",
+  "tr": "ezdit, ekhat (kuda?)",
+  "uz": "bormoq, qaerga bormoq?",
+  "en": ""
+ },
+ {
+  "n": 439,
+  "ru": "ждать (кого? что?)",
+  "tr": "zhdat (kogo? chto?)",
+  "uz": "kutmoq kimni? nimani?",
+  "en": ""
+ },
+ {
+  "n": 440,
+  "ru": "загорать",
+  "tr": "zagorat",
+  "uz": "quyoshda o’tirish",
+  "en": ""
+ },
+ {
+  "n": 441,
+  "ru": "заниматься",
+  "tr": "zanimatsya",
+  "uz": "shug’ullanmoq",
+  "en": ""
+ },
+ {
+  "n": 442,
+  "ru": "идти, ходить (куда?)",
+  "tr": "idti, khodit (kuda?)",
+  "uz": "bormoq (piyoda) qayerga?",
+  "en": ""
+ },
+ {
+  "n": 443,
+  "ru": "окончить (школу, институт)",
+  "tr": "okonchit (shkolu, institut)",
+  "uz": "tugatmoq (maktabni, oliygohni)",
+  "en": ""
+ },
+ {
+  "n": 444,
+  "ru": "опоздать куда?",
+  "tr": "opozdat kuda?",
+  "uz": "kechga qolmoq qayerga?",
+  "en": ""
+ },
+ {
+  "n": 445,
+  "ru": "поздравлять кого?",
+  "tr": "pozdravlyat kogo?",
+  "uz": "tabriklamoq kimni?",
+  "en": ""
+ },
+ {
+  "n": 446,
+  "ru": "познакомиться",
+  "tr": "poznakomitsya",
+  "uz": "tanishmoq",
+  "en": ""
+ },
+ {
+  "n": 447,
+  "ru": "пригласить кого?",
+  "tr": "priglasit kogo?",
+  "uz": "taklif qilmoq kimni?",
+  "en": ""
+ },
+ {
+  "n": 448,
+  "ru": "проспать",
+  "tr": "prospat",
+  "uz": "uxlab qolmoq",
+  "en": ""
+ },
+ {
+  "n": 449,
+  "ru": "простудиться",
+  "tr": "prostuditsya",
+  "uz": "shamollamoq",
+  "en": ""
+ },
+ {
+  "n": 450,
+  "ru": "спешить куда?",
+  "tr": "speshit kuda?",
+  "uz": "shoshilmoq qayerga?",
+  "en": ""
+ },
+ {
+  "n": 451,
+  "ru": "спросить кого?",
+  "tr": "sprosit kogo?",
+  "uz": "so'ramoq kimdan?",
+  "en": ""
+ },
+ {
+  "n": 452,
+  "ru": "ходить куда?",
+  "tr": "khodit kuda?",
+  "uz": "bormoq qayerga?",
+  "en": ""
+ },
+ {
+  "n": 453,
+  "ru": "как часто?",
+  "tr": "kak chasto?",
+  "uz": "qanchalik tez-tez?",
+  "en": ""
+ },
+ {
+  "n": 454,
+  "ru": "Подождите!",
+  "tr": "Podozhdite!",
+  "uz": "kuting!",
+  "en": ""
+ },
+ {
+  "n": 455,
+  "ru": "без чего?",
+  "tr": "bez chego?",
+  "uz": "nimasiz?",
+  "en": ""
+ },
+ {
+  "n": 456,
+  "ru": "бутылка",
+  "tr": "butylka",
+  "uz": "shisha",
+  "en": ""
+ },
+ {
+  "n": 457,
+  "ru": "внук",
+  "tr": "vnuk",
+  "uz": "o’gil nevara",
+  "en": ""
+ },
+ {
+  "n": 458,
+  "ru": "внучка",
+  "tr": "vnuchka",
+  "uz": "qiz nevara",
+  "en": ""
+ },
+ {
+  "n": 459,
+  "ru": "воздух",
+  "tr": "vozdukh",
+  "uz": "havo",
+  "en": ""
+ },
+ {
+  "n": 460,
+  "ru": "в принципе",
+  "tr": "v printsipe",
+  "uz": "asosan",
+  "en": ""
+ },
+ {
+  "n": 461,
+  "ru": "для кого? чего?",
+  "tr": "dlya kogo? chego?",
+  "uz": "kim uchun? nima uchun?",
+  "en": ""
+ },
+ {
+  "n": 462,
+  "ru": "жених",
+  "tr": "zhenikh",
+  "uz": "kuyov",
+  "en": ""
+ },
+ {
+  "n": 463,
+  "ru": "еда",
+  "tr": "eda",
+  "uz": "ovqat",
+  "en": ""
+ },
+ {
+  "n": 464,
+  "ru": "игрушка (игрушки)",
+  "tr": "igrushka (igrushki)",
+  "uz": "o'yinchoq(lar)",
+  "en": ""
+ },
+ {
+  "n": 465,
+  "ru": "к сожалению",
+  "tr": "k sozhaleniyu",
+  "uz": "afsuski",
+  "en": ""
+ },
+ {
+  "n": 466,
+  "ru": "к счастью",
+  "tr": "k schastyu",
+  "uz": "yaxshiyam",
+  "en": ""
+ },
+ {
+  "n": 467,
+  "ru": "ковёр",
+  "tr": "kovyor",
+  "uz": "gilam",
+  "en": ""
+ },
+ {
+  "n": 468,
+  "ru": "конец",
+  "tr": "konets",
+  "uz": "oxiri",
+  "en": ""
+ },
+ {
+  "n": 469,
+  "ru": "кошелёк",
+  "tr": "koshelyok",
+  "uz": "hamyon",
+  "en": ""
+ },
+ {
+  "n": 470,
+  "ru": "кроме кого? чего?",
+  "tr": "krome kogo? chego?",
+  "uz": "kimdan tashqari? nimadan tashqari?",
+  "en": ""
+ },
+ {
+  "n": 471,
+  "ru": "курс (доллара, сума, рубля)",
+  "tr": "kurs (dollara, suma, rublya)",
+  "uz": "valyuta kursi (dollar, so'm, rubl)",
+  "en": ""
+ },
+ {
+  "n": 472,
+  "ru": "курсы русского языка",
+  "tr": "kursy russkogo yazyka",
+  "uz": "rus tili kurslari",
+  "en": ""
+ },
+ {
+  "n": 473,
+  "ru": "кусок",
+  "tr": "kusok",
+  "uz": "parcha",
+  "en": ""
+ },
+ {
+  "n": 474,
+  "ru": "наверное",
+  "tr": "navernoe",
+  "uz": "balki",
+  "en": ""
+ },
+ {
+  "n": 475,
+  "ru": "начало",
+  "tr": "nachalo",
+  "uz": "boshlanishi",
+  "en": ""
+ },
+ {
+  "n": 476,
+  "ru": "невеста",
+  "tr": "nevesta",
+  "uz": "kelin",
+  "en": ""
+ },
+ {
+  "n": 477,
+  "ru": "невозможно",
+  "tr": "nevozmozhno",
+  "uz": "imkonsiz",
+  "en": ""
+ },
+ {
+  "n": 478,
+  "ru": "недалеко от чего?",
+  "tr": "nedaleko ot chego?",
+  "uz": "nimaga yaqin?",
+  "en": ""
+ },
+ {
+  "n": 479,
+  "ru": "около чего?",
+  "tr": "okolo chego?",
+  "uz": "nima atrofida?",
+  "en": ""
+ },
+ {
+  "n": 480,
+  "ru": "окончание",
+  "tr": "okonchanie",
+  "uz": "tugallanishi",
+  "en": ""
+ },
+ {
+  "n": 481,
+  "ru": "отпуск",
+  "tr": "otpusk",
+  "uz": "ta’til",
+  "en": ""
+ },
+ {
+  "n": 482,
+  "ru": "пока (ещё)",
+  "tr": "poka (eshchyo)",
+  "uz": "hali",
+  "en": ""
+ },
+ {
+  "n": 483,
+  "ru": "после чего?",
+  "tr": "posle chego?",
+  "uz": "nimadan keyin?",
+  "en": ""
+ },
+ {
+  "n": 484,
+  "ru": "свет",
+  "tr": "svet",
+  "uz": "yorug'lik",
+  "en": ""
+ },
+ {
+  "n": 485,
+  "ru": "сосед",
+  "tr": "sosed",
+  "uz": "qo'shni",
+  "en": ""
+ },
+ {
+  "n": 486,
+  "ru": "столица",
+  "tr": "stolitsa",
+  "uz": "poytaxt",
+  "en": ""
+ },
+ {
+  "n": 487,
+  "ru": "теперь",
+  "tr": "teper",
+  "uz": "endi",
+  "en": ""
+ },
+ {
+  "n": 488,
+  "ru": "удобный",
+  "tr": "udobnyy",
+  "uz": "qulay",
+  "en": ""
+ },
+ {
+  "n": 489,
+  "ru": "хозяин",
+  "tr": "khozyain",
+  "uz": "ho’jayin",
+  "en": ""
+ },
+ {
+  "n": 490,
+  "ru": "число",
+  "tr": "chislo",
+  "uz": "raqam",
+  "en": ""
+ },
+ {
+  "n": 491,
+  "ru": "значить: значит, …",
+  "tr": "znachit: znachit, …",
+  "uz": "ma’nosi",
+  "en": ""
+ },
+ {
+  "n": 492,
+  "ru": "аккуратный",
+  "tr": "akkuratnyy",
+  "uz": "ehtiyotkor",
+  "en": ""
+ },
+ {
+  "n": 493,
+  "ru": "важный",
+  "tr": "vazhnyy",
+  "uz": "muhim",
+  "en": ""
+ },
+ {
+  "n": 494,
+  "ru": "вкус",
+  "tr": "vkus",
+  "uz": "ta'm",
+  "en": ""
+ },
+ {
+  "n": 495,
+  "ru": "внимательный",
+  "tr": "vnimatelnyy",
+  "uz": "diqqatli",
+  "en": ""
+ },
+ {
+  "n": 496,
+  "ru": "даже",
+  "tr": "dazhe",
+  "uz": "hatto",
+  "en": ""
+ },
+ {
+  "n": 497,
+  "ru": "дела",
+  "tr": "dela",
+  "uz": "ishlar",
+  "en": ""
+ },
+ {
+  "n": 498,
+  "ru": "мёд",
+  "tr": "myod",
+  "uz": "asal",
+  "en": ""
+ },
+ {
+  "n": 499,
+  "ru": "между чем",
+  "tr": "mezhdu chem",
+  "uz": "orasida",
+  "en": ""
+ },
+ {
+  "n": 500,
+  "ru": "модный",
+  "tr": "modnyy",
+  "uz": "zamonaviy",
+  "en": ""
+ },
+ {
+  "n": 501,
+  "ru": "не только …, но и оба/обе",
+  "tr": "ne tolko …, no i oba/obe",
+  "uz": "nafaqat ... balki ikkalasi ham",
+  "en": ""
+ },
+ {
+  "n": 502,
+  "ru": "одинаковый",
+  "tr": "odinakovyy",
+  "uz": "bir xil",
+  "en": ""
+ },
+ {
+  "n": 503,
+  "ru": "орех",
+  "tr": "orekh",
+  "uz": "yong'oq",
+  "en": ""
+ },
+ {
+  "n": 504,
+  "ru": "острый (соус)",
+  "tr": "ostryy (sous)",
+  "uz": "achchiq sous",
+  "en": ""
+ },
+ {
+  "n": 505,
+  "ru": "пение",
+  "tr": "penie",
+  "uz": "kuy",
+  "en": ""
+ },
+ {
+  "n": 506,
+  "ru": "переводчик/переводчица",
+  "tr": "perevodchik/perevodchitsa",
+  "uz": "tarjimon",
+  "en": ""
+ },
+ {
+  "n": 507,
+  "ru": "плавание",
+  "tr": "plavanie",
+  "uz": "suzish",
+  "en": ""
+ },
+ {
+  "n": 508,
+  "ru": "подарок",
+  "tr": "podarok",
+  "uz": "sovg’a",
+  "en": ""
+ },
+ {
+  "n": 509,
+  "ru": "политик",
+  "tr": "politik",
+  "uz": "siyosatchi",
+  "en": ""
+ },
+ {
+  "n": 510,
+  "ru": "последний",
+  "tr": "posledniy",
+  "uz": "oxirgi",
+  "en": ""
+ },
+ {
+  "n": 511,
+  "ru": "примерно",
+  "tr": "primerno",
+  "uz": "taxminan",
+  "en": ""
+ },
+ {
+  "n": 512,
+  "ru": "приятный",
+  "tr": "priyatnyy",
+  "uz": "yoqimli",
+  "en": ""
+ },
+ {
+  "n": 513,
+  "ru": "разница",
+  "tr": "raznitsa",
+  "uz": "farq",
+  "en": ""
+ },
+ {
+  "n": 514,
+  "ru": "рядом с чем?",
+  "tr": "ryadom s chem?",
+  "uz": "nimani yonida?",
+  "en": ""
+ },
+ {
+  "n": 515,
+  "ru": "симпатичный",
+  "tr": "simpatichnyy",
+  "uz": "kelishgan",
+  "en": ""
+ },
+ {
+  "n": 516,
+  "ru": "случайно",
+  "tr": "sluchayno",
+  "uz": "tasodifan",
+  "en": ""
+ },
+ {
+  "n": 517,
+  "ru": "чтобы",
+  "tr": "chtoby",
+  "uz": "uchun",
+  "en": ""
+ },
+ {
+  "n": 518,
+  "ru": "встретиться с кем?",
+  "tr": "vstretitsya s kem?",
+  "uz": "kim bilan ko’rishmoq?",
+  "en": ""
+ },
+ {
+  "n": 519,
+  "ru": "дарить кому? что?",
+  "tr": "darit komu? chto?",
+  "uz": "kimga sovg’a qilmoq? nimani?",
+  "en": ""
+ },
+ {
+  "n": 520,
+  "ru": "договориться с кем?",
+  "tr": "dogovoritsya s kem?",
+  "uz": "kim bilan kelishishmoq?",
+  "en": ""
+ },
+ {
+  "n": 521,
+  "ru": "заказать что?",
+  "tr": "zakazat chto?",
+  "uz": "nimani buyurtma qilmoq?",
+  "en": ""
+ },
+ {
+  "n": 522,
+  "ru": "интересоваться чем?",
+  "tr": "interesovatsya chem?",
+  "uz": "nima bilan qiziqmoq?",
+  "en": ""
+ },
+ {
+  "n": 523,
+  "ru": "объяснить что? кому?",
+  "tr": "obyasnit chto? komu?",
+  "uz": "nimani tushuntirmoq? kimga?",
+  "en": ""
+ },
+ {
+  "n": 524,
+  "ru": "ответить что? кому?",
+  "tr": "otvetit chto? komu?",
+  "uz": "kimga javob bermoq?",
+  "en": ""
+ },
+ {
+  "n": 525,
+  "ru": "плавать/плыть",
+  "tr": "plavat/plyt",
+  "uz": "suzmoq",
+  "en": ""
+ },
+ {
+  "n": 526,
+  "ru": "показать что? кому?",
+  "tr": "pokazat chto? komu?",
+  "uz": "nimani ko'rsatmoq? kimga?",
+  "en": ""
+ },
+ {
+  "n": 527,
+  "ru": "преподавать что?",
+  "tr": "prepodavat chto?",
+  "uz": "nimani o'rgatmoq?",
+  "en": ""
+ },
+ {
+  "n": 528,
+  "ru": "сказать кому? что …",
+  "tr": "skazat komu? chto …",
+  "uz": "kimga aytmoq? nimani …",
+  "en": ""
+ },
+ {
+  "n": 529,
+  "ru": "увлекаться чем?",
+  "tr": "uvlekatsya chem?",
+  "uz": "nima bilan qiziqmoq?",
+  "en": ""
+ },
+ {
+  "n": 530,
+  "ru": "возьмите!",
+  "tr": "vozmite!",
+  "uz": "oling!",
+  "en": ""
+ },
+ {
+  "n": 531,
+  "ru": "тёмный",
+  "tr": "tyomnyy",
+  "uz": "to’q",
+  "en": ""
+ },
+ {
+  "n": 532,
+  "ru": "тихий",
+  "tr": "tikhiy",
+  "uz": "tinch",
+  "en": ""
+ },
+ {
+  "n": 533,
+  "ru": "тихо",
+  "tr": "tikho",
+  "uz": "tinch",
+  "en": ""
+ },
+ {
+  "n": 534,
+  "ru": "толстый",
+  "tr": "tolstyy",
+  "uz": "qalin, semiz",
+  "en": ""
+ },
+ {
+  "n": 535,
+  "ru": "тонкий",
+  "tr": "tonkiy",
+  "uz": "yupqa",
+  "en": ""
+ },
+ {
+  "n": 536,
+  "ru": "тонко",
+  "tr": "tonko",
+  "uz": "yupqa",
+  "en": ""
+ },
+ {
+  "n": 537,
+  "ru": "трава",
+  "tr": "trava",
+  "uz": "o't",
+  "en": ""
+ },
+ {
+  "n": 538,
+  "ru": "удобно",
+  "tr": "udobno",
+  "uz": "qulay",
+  "en": ""
+ },
+ {
+  "n": 539,
+  "ru": "узкий",
+  "tr": "uzkiy",
+  "uz": "tor",
+  "en": ""
+ },
+ {
+  "n": 540,
+  "ru": "узко",
+  "tr": "uzko",
+  "uz": "tor",
+  "en": ""
+ },
+ {
+  "n": 541,
+  "ru": "утро",
+  "tr": "utro",
+  "uz": "tong",
+  "en": ""
+ },
+ {
+  "n": 542,
+  "ru": "фраза",
+  "tr": "fraza",
+  "uz": "ibora",
+  "en": ""
+ },
+ {
+  "n": 543,
+  "ru": "хитрый",
+  "tr": "khitryy",
+  "uz": "ayyor",
+  "en": ""
+ },
+ {
+  "n": 544,
+  "ru": "цвет",
+  "tr": "tsvet",
+  "uz": "rang",
+  "en": ""
+ },
+ {
+  "n": 545,
+  "ru": "частый",
+  "tr": "chastyy",
+  "uz": "tez-tez",
+  "en": ""
+ },
+ {
+  "n": 546,
+  "ru": "часто",
+  "tr": "chasto",
+  "uz": "ko’pincha",
+  "en": ""
+ },
+ {
+  "n": 547,
+  "ru": "частный",
+  "tr": "chastnyy",
+  "uz": "xususiy",
+  "en": ""
+ },
+ {
+  "n": 548,
+  "ru": "честно",
+  "tr": "chestno",
+  "uz": "rost",
+  "en": ""
+ },
+ {
+  "n": 549,
+  "ru": "честный",
+  "tr": "chestnyy",
+  "uz": "rostgo’y",
+  "en": ""
+ },
+ {
+  "n": 550,
+  "ru": "чисто",
+  "tr": "chisto",
+  "uz": "sof",
+  "en": ""
+ },
+ {
+  "n": 551,
+  "ru": "чистый",
+  "tr": "chistyy",
+  "uz": "toza",
+  "en": ""
+ },
+ {
+  "n": 552,
+  "ru": "широкий",
+  "tr": "shirokiy",
+  "uz": "keng",
+  "en": ""
+ },
+ {
+  "n": 553,
+  "ru": "широко",
+  "tr": "shiroko",
+  "uz": "keng",
+  "en": ""
+ },
+ {
+  "n": 554,
+  "ru": "шумно",
+  "tr": "shumno",
+  "uz": "shovqin",
+  "en": ""
+ },
+ {
+  "n": 555,
+  "ru": "закрываться",
+  "tr": "zakryvatsya",
+  "uz": "yaqin",
+  "en": ""
+ },
+ {
+  "n": 556,
+  "ru": "остановить",
+  "tr": "ostanovit",
+  "uz": "to’xtatmoq",
+  "en": ""
+ },
+ {
+  "n": 557,
+  "ru": "остановите!",
+  "tr": "ostanovite!",
+  "uz": "to’xtating!",
+  "en": ""
+ },
+ {
+  "n": 558,
+  "ru": "ну и как?",
+  "tr": "nu i kak?",
+  "uz": "xo'sh, qanday?",
+  "en": ""
+ },
+ {
+  "n": 559,
+  "ru": "провести (время)",
+  "tr": "provesti (vremya)",
+  "uz": "vaqt o'tkazmoq",
+  "en": ""
+ },
+ {
+  "n": 560,
+  "ru": "рекомендовать что?",
+  "tr": "rekomendovat chto?",
+  "uz": "nimani tavsiya qilmoq?",
+  "en": ""
+ },
+ {
+  "n": 561,
+  "ru": "заранее",
+  "tr": "zaranee",
+  "uz": "oldindan",
+  "en": ""
+ },
+ {
+  "n": 562,
+  "ru": "зарплата",
+  "tr": "zarplata",
+  "uz": "ish haqi, oylik",
+  "en": ""
+ },
+ {
+  "n": 563,
+  "ru": "лекарство",
+  "tr": "lekarstvo",
+  "uz": "dori",
+  "en": ""
+ },
+ {
+  "n": 564,
+  "ru": "назад",
+  "tr": "nazad",
+  "uz": "orqaga",
+  "en": ""
+ },
+ {
+  "n": 565,
+  "ru": "наконец",
+  "tr": "nakonets",
+  "uz": "nihoyat",
+  "en": ""
+ },
+ {
+  "n": 566,
+  "ru": "память",
+  "tr": "pamyat",
+  "uz": "xotira",
+  "en": ""
+ },
+ {
+  "n": 567,
+  "ru": "прямо",
+  "tr": "pryamo",
+  "uz": "to’g’ri",
+  "en": ""
+ },
+ {
+  "n": 568,
+  "ru": "рабочий день",
+  "tr": "rabochiy den",
+  "uz": "ish kuni",
+  "en": ""
+ },
+ {
+  "n": 569,
+  "ru": "сам",
+  "tr": "sam",
+  "uz": "o'zim",
+  "en": ""
+ },
+ {
+  "n": 570,
+  "ru": "свадьба",
+  "tr": "svadba",
+  "uz": "to'y",
+  "en": ""
+ },
+ {
+  "n": 571,
+  "ru": "свежий",
+  "tr": "svezhiy",
+  "uz": "yangi",
+  "en": ""
+ },
+ {
+  "n": 572,
+  "ru": "ситуация",
+  "tr": "situatsiya",
+  "uz": "vaziyat",
+  "en": ""
+ },
+ {
+  "n": 573,
+  "ru": "сладкий",
+  "tr": "sladkiy",
+  "uz": "shirin",
+  "en": ""
+ },
+ {
+  "n": 574,
+  "ru": "строитель",
+  "tr": "stroitel",
+  "uz": "quruvchi",
+  "en": ""
+ },
+ {
+  "n": 575,
+  "ru": "счёт (в банке)",
+  "tr": "schyot (v banke)",
+  "uz": "bank hisob raqami",
+  "en": ""
+ },
+ {
+  "n": 576,
+  "ru": "то есть",
+  "tr": "to est",
+  "uz": "ya'ni",
+  "en": ""
+ },
+ {
+  "n": 577,
+  "ru": "будить – разбудить кого?",
+  "tr": "budit – razbudit kogo?",
+  "uz": "uyg'otmoq - kimni uyg'otmoq?",
+  "en": ""
+ },
+ {
+  "n": 578,
+  "ru": "бывать – побывать где?",
+  "tr": "byvat – pobyvat gde?",
+  "uz": "tashrif buyurmoq - qayerga tashrif buyurmoq?",
+  "en": ""
+ },
+ {
+  "n": 579,
+  "ru": "болеть – заболеть",
+  "tr": "bolet – zabolet",
+  "uz": "kasal bo’lmoq",
+  "en": ""
+ },
+ {
+  "n": 580,
+  "ru": "брать – взять что?",
+  "tr": "brat – vzyat chto?",
+  "uz": "nimani olmoq?",
+  "en": ""
+ },
+ {
+  "n": 581,
+  "ru": "ближайший",
+  "tr": "blizhayshiy",
+  "uz": "eng yaqin",
+  "en": ""
+ },
+ {
+  "n": 582,
+  "ru": "выходной день",
+  "tr": "vykhodnoy den",
+  "uz": "dam olish kuni",
+  "en": ""
+ },
+ {
+  "n": 583,
+  "ru": "действительно",
+  "tr": "deystvitelno",
+  "uz": "haqiqatan ham",
+  "en": ""
+ },
+ {
+  "n": 584,
+  "ru": "закрыто (-а, -ы)",
+  "tr": "zakryto (-a, -y)",
+  "uz": "yopiq",
+  "en": ""
+ },
+ {
+  "n": 585,
+  "ru": "записка",
+  "tr": "zapiska",
+  "uz": "eslatma",
+  "en": ""
+ },
+ {
+  "n": 586,
+  "ru": "маршрут",
+  "tr": "marshrut",
+  "uz": "yo’nalish",
+  "en": ""
+ },
+ {
+  "n": 587,
+  "ru": "мокрый",
+  "tr": "mokryy",
+  "uz": "nam",
+  "en": ""
+ },
+ {
+  "n": 588,
+  "ru": "настроение",
+  "tr": "nastroenie",
+  "uz": "kayfiyat",
+  "en": ""
+ },
+ {
+  "n": 589,
+  "ru": "обратно",
+  "tr": "obratno",
+  "uz": "orqaga",
+  "en": ""
+ },
+ {
+  "n": 590,
+  "ru": "однажды",
+  "tr": "odnazhdy",
+  "uz": "bir kuni",
+  "en": ""
+ },
+ {
+  "n": 591,
+  "ru": "отсюда",
+  "tr": "otsyuda",
+  "uz": "bu yerdan",
+  "en": ""
+ },
+ {
+  "n": 592,
+  "ru": "оттуда",
+  "tr": "ottuda",
+  "uz": "u yerdan",
+  "en": ""
+ },
+ {
+  "n": 593,
+  "ru": "пол",
+  "tr": "pol",
+  "uz": "yarim",
+  "en": ""
+ },
+ {
+  "n": 594,
+  "ru": "полтора",
+  "tr": "poltora",
+  "uz": "bir yarim",
+  "en": ""
+ },
+ {
+  "n": 595,
+  "ru": "похож",
+  "tr": "pokhozh",
+  "uz": "o'xshash",
+  "en": ""
+ },
+ {
+  "n": 596,
+  "ru": "правда",
+  "tr": "pravda",
+  "uz": "haqiqat",
+  "en": ""
+ },
+ {
+  "n": 597,
+  "ru": "сильный",
+  "tr": "silnyy",
+  "uz": "kuchli",
+  "en": ""
+ },
+ {
+  "n": 598,
+  "ru": "случайно",
+  "tr": "sluchayno",
+  "uz": "tasodifan",
+  "en": ""
+ },
+ {
+  "n": 599,
+  "ru": "сразу",
+  "tr": "srazu",
+  "uz": "to'g'ridan-to'g'ri",
+  "en": ""
+ },
+ {
+  "n": 600,
+  "ru": "стена",
+  "tr": "stena",
+  "uz": "devor",
+  "en": ""
+ },
+ {
+  "n": 601,
+  "ru": "сюда",
+  "tr": "syuda",
+  "uz": "bu yerga",
+  "en": ""
+ },
+ {
+  "n": 602,
+  "ru": "туда",
+  "tr": "tuda",
+  "uz": "u yerda",
+  "en": ""
+ },
+ {
+  "n": 603,
+  "ru": "хотя",
+  "tr": "khotya",
+  "uz": "garchi",
+  "en": ""
+ },
+ {
+  "n": 604,
+  "ru": "веселиться – повеселиться",
+  "tr": "veselitsya – poveselitsya",
+  "uz": "zavqlanmoq",
+  "en": ""
+ },
+ {
+  "n": 605,
+  "ru": "осматривать – смотреть",
+  "tr": "osmatrivat – smotret",
+  "uz": "qaramoq",
+  "en": ""
+ },
+ {
+  "n": 606,
+  "ru": "оставлять – оставить",
+  "tr": "ostavlyat – ostavit",
+  "uz": "qoldirmoq",
+  "en": ""
+ },
+ {
+  "n": 607,
+  "ru": "переезжать – переехать (откуда?)",
+  "tr": "pereezzhat – pereekhat (otkuda?)",
+  "uz": "ko'chib ketmoq (qayerdan?)",
+  "en": ""
+ },
+ {
+  "n": 608,
+  "ru": "помогать – помочь (кому?)",
+  "tr": "pomogat – pomoch (komu?)",
+  "uz": "yordam bermoq (kimga?)",
+  "en": ""
+ },
+ {
+  "n": 609,
+  "ru": "проводить – провести",
+  "tr": "provodit – provesti",
+  "uz": "o'tkazmoq",
+  "en": ""
+ },
+ {
+  "n": 610,
+  "ru": "разрешать – разрешить (кому?)",
+  "tr": "razreshat – razreshit (komu?)",
+  "uz": "ruxsat bermoq (kimga?)",
+  "en": ""
+ },
+ {
+  "n": 611,
+  "ru": "рассказывать – рассказать (кому? о чём?)",
+  "tr": "rasskazyvat – rasskazat (komu? o chyom?)",
+  "uz": "aytib bermoq (kimga? nima haqida?)",
+  "en": ""
+ },
+ {
+  "n": 612,
+  "ru": "расслабиться",
+  "tr": "rasslabitsya",
+  "uz": "rohatlanmoq",
+  "en": ""
+ },
+ {
+  "n": 613,
+  "ru": "садиться – сесть",
+  "tr": "saditsya – sest",
+  "uz": "o'tirmoq",
+  "en": ""
+ },
+ {
+  "n": 614,
+  "ru": "слышать – услышать",
+  "tr": "slyshat – uslyshat",
+  "uz": "eshitmoq",
+  "en": ""
+ },
+ {
+  "n": 615,
+  "ru": "смеяться – засмеяться",
+  "tr": "smeyatsya – zasmeyatsya",
+  "uz": "kulmoq",
+  "en": ""
+ },
+ {
+  "n": 616,
+  "ru": "снимать – снять (что?)",
+  "tr": "snimat – snyat (chto?)",
+  "uz": "yechmoq (nimani?)",
+  "en": ""
+ },
+ {
+  "n": 617,
+  "ru": "собираться – собраться (где?)",
+  "tr": "sobiratsya – sobratsya (gde?)",
+  "uz": "to'planmoq (qayerda?)",
+  "en": ""
+ },
+ {
+  "n": 618,
+  "ru": "стоять",
+  "tr": "stoyat",
+  "uz": "turmoq",
+  "en": ""
+ },
+ {
+  "n": 619,
+  "ru": "удивляться – удивиться",
+  "tr": "udivlyatsya – udivitsya",
+  "uz": "hayratlanmoq",
+  "en": ""
+ },
+ {
+  "n": 620,
+  "ru": "устраивать – устроить (вечеринку)",
+  "tr": "ustraivat – ustroit (vecherinku)",
+  "uz": "o'tkazmoq (kecha)",
+  "en": ""
+ },
+ {
+  "n": 621,
+  "ru": "болельщик",
+  "tr": "bolelshchik",
+  "uz": "muxlis",
+  "en": ""
+ },
+ {
+  "n": 622,
+  "ru": "в следующий раз",
+  "tr": "v sleduyushchiy raz",
+  "uz": "keyingi safar",
+  "en": ""
+ },
+ {
+  "n": 623,
+  "ru": "в прошлый раз",
+  "tr": "v proshlyy raz",
+  "uz": "o'tgan safar",
+  "en": ""
+ },
+ {
+  "n": 624,
+  "ru": "во-вторых",
+  "tr": "vo-vtorykh",
+  "uz": "ikkinchidan",
+  "en": ""
+ },
+ {
+  "n": 625,
+  "ru": "во-первых",
+  "tr": "vo-pervykh",
+  "uz": "birinchidan",
+  "en": ""
+ },
+ {
+  "n": 626,
+  "ru": "впереди",
+  "tr": "vperedi",
+  "uz": "oldinda",
+  "en": ""
+ },
+ {
+  "n": 627,
+  "ru": "занят(-а)",
+  "tr": "zanyat(-a)",
+  "uz": "band",
+  "en": ""
+ },
+ {
+  "n": 628,
+  "ru": "идея",
+  "tr": "ideya",
+  "uz": "fikr",
+  "en": ""
+ },
+ {
+  "n": 629,
+  "ru": "команда",
+  "tr": "komanda",
+  "uz": "jamoa",
+  "en": ""
+ },
+ {
+  "n": 630,
+  "ru": "кухня",
+  "tr": "kukhnya",
+  "uz": "oshxona",
+  "en": ""
+ },
+ {
+  "n": 631,
+  "ru": "кроме того",
+  "tr": "krome togo",
+  "uz": "bundan tashqari",
+  "en": ""
+ },
+ {
+  "n": 632,
+  "ru": "много дел",
+  "tr": "mnogo del",
+  "uz": "ishlar ko'p",
+  "en": ""
+ },
+ {
+  "n": 633,
+  "ru": "мысль",
+  "tr": "mysl",
+  "uz": "o'y",
+  "en": ""
+ },
+ {
+  "n": 634,
+  "ru": "обеденный перерыв",
+  "tr": "obedennyy pereryv",
+  "uz": "tushlik vaqti",
+  "en": ""
+ },
+ {
+  "n": 635,
+  "ru": "обязательно",
+  "tr": "obyazatelno",
+  "uz": "majburiy",
+  "en": ""
+ },
+ {
+  "n": 636,
+  "ru": "отличный",
+  "tr": "otlichnyy",
+  "uz": "ajoyib",
+  "en": ""
+ },
+ {
+  "n": 637,
+  "ru": "посылка",
+  "tr": "posylka",
+  "uz": "buyurtma",
+  "en": ""
+ },
+ {
+  "n": 638,
+  "ru": "праздник",
+  "tr": "prazdnik",
+  "uz": "bayram",
+  "en": ""
+ },
+ {
+  "n": 639,
+  "ru": "приглашение",
+  "tr": "priglashenie",
+  "uz": "taklifnoma",
+  "en": ""
+ },
+ {
+  "n": 640,
+  "ru": "просьба",
+  "tr": "prosba",
+  "uz": "iltimos",
+  "en": ""
+ },
+ {
+  "n": 641,
+  "ru": "против",
+  "tr": "protiv",
+  "uz": "qarshi",
+  "en": ""
+ },
+ {
+  "n": 642,
+  "ru": "прошлый",
+  "tr": "proshlyy",
+  "uz": "oldingi",
+  "en": ""
+ },
+ {
+  "n": 643,
+  "ru": "раньше (пораньше)",
+  "tr": "ranshe (poranshe)",
+  "uz": "oldin (oldin)",
+  "en": ""
+ },
+ {
+  "n": 644,
+  "ru": "свободен (свободна)",
+  "tr": "svoboden (svobodna)",
+  "uz": "ozod",
+  "en": ""
+ },
+ {
+  "n": 645,
+  "ru": "скоро",
+  "tr": "skoro",
+  "uz": "tez orada",
+  "en": ""
+ },
+ {
+  "n": 646,
+  "ru": "современный",
+  "tr": "sovremennyy",
+  "uz": "zamonaviy",
+  "en": ""
+ },
+ {
+  "n": 647,
+  "ru": "счёт (матча)",
+  "tr": "schyot (matcha)",
+  "uz": "o'yin hisobi",
+  "en": ""
+ },
+ {
+  "n": 648,
+  "ru": "успех",
+  "tr": "uspekh",
+  "uz": "muvaffaqiyat",
+  "en": ""
+ },
+ {
+  "n": 649,
+  "ru": "уютно",
+  "tr": "uyutno",
+  "uz": "qulay",
+  "en": ""
+ },
+ {
+  "n": 650,
+  "ru": "бояться",
+  "tr": "boyatsya",
+  "uz": "qo'rqmoq",
+  "en": ""
+ },
+ {
+  "n": 651,
+  "ru": "вызывать – вызвать (такси)",
+  "tr": "vyzyvat – vyzvat (taksi)",
+  "uz": "chaqirmoq (taksi)",
+  "en": ""
+ },
+ {
+  "n": 652,
+  "ru": "выигрывать – выиграть",
+  "tr": "vyigryvat – vyigrat",
+  "uz": "g'alaba qozonmoq",
+  "en": ""
+ },
+ {
+  "n": 653,
+  "ru": "использовать что?",
+  "tr": "ispolzovat chto?",
+  "uz": "ishlatmoq (nimani?)",
+  "en": ""
+ },
+ {
+  "n": 654,
+  "ru": "надеяться",
+  "tr": "nadeyatsya",
+  "uz": "umid qilmoq",
+  "en": ""
+ },
+ {
+  "n": 655,
+  "ru": "отказывать – отказаться",
+  "tr": "otkazyvat – otkazatsya",
+  "uz": "vos kechmoq",
+  "en": ""
+ },
+ {
+  "n": 656,
+  "ru": "ошибаться – ошибиться",
+  "tr": "oshibatsya – oshibitsya",
+  "uz": "xato qilmoq",
+  "en": ""
+ },
+ {
+  "n": 657,
+  "ru": "переносить – перенести (что? на какое время?)",
+  "tr": "perenosit – perenesti (chto? na kakoe vremya?)",
+  "uz": "ko'chirmoq (boshqa kunga)",
+  "en": ""
+ },
+ {
+  "n": 658,
+  "ru": "предлагать – предложить (кому?)",
+  "tr": "predlagat – predlozhit (komu?)",
+  "uz": "taklif qilmoq",
+  "en": ""
+ },
+ {
+  "n": 659,
+  "ru": "проигрывать – проиграть (что? кому?)",
+  "tr": "proigryvat – proigrat (chto? komu?)",
+  "uz": "yutqazmoq (nimani? kimga?)",
+  "en": ""
+ },
+ {
+  "n": 660,
+  "ru": "просить – попросить (кого?)",
+  "tr": "prosit – poprosit (kogo?)",
+  "uz": "iltimos qilmoq (kimni?)",
+  "en": ""
+ },
+ {
+  "n": 661,
+  "ru": "путать – перепутать (что?)",
+  "tr": "putat – pereputat (chto?)",
+  "uz": "adashtirmoq (niman?)",
+  "en": ""
+ },
+ {
+  "n": 662,
+  "ru": "собираться",
+  "tr": "sobiratsya",
+  "uz": "yig’ilmoq",
+  "en": ""
+ },
+ {
+  "n": 663,
+  "ru": "соглашаться – согласиться",
+  "tr": "soglashatsya – soglasitsya",
+  "uz": "rozilik bildirmoq",
+  "en": ""
+ },
+ {
+  "n": 664,
+  "ru": "сообщать – сообщить (что? кому?)",
+  "tr": "soobshchat – soobshchit (chto? komu?)",
+  "uz": "ma'lum qilmoq",
+  "en": ""
+ },
+ {
+  "n": 665,
+  "ru": "стараться – постараться",
+  "tr": "staratsya – postaratsya",
+  "uz": "harakat qilmoq",
+  "en": ""
+ },
+ {
+  "n": 666,
+  "ru": "устраивать – устроить (кого?)",
+  "tr": "ustraivat – ustroit (kogo?)",
+  "uz": "tartibga solmoq (kimni?)",
+  "en": ""
+ },
+ {
+  "n": 667,
+  "ru": "дайте!",
+  "tr": "dayte!",
+  "uz": "bering!",
+  "en": ""
+ },
+ {
+  "n": 668,
+  "ru": "почему бы и нет?",
+  "tr": "pochemu by i net?",
+  "uz": "nega yo'q?",
+  "en": ""
+ },
+ {
+  "n": 669,
+  "ru": "с удовольствием!",
+  "tr": "s udovolstviem!",
+  "uz": "bajonidil!",
+  "en": ""
+ },
+ {
+  "n": 670,
+  "ru": "беспокойство",
+  "tr": "bespokoystvo",
+  "uz": "tashvish",
+  "en": ""
+ },
+ {
+  "n": 671,
+  "ru": "больно",
+  "tr": "bolno",
+  "uz": "og'riqli",
+  "en": ""
+ },
+ {
+  "n": 672,
+  "ru": "везде",
+  "tr": "vezde",
+  "uz": "hamma joyda",
+  "en": ""
+ },
+ {
+  "n": 673,
+  "ru": "весело",
+  "tr": "veselo",
+  "uz": "kulgili",
+  "en": ""
+ },
+ {
+  "n": 674,
+  "ru": "впечатление",
+  "tr": "vpechatlenie",
+  "uz": "taassurot",
+  "en": ""
+ },
+ {
+  "n": 675,
+  "ru": "гора (горы)",
+  "tr": "gora (gory)",
+  "uz": "tog' (lar)",
+  "en": ""
+ },
+ {
+  "n": 676,
+  "ru": "гость",
+  "tr": "gost",
+  "uz": "mehmon",
+  "en": ""
+ },
+ {
+  "n": 677,
+  "ru": "грустный",
+  "tr": "grustnyy",
+  "uz": "qayg'uli",
+  "en": ""
+ },
+ {
+  "n": 678,
+  "ru": "жаль",
+  "tr": "zhal",
+  "uz": "afsuski",
+  "en": ""
+ },
+ {
+  "n": 679,
+  "ru": "за границей (где?)",
+  "tr": "za granitsey (gde?)",
+  "uz": "chet elda (qaerda?)",
+  "en": ""
+ },
+ {
+  "n": 680,
+  "ru": "за границу (куда?)",
+  "tr": "za granitsu (kuda?)",
+  "uz": "chet elga (qaerga?)",
+  "en": ""
+ },
+ {
+  "n": 681,
+  "ru": "здоровье",
+  "tr": "zdorove",
+  "uz": "salomatlik",
+  "en": ""
+ },
+ {
+  "n": 682,
+  "ru": "земля",
+  "tr": "zemlya",
+  "uz": "yer",
+  "en": ""
+ },
+ {
+  "n": 683,
+  "ru": "качество",
+  "tr": "kachestvo",
+  "uz": "sifat",
+  "en": ""
+ },
+ {
+  "n": 684,
+  "ru": "на минутку",
+  "tr": "na minutku",
+  "uz": "bir daqiqaga",
+  "en": ""
+ },
+ {
+  "n": 685,
+  "ru": "наказание",
+  "tr": "nakazanie",
+  "uz": "jazo",
+  "en": ""
+ },
+ {
+  "n": 686,
+  "ru": "опоздание",
+  "tr": "opozdanie",
+  "uz": "kechikish",
+  "en": ""
+ },
+ {
+  "n": 687,
+  "ru": "планета",
+  "tr": "planeta",
+  "uz": "sayyora",
+  "en": ""
+ },
+ {
+  "n": 688,
+  "ru": "по дороге",
+  "tr": "po doroge",
+  "uz": "yo'l bo'ylab",
+  "en": ""
+ },
+ {
+  "n": 689,
+  "ru": "помощь",
+  "tr": "pomoshch",
+  "uz": "yordam",
+  "en": ""
+ },
+ {
+  "n": 690,
+  "ru": "пора",
+  "tr": "pora",
+  "uz": "vaqt bo'ldi",
+  "en": ""
+ },
+ {
+  "n": 691,
+  "ru": "приглашение",
+  "tr": "priglashenie",
+  "uz": "taklifnoma",
+  "en": ""
+ },
+ {
+  "n": 692,
+  "ru": "причина",
+  "tr": "prichina",
+  "uz": "sabab",
+  "en": ""
+ },
+ {
+  "n": 693,
+  "ru": "продавец",
+  "tr": "prodavets",
+  "uz": "sotuvchi",
+  "en": ""
+ },
+ {
+  "n": 694,
+  "ru": "сказка",
+  "tr": "skazka",
+  "uz": "ertak",
+  "en": ""
+ },
+ {
+  "n": 695,
+  "ru": "скучно",
+  "tr": "skuchno",
+  "uz": "zerikarli",
+  "en": ""
+ },
+ {
+  "n": 696,
+  "ru": "сегодняшний",
+  "tr": "segodnyashniy",
+  "uz": "bugungi",
+  "en": ""
+ },
+ {
+  "n": 697,
+  "ru": "специальность",
+  "tr": "spetsialnost",
+  "uz": "mutaxassislik",
+  "en": ""
+ },
+ {
+  "n": 698,
+  "ru": "страшно",
+  "tr": "strashno",
+  "uz": "qo'rqinchli",
+  "en": ""
+ },
+ {
+  "n": 699,
+  "ru": "стыдно",
+  "tr": "stydno",
+  "uz": "uyaltli",
+  "en": ""
+ },
+ {
+  "n": 700,
+  "ru": "счастье",
+  "tr": "schaste",
+  "uz": "baxt",
+  "en": ""
+ },
+ {
+  "n": 701,
+  "ru": "уважаемый",
+  "tr": "uvazhaemyy",
+  "uz": "hurmatli",
+  "en": ""
+ },
+ {
+  "n": 702,
+  "ru": "удобно",
+  "tr": "udobno",
+  "uz": "qulay",
+  "en": ""
+ },
+ {
+  "n": 703,
+  "ru": "ужасно",
+  "tr": "uzhasno",
+  "uz": "qo'rqinchli",
+  "en": ""
+ },
+ {
+  "n": 704,
+  "ru": "учитель учительница",
+  "tr": "uchitel uchitelnitsa",
+  "uz": "o'qituvchi",
+  "en": ""
+ },
+ {
+  "n": 705,
+  "ru": "фильм ужасов",
+  "tr": "film uzhasov",
+  "uz": "qo’rqinchli film",
+  "en": ""
+ },
+ {
+  "n": 706,
+  "ru": "цвет",
+  "tr": "tsvet",
+  "uz": "rang",
+  "en": ""
+ },
+ {
+  "n": 707,
+  "ru": "цветы",
+  "tr": "tsvety",
+  "uz": "gullar",
+  "en": ""
+ },
+ {
+  "n": 708,
+  "ru": "честно говоря",
+  "tr": "chestno govorya",
+  "uz": "to `g` risini aytganda",
+  "en": ""
+ },
+ {
+  "n": 709,
+  "ru": "будущий",
+  "tr": "budushchiy",
+  "uz": "kelajak",
+  "en": ""
+ },
+ {
+  "n": 710,
+  "ru": "в честь (кого? чего?)",
+  "tr": "v chest (kogo? chego?)",
+  "uz": "sharafiga (kim? nima?)",
+  "en": ""
+ },
+ {
+  "n": 711,
+  "ru": "взрослый",
+  "tr": "vzroslyy",
+  "uz": "kattalar",
+  "en": ""
+ },
+ {
+  "n": 712,
+  "ru": "возраст",
+  "tr": "vozrast",
+  "uz": "yoshi",
+  "en": ""
+ },
+ {
+  "n": 713,
+  "ru": "деликатный",
+  "tr": "delikatnyy",
+  "uz": "nozik",
+  "en": ""
+ },
+ {
+  "n": 714,
+  "ru": "детство",
+  "tr": "detstvo",
+  "uz": "bolalik",
+  "en": ""
+ },
+ {
+  "n": 715,
+  "ru": "дружный",
+  "tr": "druzhnyy",
+  "uz": "do'stona",
+  "en": ""
+ },
+ {
+  "n": 716,
+  "ru": "лыжи",
+  "tr": "lyzhi",
+  "uz": "chang'i",
+  "en": ""
+ },
+ {
+  "n": 717,
+  "ru": "любопытство",
+  "tr": "lyubopytstvo",
+  "uz": "qiziquvchanlik",
+  "en": ""
+ },
+ {
+  "n": 718,
+  "ru": "мнение (по моему мнению)",
+  "tr": "mnenie (po moemu mneniyu)",
+  "uz": "fikr (mening fikrimcha)",
+  "en": ""
+ },
+ {
+  "n": 719,
+  "ru": "мудрый",
+  "tr": "mudryy",
+  "uz": "dono",
+  "en": ""
+ },
+ {
+  "n": 720,
+  "ru": "номер (в гостинице)",
+  "tr": "nomer (v gostinitse)",
+  "uz": "mehmonxona xonasi",
+  "en": ""
+ },
+ {
+  "n": 721,
+  "ru": "племянник",
+  "tr": "plemyannik",
+  "uz": "o’gil jiyan",
+  "en": ""
+ },
+ {
+  "n": 722,
+  "ru": "полезно",
+  "tr": "polezno",
+  "uz": "foydali",
+  "en": ""
+ },
+ {
+  "n": 723,
+  "ru": "престижный",
+  "tr": "prestizhnyy",
+  "uz": "nufuzli",
+  "en": ""
+ },
+ {
+  "n": 724,
+  "ru": "распространённый",
+  "tr": "rasprostranyonnyy",
+  "uz": "tarqalgan",
+  "en": ""
+ },
+ {
+  "n": 725,
+  "ru": "опыт",
+  "tr": "opyt",
+  "uz": "tajriba",
+  "en": ""
+ },
+ {
+  "n": 726,
+  "ru": "отдельно от (кого? чего?)",
+  "tr": "otdelno ot (kogo? chego?)",
+  "uz": "dan tashqari (kimdan? nimadan?)",
+  "en": ""
+ },
+ {
+  "n": 727,
+  "ru": "отношения",
+  "tr": "otnosheniya",
+  "uz": "munosabat",
+  "en": ""
+ },
+ {
+  "n": 728,
+  "ru": "отъезд",
+  "tr": "otezd",
+  "uz": "ketish",
+  "en": ""
+ },
+ {
+  "n": 729,
+  "ru": "свой",
+  "tr": "svoy",
+  "uz": "o’zimniki",
+  "en": ""
+ },
+ {
+  "n": 730,
+  "ru": "серьги",
+  "tr": "sergi",
+  "uz": "sirg'a",
+  "en": ""
+ },
+ {
+  "n": 731,
+  "ru": "справедливый",
+  "tr": "spravedlivyy",
+  "uz": "adolatli",
+  "en": ""
+ },
+ {
+  "n": 732,
+  "ru": "строгий",
+  "tr": "strogiy",
+  "uz": "qattiq qo’l",
+  "en": ""
+ },
+ {
+  "n": 733,
+  "ru": "талантливый",
+  "tr": "talantlivyy",
+  "uz": "iste'dodli",
+  "en": ""
+ },
+ {
+  "n": 734,
+  "ru": "учёный",
+  "tr": "uchyonyy",
+  "uz": "olim",
+  "en": ""
+ },
+ {
+  "n": 735,
+  "ru": "водить машину",
+  "tr": "vodit mashinu",
+  "uz": "mashina haydash",
+  "en": ""
+ },
+ {
+  "n": 736,
+  "ru": "бить – побить",
+  "tr": "bit – pobit",
+  "uz": "urmoq",
+  "en": ""
+ },
+ {
+  "n": 737,
+  "ru": "бросать бросить",
+  "tr": "brosat brosit",
+  "uz": "otmoq, tashlamoq",
+  "en": ""
+ },
+ {
+  "n": 738,
+  "ru": "ненавидеть (кого?)",
+  "tr": "nenavidet (kogo?)",
+  "uz": "nafrat (kimni?)",
+  "en": ""
+ },
+ {
+  "n": 739,
+  "ru": "обожать (кого?)",
+  "tr": "obozhat (kogo?)",
+  "uz": "sevmoq (kimni?)",
+  "en": ""
+ },
+ {
+  "n": 740,
+  "ru": "означать",
+  "tr": "oznachat",
+  "uz": "anglatmoq",
+  "en": ""
+ },
+ {
+  "n": 741,
+  "ru": "относить – отнести (что? кому?)",
+  "tr": "otnosit – otnesti (chto? komu?)",
+  "uz": "obormoq (nima? kimga?)",
+  "en": ""
+ },
+ {
+  "n": 742,
+  "ru": "пожениться",
+  "tr": "pozhenitsya",
+  "uz": "turmush qurmoq",
+  "en": ""
+ },
+ {
+  "n": 743,
+  "ru": "пользоваться",
+  "tr": "polzovatsya",
+  "uz": "ishlatmoq, foydalanmoq",
+  "en": ""
+ },
+ {
+  "n": 744,
+  "ru": "радоваться",
+  "tr": "radovatsya",
+  "uz": "quvonmoq",
+  "en": ""
+ },
+ {
+  "n": 745,
+  "ru": "ругать",
+  "tr": "rugat",
+  "uz": "ta'na qilmoq, urushmoq",
+  "en": ""
+ },
+ {
+  "n": 746,
+  "ru": "сердиться",
+  "tr": "serditsya",
+  "uz": "g'azablanmoq",
+  "en": ""
+ },
+ {
+  "n": 747,
+  "ru": "ссориться – поссориться",
+  "tr": "ssoritsya – possoritsya",
+  "uz": "janjallashmoq",
+  "en": ""
+ },
+ {
+  "n": 748,
+  "ru": "уважать",
+  "tr": "uvazhat",
+  "uz": "hurmat qilmoq",
+  "en": ""
+ },
+ {
+  "n": 749,
+  "ru": "уметь",
+  "tr": "umet",
+  "uz": "qila olmoq",
+  "en": ""
+ },
+ {
+  "n": 750,
+  "ru": "учить",
+  "tr": "uchit",
+  "uz": "o'rganmoq",
+  "en": ""
+ },
+ {
+  "n": 751,
+  "ru": "учиться",
+  "tr": "uchitsya",
+  "uz": "o'qimoq",
+  "en": ""
+ },
+ {
+  "n": 752,
+  "ru": "хвалить",
+  "tr": "khvalit",
+  "uz": "maqtamoq",
+  "en": ""
+ },
+ {
+  "n": 753,
+  "ru": "целовать",
+  "tr": "tselovat",
+  "uz": "o'pmoq",
+  "en": ""
+ },
+ {
+  "n": 754,
+  "ru": "Извините за любопытство!",
+  "tr": "Izvinite za lyubopytstvo!",
+  "uz": "qiziquvchanlik uchun uzr!",
+  "en": ""
+ },
+ {
+  "n": 755,
+  "ru": "внимание",
+  "tr": "vnimanie",
+  "uz": "diqqat",
+  "en": ""
+ },
+ {
+  "n": 756,
+  "ru": "вчерашний",
+  "tr": "vcherashniy",
+  "uz": "kechagi",
+  "en": ""
+ },
+ {
+  "n": 757,
+  "ru": "главный",
+  "tr": "glavnyy",
+  "uz": "asosiy",
+  "en": ""
+ },
+ {
+  "n": 758,
+  "ru": "действительно",
+  "tr": "deystvitelno",
+  "uz": "haqiqatan ham",
+  "en": ""
+ },
+ {
+  "n": 759,
+  "ru": "еда",
+  "tr": "eda",
+  "uz": "ovqat",
+  "en": ""
+ },
+ {
+  "n": 760,
+  "ru": "желание",
+  "tr": "zhelanie",
+  "uz": "tilak",
+  "en": ""
+ },
+ {
+  "n": 761,
+  "ru": "зрение",
+  "tr": "zrenie",
+  "uz": "ko'rish",
+  "en": ""
+ },
+ {
+  "n": 762,
+  "ru": "карман",
+  "tr": "karman",
+  "uz": "cho'ntak",
+  "en": ""
+ },
+ {
+  "n": 763,
+  "ru": "кашель",
+  "tr": "kashel",
+  "uz": "yo'tal",
+  "en": ""
+ },
+ {
+  "n": 764,
+  "ru": "ленивый",
+  "tr": "lenivyy",
+  "uz": "dangasa",
+  "en": ""
+ },
+ {
+  "n": 765,
+  "ru": "лишний",
+  "tr": "lishniy",
+  "uz": "qo'shimcha",
+  "en": ""
+ },
+ {
+  "n": 766,
+  "ru": "название",
+  "tr": "nazvanie",
+  "uz": "ism",
+  "en": ""
+ },
+ {
+  "n": 767,
+  "ru": "насморк",
+  "tr": "nasmork",
+  "uz": "tumov",
+  "en": ""
+ },
+ {
+  "n": 768,
+  "ru": "палец",
+  "tr": "palets",
+  "uz": "barmoq",
+  "en": ""
+ },
+ {
+  "n": 769,
+  "ru": "печень",
+  "tr": "pechen",
+  "uz": "jigar",
+  "en": ""
+ },
+ {
+  "n": 770,
+  "ru": "порция",
+  "tr": "portsiya",
+  "uz": "qism (bir qismi)",
+  "en": ""
+ },
+ {
+  "n": 771,
+  "ru": "простуда",
+  "tr": "prostuda",
+  "uz": "sovuq",
+  "en": ""
+ },
+ {
+  "n": 772,
+  "ru": "просьба",
+  "tr": "prosba",
+  "uz": "iltimos",
+  "en": ""
+ },
+ {
+  "n": 773,
+  "ru": "сердце",
+  "tr": "serdtse",
+  "uz": "yurak",
+  "en": ""
+ },
+ {
+  "n": 774,
+  "ru": "слух",
+  "tr": "slukh",
+  "uz": "eshitish",
+  "en": ""
+ },
+ {
+  "n": 775,
+  "ru": "спина",
+  "tr": "spina",
+  "uz": "bel",
+  "en": ""
+ },
+ {
+  "n": 776,
+  "ru": "срочно",
+  "tr": "srochno",
+  "uz": "zudlik bilan",
+  "en": ""
+ },
+ {
+  "n": 777,
+  "ru": "удача благодарить –",
+  "tr": "udacha blagodarit –",
+  "uz": "omad rahmat aytmoq - (kimga?",
+  "en": ""
+ },
+ {
+  "n": 778,
+  "ru": "поблагодарить (кого? за что?)",
+  "tr": "poblagodarit (kogo? za chto?)",
+  "uz": "nima uchun?)",
+  "en": ""
+ },
+ {
+  "n": 779,
+  "ru": "заказать блюдо с собой",
+  "tr": "zakazat blyudo s soboy",
+  "uz": "buyurtma (ovqat)",
+  "en": ""
+ },
+ {
+  "n": 780,
+  "ru": "замерзать – замёрзнуть",
+  "tr": "zamerzat – zamyorznut",
+  "uz": "muzlamoq",
+  "en": ""
+ },
+ {
+  "n": 781,
+  "ru": "здороваться – поздороваться (с кем?)",
+  "tr": "zdorovatsya – pozdorovatsya (s kem?)",
+  "uz": "salomlashmoq (kim bilan?)",
+  "en": ""
+ },
+ {
+  "n": 782,
+  "ru": "лечиться – вылечиться",
+  "tr": "lechitsya – vylechitsya",
+  "uz": "davolanmoq",
+  "en": ""
+ },
+ {
+  "n": 783,
+  "ru": "красть – украсть (что? )",
+  "tr": "krast – ukrast (chto? )",
+  "uz": "o'g'irlamoq (nimani?)",
+  "en": ""
+ },
+ {
+  "n": 784,
+  "ru": "у меня нет сил.",
+  "tr": "u menya net sil.",
+  "uz": "menda kuch yo'q.",
+  "en": ""
+ },
+ {
+  "n": 785,
+  "ru": "у меня нет слов.",
+  "tr": "u menya net slov.",
+  "uz": "menda so'z yo'q.",
+  "en": ""
+ },
+ {
+  "n": 786,
+  "ru": "у меня к вам дело",
+  "tr": "u menya k vam delo",
+  "uz": "sizga ishim bor",
+  "en": ""
+ },
+ {
+  "n": 787,
+  "ru": "приезжайте!",
+  "tr": "priezzhayte!",
+  "uz": "keling! (uzoqda bo’lsa)",
+  "en": ""
+ },
+ {
+  "n": 788,
+  "ru": "приходите!",
+  "tr": "prikhodite!",
+  "uz": "keling! (yaqin bo’lsa)",
+  "en": ""
+ },
+ {
+  "n": 789,
+  "ru": "поправляйтесь!",
+  "tr": "popravlyaytes!",
+  "uz": "tuzalib keting!",
+  "en": ""
+ },
+ {
+  "n": 790,
+  "ru": "проходите!",
+  "tr": "prokhodite!",
+  "uz": "o’ting!",
+  "en": ""
+ },
+ {
+  "n": 791,
+  "ru": "садитесь!",
+  "tr": "sadites!",
+  "uz": "o'tiring!",
+  "en": ""
+ },
+ {
+  "n": 792,
+  "ru": "случаться – случиться",
+  "tr": "sluchatsya – sluchitsya",
+  "uz": "sodir bo'lmoq",
+  "en": ""
+ },
+ {
+  "n": 793,
+  "ru": "большинство",
+  "tr": "bolshinstvo",
+  "uz": "ko'pchilik",
+  "en": ""
+ },
+ {
+  "n": 794,
+  "ru": "в отличие (от чего?)",
+  "tr": "v otlichie (ot chego?)",
+  "uz": "farqli o'laroq (nimadan?)",
+  "en": ""
+ },
+ {
+  "n": 795,
+  "ru": "верхний",
+  "tr": "verkhniy",
+  "uz": "yuqori",
+  "en": ""
+ },
+ {
+  "n": 796,
+  "ru": "вид",
+  "tr": "vid",
+  "uz": "ko'rinish",
+  "en": ""
+ },
+ {
+  "n": 797,
+  "ru": "вовремя",
+  "tr": "vovremya",
+  "uz": "vaqtida",
+  "en": ""
+ },
+ {
+  "n": 798,
+  "ru": "гениальный",
+  "tr": "genialnyy",
+  "uz": "zukko",
+  "en": ""
+ },
+ {
+  "n": 799,
+  "ru": "житель",
+  "tr": "zhitel",
+  "uz": "yashovchi",
+  "en": ""
+ },
+ {
+  "n": 800,
+  "ru": "личный",
+  "tr": "lichnyy",
+  "uz": "xususiy",
+  "en": ""
+ },
+ {
+  "n": 801,
+  "ru": "многоэтажный",
+  "tr": "mnogoetazhnyy",
+  "uz": "ko'p qavatli",
+  "en": ""
+ },
+ {
+  "n": 802,
+  "ru": "население",
+  "tr": "naselenie",
+  "uz": "aholi",
+  "en": ""
+ },
+ {
+  "n": 803,
+  "ru": "небо",
+  "tr": "nebo",
+  "uz": "osmon",
+  "en": ""
+ },
+ {
+  "n": 804,
+  "ru": "необитаемый",
+  "tr": "neobitaemyy",
+  "uz": "yashamaydigan",
+  "en": ""
+ },
+ {
+  "n": 805,
+  "ru": "нижний",
+  "tr": "nizhniy",
+  "uz": "pastroq",
+  "en": ""
+ },
+ {
+  "n": 806,
+  "ru": "отправление",
+  "tr": "otpravlenie",
+  "uz": "jo’nash",
+  "en": ""
+ },
+ {
+  "n": 807,
+  "ru": "переговоры",
+  "tr": "peregovory",
+  "uz": "muzokaralar",
+  "en": ""
+ },
+ {
+  "n": 808,
+  "ru": "полёт",
+  "tr": "polyot",
+  "uz": "parvoz",
+  "en": ""
+ },
+ {
+  "n": 809,
+  "ru": "прибытие",
+  "tr": "pribytie",
+  "uz": "kelish",
+  "en": ""
+ },
+ {
+  "n": 810,
+  "ru": "пригород",
+  "tr": "prigorod",
+  "uz": "chekka",
+  "en": ""
+ },
+ {
+  "n": 811,
+  "ru": "пустой",
+  "tr": "pustoy",
+  "uz": "bo'sh",
+  "en": ""
+ },
+ {
+  "n": 812,
+  "ru": "путь",
+  "tr": "put",
+  "uz": "yo'l",
+  "en": ""
+ },
+ {
+  "n": 813,
+  "ru": "работник",
+  "tr": "rabotnik",
+  "uz": "ishchi",
+  "en": ""
+ },
+ {
+  "n": 814,
+  "ru": "расписание",
+  "tr": "raspisanie",
+  "uz": "jadval",
+  "en": ""
+ },
+ {
+  "n": 815,
+  "ru": "с ужасом",
+  "tr": "s uzhasom",
+  "uz": "qo'rquv bilan",
+  "en": ""
+ },
+ {
+  "n": 816,
+  "ru": "святой",
+  "tr": "svyatoy",
+  "uz": "avliyo",
+  "en": ""
+ },
+ {
+  "n": 817,
+  "ru": "сдача",
+  "tr": "sdacha",
+  "uz": "qaytim",
+  "en": ""
+ },
+ {
+  "n": 818,
+  "ru": "смерть",
+  "tr": "smert",
+  "uz": "o'lim",
+  "en": ""
+ },
+ {
+  "n": 819,
+  "ru": "смысл (жизни)",
+  "tr": "smysl (zhizni)",
+  "uz": "hayot mazmuni",
+  "en": ""
+ },
+ {
+  "n": 820,
+  "ru": "собственный",
+  "tr": "sobstvennyy",
+  "uz": "shaxsiy",
+  "en": ""
+ },
+ {
+  "n": 821,
+  "ru": "событие",
+  "tr": "sobytie",
+  "uz": "voqea",
+  "en": ""
+ },
+ {
+  "n": 822,
+  "ru": "соседний",
+  "tr": "sosedniy",
+  "uz": "qo'shni",
+  "en": ""
+ },
+ {
+  "n": 823,
+  "ru": "срок",
+  "tr": "srok",
+  "uz": "muddat",
+  "en": ""
+ },
+ {
+  "n": 824,
+  "ru": "чуть не …",
+  "tr": "chut ne …",
+  "uz": "yaqin …",
+  "en": ""
+ },
+ {
+  "n": 825,
+  "ru": "эмоция",
+  "tr": "emotsiya",
+  "uz": "hissiyot",
+  "en": ""
+ },
+ {
+  "n": 826,
+  "ru": "временно",
+  "tr": "vremenno",
+  "uz": "vaqtincha",
+  "en": ""
+ },
+ {
+  "n": 827,
+  "ru": "конкретно",
+  "tr": "konkretno",
+  "uz": "maxsus",
+  "en": ""
+ },
+ {
+  "n": 828,
+  "ru": "кольцо",
+  "tr": "koltso",
+  "uz": "uzuk",
+  "en": ""
+ },
+ {
+  "n": 829,
+  "ru": "момент",
+  "tr": "moment",
+  "uz": "moment",
+  "en": ""
+ },
+ {
+  "n": 830,
+  "ru": "острый",
+  "tr": "ostryy",
+  "uz": "achchiq",
+  "en": ""
+ },
+ {
+  "n": 831,
+  "ru": "реальный",
+  "tr": "realnyy",
+  "uz": "haqiqiy",
+  "en": ""
+ },
+ {
+  "n": 832,
+  "ru": "ровесник",
+  "tr": "rovesnik",
+  "uz": "tengdosh",
+  "en": ""
+ },
+ {
+  "n": 833,
+  "ru": "родственник",
+  "tr": "rodstvennik",
+  "uz": "qarindosh",
+  "en": ""
+ },
+ {
+  "n": 834,
+  "ru": "скорость",
+  "tr": "skorost",
+  "uz": "tezlik",
+  "en": ""
+ },
+ {
+  "n": 835,
+  "ru": "член семьи, команды",
+  "tr": "chlen semi, komandy",
+  "uz": "oila a'zosi, jamoa",
+  "en": ""
+ },
+ {
+  "n": 836,
+  "ru": "иметь значение",
+  "tr": "imet znachenie",
+  "uz": "masala",
+  "en": ""
+ },
+ {
+  "n": 837,
+  "ru": "в течение",
+  "tr": "v techenie",
+  "uz": "davomida",
+  "en": ""
+ },
+ {
+  "n": 838,
+  "ru": "в том числе",
+  "tr": "v tom chisle",
+  "uz": "shu jumladan",
+  "en": ""
+ },
+ {
+  "n": 839,
+  "ru": "прежде всего",
+  "tr": "prezhde vsego",
+  "uz": "eng avvalo",
+  "en": ""
+ },
+ {
+  "n": 840,
+  "ru": "развитие",
+  "tr": "razvitie",
+  "uz": "rivojlanish",
+  "en": ""
+ },
+ {
+  "n": 841,
+  "ru": "основатель",
+  "tr": "osnovatel",
+  "uz": "asoschisi",
+  "en": ""
+ },
+ {
+  "n": 842,
+  "ru": "слёзы",
+  "tr": "slyozy",
+  "uz": "ko'z yoshlari",
+  "en": ""
+ },
+ {
+  "n": 843,
+  "ru": "старик старуха",
+  "tr": "starik starukha",
+  "uz": "chol kampir",
+  "en": ""
+ },
+ {
+  "n": 844,
+  "ru": "толстый",
+  "tr": "tolstyy",
+  "uz": "qalin",
+  "en": ""
+ },
+ {
+  "n": 845,
+  "ru": "явление",
+  "tr": "yavlenie",
+  "uz": "hodisa",
+  "en": ""
+ },
+ {
+  "n": 846,
+  "ru": "весить",
+  "tr": "vesit",
+  "uz": "vaznga",
+  "en": ""
+ },
+ {
+  "n": 847,
+  "ru": "записывать - записать",
+  "tr": "zapisyvat - zapisat",
+  "uz": "yozib qo'ymoq yozilmoq",
+  "en": ""
+ },
+ {
+  "n": 848,
+  "ru": "замечать – заметить",
+  "tr": "zamechat – zametit",
+  "uz": "payqamoq",
+  "en": ""
+ },
+ {
+  "n": 849,
+  "ru": "любоваться (чем?)",
+  "tr": "lyubovatsya (chem?)",
+  "uz": "zavqlanmoq (nima bilan?)",
+  "en": ""
+ },
+ {
+  "n": 850,
+  "ru": "нести - носить (что?)",
+  "tr": "nesti - nosit (chto?)",
+  "uz": "olib yurmoq, kiymoq (nima?)",
+  "en": ""
+ },
+ {
+  "n": 851,
+  "ru": "худеть – похудеть",
+  "tr": "khudet – pokhudet",
+  "uz": "vazn yo'qotmoq, ozimoq",
+  "en": ""
+ },
+ {
+  "n": 852,
+  "ru": "создавать – создать",
+  "tr": "sozdavat – sozdat",
+  "uz": "yaratmoq",
+  "en": ""
+ },
+ {
+  "n": 853,
+  "ru": "пациент",
+  "tr": "patsient",
+  "uz": "bemor",
+  "en": ""
+ },
+ {
+  "n": 854,
+  "ru": "жирный",
+  "tr": "zhirnyy",
+  "uz": "yog'li",
+  "en": ""
+ },
+ {
+  "n": 855,
+  "ru": "злой",
+  "tr": "zloy",
+  "uz": "yovuz",
+  "en": ""
+ },
+ {
+  "n": 856,
+  "ru": "кроме (кого? чего?)",
+  "tr": "krome (kogo? chego?)",
+  "uz": "tashqari (kimdan? nimadan?)",
+  "en": ""
+ },
+ {
+  "n": 857,
+  "ru": "менее",
+  "tr": "menee",
+  "uz": "ozroq",
+  "en": ""
+ },
+ {
+  "n": 858,
+  "ru": "намного",
+  "tr": "namnogo",
+  "uz": "ko'proq",
+  "en": ""
+ },
+ {
+  "n": 859,
+  "ru": "поведение",
+  "tr": "povedenie",
+  "uz": "xulq-atvor",
+  "en": ""
+ },
+ {
+  "n": 860,
+  "ru": "постепенно",
+  "tr": "postepenno",
+  "uz": "asta-sekin",
+  "en": ""
+ },
+ {
+  "n": 861,
+  "ru": "постоянно",
+  "tr": "postoyanno",
+  "uz": "doimiy",
+  "en": ""
+ },
+ {
+  "n": 862,
+  "ru": "угощение",
+  "tr": "ugoshchenie",
+  "uz": "siylov",
+  "en": ""
+ },
+ {
+  "n": 863,
+  "ru": "в ширину",
+  "tr": "v shirinu",
+  "uz": "eniga",
+  "en": ""
+ },
+ {
+  "n": 864,
+  "ru": "в длину",
+  "tr": "v dlinu",
+  "uz": "bo’yiga",
+  "en": ""
+ },
+ {
+  "n": 865,
+  "ru": "порядок",
+  "tr": "poryadok",
+  "uz": "tartib",
+  "en": ""
+ },
+ {
+  "n": 866,
+  "ru": "полезно",
+  "tr": "polezno",
+  "uz": "foydali",
+  "en": ""
+ },
+ {
+  "n": 867,
+  "ru": "очередь",
+  "tr": "ochered",
+  "uz": "navbat",
+  "en": ""
+ },
+ {
+  "n": 868,
+  "ru": "чем …, тем",
+  "tr": "chem …, tem",
+  "uz": "dan ..., ko’ra",
+  "en": ""
+ },
+ {
+  "n": 869,
+  "ru": "число",
+  "tr": "chislo",
+  "uz": "raqam",
+  "en": ""
+ },
+ {
+  "n": 870,
+  "ru": "ответственный",
+  "tr": "otvetstvennyy",
+  "uz": "mas'ul",
+  "en": ""
+ },
+ {
+  "n": 871,
+  "ru": "спокойно",
+  "tr": "spokoyno",
+  "uz": "xotirjam",
+  "en": ""
+ },
+ {
+  "n": 872,
+  "ru": "варить – сварить",
+  "tr": "varit – svarit",
+  "uz": "pishirmoq",
+  "en": ""
+ },
+ {
+  "n": 873,
+  "ru": "падать – упасть",
+  "tr": "padat – upast",
+  "uz": "tushib ketmoq, yiqilmoq",
+  "en": ""
+ },
+ {
+  "n": 874,
+  "ru": "расти – вырасти",
+  "tr": "rasti – vyrasti",
+  "uz": "o'smoq, katta bo’lmoq",
+  "en": ""
+ },
+ {
+  "n": 875,
+  "ru": "выступать – выступить",
+  "tr": "vystupat – vystupit",
+  "uz": "bajarmoq",
+  "en": ""
+ },
+ {
+  "n": 876,
+  "ru": "девать – деть",
+  "tr": "devat – det",
+  "uz": "qo’ymoq",
+  "en": ""
+ },
+ {
+  "n": 877,
+  "ru": "добавлять – добавить",
+  "tr": "dobavlyat – dobavit",
+  "uz": "qo'shmoq",
+  "en": ""
+ },
+ {
+  "n": 878,
+  "ru": "исполнять – исполнить",
+  "tr": "ispolnyat – ispolnit",
+  "uz": "ijro etmoq",
+  "en": ""
+ },
+ {
+  "n": 879,
+  "ru": "наливать – налить",
+  "tr": "nalivat – nalit",
+  "uz": "quymoq",
+  "en": ""
+ },
+ {
+  "n": 880,
+  "ru": "приятного аппетита!",
+  "tr": "priyatnogo appetita!",
+  "uz": "yoqimli ishtaha!",
+  "en": ""
+ },
+ {
+  "n": 881,
+  "ru": "час пик",
+  "tr": "chas pik",
+  "uz": "tig'iz vaqt",
+  "en": ""
+ },
+ {
+  "n": 882,
+  "ru": "угощать – угостить",
+  "tr": "ugoshchat – ugostit",
+  "uz": "siylamoq",
+  "en": ""
+ },
+ {
+  "n": 883,
+  "ru": "улучшать – улучшить",
+  "tr": "uluchshat – uluchshit",
+  "uz": "yaxshilamoq",
+  "en": ""
+ },
+ {
+  "n": 884,
+  "ru": "вниз",
+  "tr": "vniz",
+  "uz": "pastga",
+  "en": ""
+ },
+ {
+  "n": 885,
+  "ru": "внизу",
+  "tr": "vnizu",
+  "uz": "pastda",
+  "en": ""
+ },
+ {
+  "n": 886,
+  "ru": "внутри",
+  "tr": "vnutri",
+  "uz": "ichida",
+  "en": ""
+ },
+ {
+  "n": 887,
+  "ru": "вовремя",
+  "tr": "vovremya",
+  "uz": "vaqtida",
+  "en": ""
+ },
+ {
+  "n": 888,
+  "ru": "вокруг чего?",
+  "tr": "vokrug chego?",
+  "uz": "nima atrofida?",
+  "en": ""
+ },
+ {
+  "n": 889,
+  "ru": "издалека",
+  "tr": "izdaleka",
+  "uz": "uzoqdan",
+  "en": ""
+ },
+ {
+  "n": 890,
+  "ru": "из-за",
+  "tr": "iz-za",
+  "uz": "sababli",
+  "en": ""
+ },
+ {
+  "n": 891,
+  "ru": "из-под",
+  "tr": "iz-pod",
+  "uz": "ostidan",
+  "en": ""
+ },
+ {
+  "n": 892,
+  "ru": "на всякий случай",
+  "tr": "na vsyakiy sluchay",
+  "uz": "har ehtimolga qarshi",
+  "en": ""
+ },
+ {
+  "n": 893,
+  "ru": "над чем?",
+  "tr": "nad chem?",
+  "uz": "nimadan yuqori?",
+  "en": ""
+ },
+ {
+  "n": 894,
+  "ru": "напротив чего?",
+  "tr": "naprotiv chego?",
+  "uz": "nimaga qarshi?",
+  "en": ""
+ },
+ {
+  "n": 895,
+  "ru": "посередине",
+  "tr": "poseredine",
+  "uz": "o'rtasida",
+  "en": ""
+ },
+ {
+  "n": 896,
+  "ru": "птица",
+  "tr": "ptitsa",
+  "uz": "qush",
+  "en": ""
+ },
+ {
+  "n": 897,
+  "ru": "сверху",
+  "tr": "sverkhu",
+  "uz": "yuqorida",
+  "en": ""
+ },
+ {
+  "n": 898,
+  "ru": "сзади",
+  "tr": "szadi",
+  "uz": "orqasida",
+  "en": ""
+ },
+ {
+  "n": 899,
+  "ru": "снаружи",
+  "tr": "snaruzhi",
+  "uz": "tashqarida",
+  "en": ""
+ },
+ {
+  "n": 900,
+  "ru": "снизу",
+  "tr": "snizu",
+  "uz": "pastdan",
+  "en": ""
+ },
+ {
+  "n": 901,
+  "ru": "спереди",
+  "tr": "speredi",
+  "uz": "old",
+  "en": ""
+ },
+ {
+  "n": 902,
+  "ru": "срочно",
+  "tr": "srochno",
+  "uz": "zudlik bilan",
+  "en": ""
+ },
+ {
+  "n": 903,
+  "ru": "шумно",
+  "tr": "shumno",
+  "uz": "shovqinli",
+  "en": ""
+ },
+ {
+  "n": 904,
+  "ru": "взять с собой",
+  "tr": "vzyat s soboy",
+  "uz": "o'zi bilan olmoq",
+  "en": ""
+ },
+ {
+  "n": 905,
+  "ru": "верхний",
+  "tr": "verkhniy",
+  "uz": "yuqori",
+  "en": ""
+ },
+ {
+  "n": 906,
+  "ru": "весенний",
+  "tr": "vesenniy",
+  "uz": "bahorgi",
+  "en": ""
+ },
+ {
+  "n": 907,
+  "ru": "вечерний",
+  "tr": "vecherniy",
+  "uz": "kechgi",
+  "en": ""
+ },
+ {
+  "n": 908,
+  "ru": "виноват(-а)",
+  "tr": "vinovat(-a)",
+  "uz": "aybdor",
+  "en": ""
+ },
+ {
+  "n": 909,
+  "ru": "горько",
+  "tr": "gorko",
+  "uz": "achchiq",
+  "en": ""
+ },
+ {
+  "n": 910,
+  "ru": "дальний",
+  "tr": "dalniy",
+  "uz": "uzoqdagi",
+  "en": ""
+ },
+ {
+  "n": 911,
+  "ru": "древний",
+  "tr": "drevniy",
+  "uz": "qadimiy",
+  "en": ""
+ },
+ {
+  "n": 912,
+  "ru": "зимний",
+  "tr": "zimniy",
+  "uz": "qish",
+  "en": ""
+ },
+ {
+  "n": 913,
+  "ru": "летний",
+  "tr": "letniy",
+  "uz": "yozgi",
+  "en": ""
+ },
+ {
+  "n": 914,
+  "ru": "крайний",
+  "tr": "krayniy",
+  "uz": "oxirgi",
+  "en": ""
+ },
+ {
+  "n": 915,
+  "ru": "осенний",
+  "tr": "osenniy",
+  "uz": "kuzgi",
+  "en": ""
+ },
+ {
+  "n": 916,
+  "ru": "прошлое",
+  "tr": "proshloe",
+  "uz": "o'tgan",
+  "en": ""
+ },
+ {
+  "n": 917,
+  "ru": "прибыль",
+  "tr": "pribyl",
+  "uz": "foyda",
+  "en": ""
+ },
+ {
+  "n": 918,
+  "ru": "принято",
+  "tr": "prinyato",
+  "uz": "qabul qilindi",
+  "en": ""
+ },
+ {
+  "n": 919,
+  "ru": "прогулка",
+  "tr": "progulka",
+  "uz": "sayr",
+  "en": ""
+ },
+ {
+  "n": 920,
+  "ru": "участие",
+  "tr": "uchastie",
+  "uz": "ishtirok",
+  "en": ""
+ },
+ {
+  "n": 921,
+  "ru": "честь",
+  "tr": "chest",
+  "uz": "hurmat",
+  "en": ""
+ },
+ {
+  "n": 922,
+  "ru": "утренний",
+  "tr": "utrenniy",
+  "uz": "tongi",
+  "en": ""
+ },
+ {
+  "n": 923,
+  "ru": "условие: при каком условии?",
+  "tr": "uslovie: pri kakom uslovii?",
+  "uz": "shart: qanday holatda?",
+  "en": ""
+ },
+ {
+  "n": 924,
+  "ru": "честный",
+  "tr": "chestnyy",
+  "uz": "haqgo’y",
+  "en": ""
+ },
+ {
+  "n": 925,
+  "ru": "уровень",
+  "tr": "uroven",
+  "uz": "daraja",
+  "en": ""
+ },
+ {
+  "n": 926,
+  "ru": "бумажник",
+  "tr": "bumazhnik",
+  "uz": "hamyon",
+  "en": ""
+ },
+ {
+  "n": 927,
+  "ru": "зал ожидания",
+  "tr": "zal ozhidaniya",
+  "uz": "kutish zali",
+  "en": ""
+ },
+ {
+  "n": 928,
+  "ru": "наследство",
+  "tr": "nasledstvo",
+  "uz": "meros",
+  "en": ""
+ },
+ {
+  "n": 929,
+  "ru": "общество",
+  "tr": "obshchestvo",
+  "uz": "jamiyat",
+  "en": ""
+ },
+ {
+  "n": 930,
+  "ru": "слава",
+  "tr": "slava",
+  "uz": "shon-sharaf",
+  "en": ""
+ },
+ {
+  "n": 931,
+  "ru": "ранен(-а)",
+  "tr": "ranen(-a)",
+  "uz": "jarohatlangan",
+  "en": ""
+ },
+ {
+  "n": 932,
+  "ru": "пустыня",
+  "tr": "pustynya",
+  "uz": "cho'l",
+  "en": ""
+ },
+ {
+  "n": 933,
+  "ru": "потепление",
+  "tr": "poteplenie",
+  "uz": "isinish",
+  "en": ""
+ },
+ {
+  "n": 934,
+  "ru": "ухудшение",
+  "tr": "ukhudshenie",
+  "uz": "yomonlashishi",
+  "en": ""
+ },
+ {
+  "n": 935,
+  "ru": "грязь",
+  "tr": "gryaz",
+  "uz": "loy",
+  "en": ""
+ },
+ {
+  "n": 936,
+  "ru": "выбор",
+  "tr": "vybor",
+  "uz": "tanlo’v",
+  "en": ""
+ },
+ {
+  "n": 937,
+  "ru": "забастовка",
+  "tr": "zabastovka",
+  "uz": "pistirma",
+  "en": ""
+ },
+ {
+  "n": 938,
+  "ru": "зато",
+  "tr": "zato",
+  "uz": "lekin",
+  "en": ""
+ },
+ {
+  "n": 939,
+  "ru": "внешность",
+  "tr": "vneshnost",
+  "uz": "tashqi qiyofa",
+  "en": ""
+ },
+ {
+  "n": 940,
+  "ru": "воспитание",
+  "tr": "vospitanie",
+  "uz": "tarbiya",
+  "en": ""
+ },
+ {
+  "n": 941,
+  "ru": "вдвое",
+  "tr": "vdvoe",
+  "uz": "ikki marta",
+  "en": ""
+ },
+ {
+  "n": 942,
+  "ru": "изучение",
+  "tr": "izuchenie",
+  "uz": "ta’lim olmoq",
+  "en": ""
+ },
+ {
+  "n": 943,
+  "ru": "многодетная семья",
+  "tr": "mnogodetnaya semya",
+  "uz": "katta oila",
+  "en": ""
+ },
+ {
+  "n": 944,
+  "ru": "недостаток",
+  "tr": "nedostatok",
+  "uz": "kamchilik",
+  "en": ""
+ },
+ {
+  "n": 945,
+  "ru": "влияние",
+  "tr": "vliyanie",
+  "uz": "ta'sir",
+  "en": ""
+ },
+ {
+  "n": 946,
+  "ru": "голод",
+  "tr": "golod",
+  "uz": "ochlik",
+  "en": ""
+ },
+ {
+  "n": 947,
+  "ru": "жажда",
+  "tr": "zhazhda",
+  "uz": "tashnalik",
+  "en": ""
+ },
+ {
+  "n": 948,
+  "ru": "крепко",
+  "tr": "krepko",
+  "uz": "qat'iy",
+  "en": ""
+ },
+ {
+  "n": 949,
+  "ru": "кровь",
+  "tr": "krov",
+  "uz": "qon",
+  "en": ""
+ },
+ {
+  "n": 950,
+  "ru": "по имени",
+  "tr": "po imeni",
+  "uz": "nomi bilan",
+  "en": ""
+ },
+ {
+  "n": 951,
+  "ru": "с тех пор",
+  "tr": "s tekh por",
+  "uz": "o'shandan beri",
+  "en": ""
+ },
+ {
+  "n": 952,
+  "ru": "тщательно",
+  "tr": "tshchatelno",
+  "uz": "yaxshilab",
+  "en": ""
+ },
+ {
+  "n": 953,
+  "ru": "утюг",
+  "tr": "utyug",
+  "uz": "dazmol",
+  "en": ""
+ },
+ {
+  "n": 954,
+  "ru": "чудо",
+  "tr": "chudo",
+  "uz": "mo''jiza",
+  "en": ""
+ },
+ {
+  "n": 955,
+  "ru": "человечество",
+  "tr": "chelovechestvo",
+  "uz": "insoniyat",
+  "en": ""
+ },
+ {
+  "n": 956,
+  "ru": "детвора",
+  "tr": "detvora",
+  "uz": "bolalar",
+  "en": ""
+ },
+ {
+  "n": 957,
+  "ru": "сон",
+  "tr": "son",
+  "uz": "uyqu",
+  "en": ""
+ },
+ {
+  "n": 958,
+  "ru": "беречь – сберечь",
+  "tr": "berech – sberech",
+  "uz": "saqlamoq, avaylamoq",
+  "en": ""
+ },
+ {
+  "n": 959,
+  "ru": "погладить (одежду)",
+  "tr": "pogladit (odezhdu)",
+  "uz": "kiyimlarni dazmollamoq",
+  "en": ""
+ },
+ {
+  "n": 960,
+  "ru": "в чём смысл?",
+  "tr": "v chyom smysl?",
+  "uz": "buning nima keragi bor?",
+  "en": ""
+ },
+ {
+  "n": 961,
+  "ru": "драка",
+  "tr": "draka",
+  "uz": "kurash",
+  "en": ""
+ },
+ {
+  "n": 962,
+  "ru": "вина",
+  "tr": "vina",
+  "uz": "aybdorlik",
+  "en": ""
+ },
+ {
+  "n": 963,
+  "ru": "глупость",
+  "tr": "glupost",
+  "uz": "ahmoqlik",
+  "en": ""
+ },
+ {
+  "n": 964,
+  "ru": "досрочно",
+  "tr": "dosrochno",
+  "uz": "muddatidan oldin",
+  "en": ""
+ },
+ {
+  "n": 965,
+  "ru": "засуха",
+  "tr": "zasukha",
+  "uz": "qurg'oqchilik",
+  "en": ""
+ },
+ {
+  "n": 966,
+  "ru": "жив (жива, живы)",
+  "tr": "zhiv (zhiva, zhivy)",
+  "uz": "tirik",
+  "en": ""
+ },
+ {
+  "n": 967,
+  "ru": "злость",
+  "tr": "zlost",
+  "uz": "g'azab",
+  "en": ""
+ },
+ {
+  "n": 968,
+  "ru": "скука",
+  "tr": "skuka",
+  "uz": "zerikish",
+  "en": ""
+ },
+ {
+  "n": 969,
+  "ru": "ревность",
+  "tr": "revnost",
+  "uz": "hasad",
+  "en": ""
+ },
+ {
+  "n": 970,
+  "ru": "холостяк",
+  "tr": "kholostyak",
+  "uz": "bo’ydoq",
+  "en": ""
+ },
+ {
+  "n": 971,
+  "ru": "сутки",
+  "tr": "sutki",
+  "uz": "bir kecha",
+  "en": ""
+ },
+ {
+  "n": 972,
+  "ru": "старость",
+  "tr": "starost",
+  "uz": "qarilik",
+  "en": ""
+ },
+ {
+  "n": 973,
+  "ru": "страх",
+  "tr": "strakh",
+  "uz": "qo'rquv",
+  "en": ""
+ },
+ {
+  "n": 974,
+  "ru": "нехватка",
+  "tr": "nekhvatka",
+  "uz": "etishmaslik",
+  "en": ""
+ },
+ {
+  "n": 975,
+  "ru": "никак",
+  "tr": "nikak",
+  "uz": "hech qanaqasiga",
+  "en": ""
+ },
+ {
+  "n": 976,
+  "ru": "обида",
+  "tr": "obida",
+  "uz": "hafagarchilik",
+  "en": ""
+ },
+ {
+  "n": 977,
+  "ru": "отсутствие",
+  "tr": "otsutstvie",
+  "uz": "yo'qligi",
+  "en": ""
+ },
+ {
+  "n": 978,
+  "ru": "подлинник",
+  "tr": "podlinnik",
+  "uz": "asl",
+  "en": ""
+ },
+ {
+  "n": 979,
+  "ru": "полностью",
+  "tr": "polnostyu",
+  "uz": "to'liq",
+  "en": ""
+ },
+ {
+  "n": 980,
+  "ru": "привычка",
+  "tr": "privychka",
+  "uz": "odat",
+  "en": ""
+ },
+ {
+  "n": 981,
+  "ru": "ненависть",
+  "tr": "nenavist",
+  "uz": "nafrat",
+  "en": ""
+ },
+ {
+  "n": 982,
+  "ru": "на самом деле",
+  "tr": "na samom dele",
+  "uz": "aslida",
+  "en": ""
+ },
+ {
+  "n": 983,
+  "ru": "способ",
+  "tr": "sposob",
+  "uz": "yo'l",
+  "en": ""
+ },
+ {
+  "n": 984,
+  "ru": "стыд",
+  "tr": "styd",
+  "uz": "uyat",
+  "en": ""
+ },
+ {
+  "n": 985,
+  "ru": "судьба",
+  "tr": "sudba",
+  "uz": "taqdir",
+  "en": ""
+ },
+ {
+  "n": 986,
+  "ru": "благодаря (чему? кому?)",
+  "tr": "blagodarya (chemu? komu?)",
+  "uz": "tashakkur (nimaga? kimga?)",
+  "en": ""
+ },
+ {
+  "n": 987,
+  "ru": "удивительно",
+  "tr": "udivitelno",
+  "uz": "ajoyib",
+  "en": ""
+ },
+ {
+  "n": 988,
+  "ru": "визит",
+  "tr": "vizit",
+  "uz": "tashrif",
+  "en": ""
+ },
+ {
+  "n": 989,
+  "ru": "обманщик",
+  "tr": "obmanshchik",
+  "uz": "yolg’onchi",
+  "en": ""
+ },
+ {
+  "n": 990,
+  "ru": "спрос",
+  "tr": "spros",
+  "uz": "talab",
+  "en": ""
+ },
+ {
+  "n": 991,
+  "ru": "несмотря на",
+  "tr": "nesmotrya na",
+  "uz": "ga qaramasdan",
+  "en": ""
+ },
+ {
+  "n": 992,
+  "ru": "настоящий",
+  "tr": "nastoyashchiy",
+  "uz": "haqiqiy",
+  "en": ""
+ },
+ {
+  "n": 993,
+  "ru": "что бы ни …",
+  "tr": "chto by ni …",
+  "uz": "nima bo'lsa ham …",
+  "en": ""
+ },
+ {
+  "n": 994,
+  "ru": "хитро",
+  "tr": "khitro",
+  "uz": "ayyorlik bilan",
+  "en": ""
+ },
+ {
+  "n": 995,
+  "ru": "сажать",
+  "tr": "sazhat",
+  "uz": "o'simlik",
+  "en": ""
+ },
+ {
+  "n": 996,
+  "ru": "беспокоить",
+  "tr": "bespokoit",
+  "uz": "bezovta qilmoq",
+  "en": ""
+ },
+ {
+  "n": 997,
+  "ru": "глухонемой",
+  "tr": "glukhonemoy",
+  "uz": "kar soqov",
+  "en": ""
+ },
+ {
+  "n": 998,
+  "ru": "слепой",
+  "tr": "slepoy",
+  "uz": "ko'r",
+  "en": ""
+ },
+ {
+  "n": 999,
+  "ru": "вслух",
+  "tr": "vslukh",
+  "uz": "baland ovozda",
+  "en": ""
+ },
+ {
+  "n": 1000,
+  "ru": "торговля",
+  "tr": "torgovlya",
+  "uz": "savdo",
+  "en": ""
+ }
+]
