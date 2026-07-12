@@ -107,8 +107,22 @@
   .searchbar button{width:52px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:18px;cursor:pointer}
 
   /* ---- pro ---- */
-  .pro-hero{text-align:center;padding:22px 14px;background:linear-gradient(135deg,rgba(246,196,69,.14),rgba(139,91,255,.10));border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
-  .pro-hero .em{font-size:40px}
+  .pro-hero{position:relative;overflow:hidden;text-align:center;padding:24px 14px 22px;background:linear-gradient(135deg,rgba(246,196,69,.16),rgba(139,91,255,.12));border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
+  .pro-hero::before{content:"";position:absolute;top:0;left:-70%;width:55%;height:100%;
+    background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);
+    transform:skewX(-18deg);animation:shine 5s ease-in-out infinite;pointer-events:none}
+  @keyframes shine{0%{left:-70%}55%{left:135%}100%{left:135%}}
+  .pro-logo{width:74px;height:74px;margin:0 auto 10px;border-radius:20px;overflow:hidden;
+    animation:floaty 3s ease-in-out infinite;filter:drop-shadow(0 10px 22px rgba(240,170,40,.5))}
+  .pro-logo svg,.pro-logo img{width:100%;height:100%;display:block}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .pro-word{background:linear-gradient(90deg,#e0920a,#f6c445,#e0920a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.5px}
+  .spark{position:absolute;opacity:0;animation:twinkle 3.2s ease-in-out infinite;pointer-events:none}
+  .spark.s1{top:16px;left:26%;font-size:15px;animation-delay:.1s}
+  .spark.s2{top:44px;right:24%;font-size:11px;animation-delay:1.2s}
+  .spark.s3{bottom:22px;left:22%;font-size:13px;animation-delay:2.1s}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5) rotate(0)}50%{opacity:.95;transform:scale(1) rotate(15deg)}}
+  @media (prefers-reduced-motion: reduce){ .pro-hero::before,.pro-logo,.spark{animation:none} }
   .pro-hero h2{margin:8px 0 4px;font-size:20px}
   .pro-hero p{margin:0;font-size:13px;color:var(--muted)}
   .feat{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
@@ -188,8 +202,9 @@
 <!-- ============ PRO ============ -->
 <div class="page" id="pg-pro">
   <div class="pro-hero">
-    <div class="em">⭐</div>
-    <h2>Seyly PRO</h2>
+    <span class="spark s1">✨</span><span class="spark s2">✨</span><span class="spark s3">⭐</span>
+    <div class="pro-logo" id="proHeroLogo"></div>
+    <h2>Seyly <span class="pro-word">PRO</span></h2>
     <p>Cheklovlarsiz o'rganing</p>
   </div>
   <div class="card">
@@ -262,6 +277,10 @@ function setLogo(){
   var src = S.pro ? 'seyly-pro.png' : 'seyly-standard.png';
   // PNG ishlatamiz; agar repoda topilmasa -> SVG zaxira
   el.innerHTML = '<img src="'+src+'" alt="Seyly" onerror="this.parentNode.innerHTML=seylyIcon('+(!!S.pro)+')">';
+}
+function setProLogo(){
+  var el=document.getElementById('proHeroLogo'); if(!el) return;
+  el.innerHTML = '<img src="seyly-pro.png" alt="Seyly PRO" onerror="this.parentNode.innerHTML=seylyIcon(true)">';
 }
 /* Favicon (standart logo) */
 (function(){
@@ -679,6 +698,7 @@ function boot(d){
   });
 }
 function start(){
+  setProLogo();
   if(S.onboarded){ go('home'); } else { renderOb(); go('ob'); }
 }
 </script>
