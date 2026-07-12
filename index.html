@@ -147,7 +147,7 @@
     <div class="stat"><b id="stTotal">400</b><span>🎯 jami ibora</span></div>
   </div>
   <div class="quota" id="quotaBox">
-    <div>Bugungi yangi iboralar<br><b id="quotaTxt">0 / 10</b></div>
+    <div><span id="quotaLabel">Bugungi maqsad</span><br><b id="quotaTxt">0 / 10</b></div>
     <button class="pill" id="quotaBtn" onclick="go('pro')">⭐ Pro</button>
   </div>
   <div class="grid" id="catGrid"></div>
@@ -299,7 +299,7 @@ var OB_STEPS = [
   { title:"Kuniga nechta ibora?", sub:"Oz-ozdan, lekin har kuni — eng samarali yo'l.",
     opts:[ {v:5,  em:"🙂", t:"5 ta — yengil", s:"Kuniga ~3 daqiqa"},
            {v:10, em:"💪", t:"10 ta — faol", s:"Kuniga ~7 daqiqa"},
-           {v:15, em:"🔥", t:"15 ta — jadal", s:"Pro bilan cheksiz", pro:true} ], key:"daily", multi:false }
+           {v:15, em:"🔥", t:"15 ta — jadal", s:"Bepulda 10 tagacha, Pro bilan to'liq"} ], key:"daily", multi:false }
 ];
 function renderOb(){
   var st=OB_STEPS[ob.step];
@@ -334,7 +334,7 @@ function obNext(){
   }
   if(ob.step<OB_STEPS.length-1){ ob.step++; renderOb(); return; }
   S.onboarded=true; S.level=ob.level; S.goal=ob.goal; S.interests=ob.interests.slice();
-  S.daily=Math.min(ob.daily, S.pro?ob.daily:FREE_DAILY);
+  S.daily=ob.daily;   // maqsad (cheklov emas). Bepul cheklov = FREE_DAILY, alohida.
   save();
   if(SERVER){
     api('onboard',{level:ob.level, goal:ob.goal, interests:ob.interests, daily:ob.daily})
@@ -346,14 +346,17 @@ function obNext(){
 
 /* ================== HOME ================== */
 function learnedCount(){ return Object.keys(S.learned).length; }
-function dayLimit(){ return S.pro ? Infinity : Math.min(S.daily, FREE_DAILY); }
+function goal(){ return S.daily || 10; }                 // motivatsion maqsad
+function freeCap(){ return S.pro ? Infinity : FREE_DAILY; } // bepul qat'iy cheklov
 function renderHome(){
   document.getElementById('stStreak').textContent=S.streak;
   document.getElementById('stLearned').textContent=learnedCount();
   var tot=0; DATA.categories.forEach(function(c){tot+=c.phrases.length;});
   document.getElementById('stTotal').textContent=tot;
   document.getElementById('proBadge').style.display=S.pro?'inline-block':'none';
-  document.getElementById('quotaTxt').textContent = S.pro ? (S.todayNew+" / ∞") : (S.todayNew+" / "+dayLimit());
+  var g=goal(), reached=S.todayNew>=g;
+  document.getElementById('quotaLabel').textContent = reached ? "Maqsad bajarildi! 🎉" : "Bugungi maqsad";
+  document.getElementById('quotaTxt').textContent = S.todayNew+" / "+g+(reached?" ✅":"");
   document.getElementById('quotaBtn').style.display=S.pro?'none':'inline-flex';
   // qiziqishlar birinchi
   var order=DATA.categories.slice().sort(function(a,b){
@@ -390,9 +393,21 @@ function openCat(key){
 }
 function showLock(id){
   var body=document.getElementById('phb-'+id);
-  body.innerHTML='<div class="lockmsg">Bugungi '+(S.pro?'':dayLimit()+' ta ')+'yangi ibora tugadi 😊 Ertaga davom eting yoki<br><br>'+
+  var g=goal(), msg;
+  if(g>FREE_DAILY){
+    msg="Siz kuniga <b>"+g+" ta</b> maqsad qo'ygansiz, bepul rejada esa kuniga "+FREE_DAILY+" ta. <b>Pro</b> bilan to'liq maqsadingizga yeting 🚀";
+  } else {
+    msg="Bugungi "+FREE_DAILY+" ta bepul yangi ibora tugadi 😊 Ertaga davom eting yoki Pro oling.";
+  }
+  body.innerHTML='<div class="lockmsg">'+msg+'<br><br>'+
     '<button class="btn gold" onclick="go(\'pro\')">⭐ Pro — cheksiz o\'rganish</button></div>';
   document.getElementById('phi-'+id).classList.add('open');
+}
+function celebrateGoal(prevNew){
+  var g=goal();
+  if(prevNew < g && S.todayNew >= g){
+    toast("🎉 Bugungi maqsadingizga yetdingiz! Xohlasangiz davom eting.");
+  }
 }
 function markDone(id){
   var st=document.getElementById('st-'+id);
@@ -432,17 +447,19 @@ function togglePh(id){
       learnBusy=false;
       if(res && res.error==='limit'){ if(typeof res.todayNew==='number') S.todayNew=res.todayNew; showLock(id); return; }
       if(res && res.ok){
+        var prev=S.todayNew;
         S.learned[id]=today();
         if(typeof res.todayNew==='number') S.todayNew=res.todayNew;
         if(typeof res.streak==='number') S.streak=res.streak;
-        save(); markDone(id); openBody(id);
+        save(); markDone(id); openBody(id); celebrateGoal(prev);
       } else toast("Xatolik — qayta urinib ko'ring");
     }).catch(function(){ learnBusy=false; toast("Internet xatosi — qayta urinib ko'ring"); });
     return;
   }
 
   /* mehmon rejimi (Telegramsiz) — localStorage */
-  if(!S.pro && S.todayNew>=dayLimit()){ showLock(id); return; }
+  if(S.todayNew>=freeCap()){ showLock(id); return; }
+  var prev=S.todayNew;
   S.learned[id]=today(); S.todayNew++;
   var t=today();
   if(S.lastDay!==t){
@@ -450,7 +467,7 @@ function togglePh(id){
     S.streak=(S.lastDay===y)?S.streak+1:1;
     S.lastDay=t;
   }
-  save(); markDone(id); openBody(id);
+  save(); markDone(id); openBody(id); celebrateGoal(prev);
 }
 
 /* ================== YOUGLISH ================== */
