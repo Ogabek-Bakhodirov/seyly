@@ -359,9 +359,9 @@ resetDaily();
 
 /* ================== MA'LUMOT (ko'p tilli) ================== */
 var LANGS=[
-  {code:'ru', flag:'🇷🇺', name:'Rus tili',    yg:'russian', tts:'ru-RU', hint:'400+ ibora tayyor'},
-  {code:'en', flag:'🇬🇧', name:'Ingliz tili', yg:'english', tts:'en-US', hint:'Iboralar tez orada'},
-  {code:'de', flag:'🇩🇪', name:'Nemis tili',  yg:'german',  tts:'de-DE', hint:'Iboralar tez orada'}
+  {code:'ru', flag:'🇷🇺', name:'Rus tili',    yg:'russian', tts:'ru-RU', hint:'400 ta ibora tayyor'},
+  {code:'en', flag:'🇬🇧', name:'Ingliz tili', yg:'english', tts:'en-US', hint:'400 ta ibora tayyor'},
+  {code:'de', flag:'🇩🇪', name:'Nemis tili',  yg:'german',  tts:'de-DE', hint:'400 ta ibora tayyor'}
 ];
 function langInfo(c){ for(var i=0;i<LANGS.length;i++) if(LANGS[i].code===c) return LANGS[i]; return LANGS[0]; }
 /* Kategoriyalar — barcha tillar uchun bir xil tuzilma */
@@ -853,7 +853,7 @@ function speak(enc, tts){
 }
 
 /* ================== ISHGA TUSHIRISH ================== */
-var PH_VER = "v1";   // phrases.json versiyasi — kontent o'zgarsa oshiring (kesh yangilanadi)
+var PH_VER = "v2";   // phrases.json versiyasi — kontent o'zgarsa oshiring (kesh yangilanadi)
 
 /* 1) init'ni DARROV yuboramiz — phrases yuklanishini KUTMASDAN (parallel, tezlik uchun) */
 var initPromise = SERVER ? api('init').catch(function(){ return null; }) : Promise.resolve(false);
@@ -867,7 +867,10 @@ function fetchPhrases(){
 (function(){
   var cached=null;
   try{ cached = JSON.parse(localStorage.getItem('ru_phrases_'+PH_VER)||'null'); }catch(e){}
-  if(cached && cached.categories && cached.categories.length){
+  var cacheOk = cached && (cached.version===2
+      ? (cached.ru && cached.ru.categories && cached.ru.categories.length)
+      : (cached.categories && cached.categories.length));
+  if(cacheOk){
     boot(cached);                 // darhol ko'rsatamiz
     fetchPhrases().catch(function(){});   // fon: keyingi safar uchun yangilab qo'yamiz
     return;
@@ -881,7 +884,14 @@ function fetchPhrases(){
     });
 })();
 function boot(d){
-  LDATA.ru=d;
+  if(d && d.version===2){
+    /* yangi ko'p tilli format */
+    if(d.ru) LDATA.ru=d.ru;
+    if(d.en) LDATA.en=d.en;
+    if(d.de) LDATA.de=d.de;
+  } else {
+    LDATA.ru=d;   // eski format (faqat ruscha)
+  }
   buildIndex();
   if(!S.langs || !S.langs.length){ S.langs=['ru']; }
   if(S.langs.indexOf(S.curLang)<0) S.curLang=S.langs[0];
