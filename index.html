@@ -145,6 +145,24 @@
   .lbtn .fl{font-size:16px}
   .lbtn.add{padding:7px 11px;font-size:15px;line-height:1}
   .cat .soon{display:inline-block;font-size:10px;font-weight:800;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:2px 8px;margin-top:6px}
+  .defcard{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+  .defcard.loading{color:var(--muted);font-size:13px;text-align:center;padding:16px}
+  .def-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+  .def-word{font-size:18px;font-weight:800;color:var(--text)}
+  .def-tr{font-size:12.5px;color:var(--accent-2);font-weight:600}
+  .def-pos{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;font-weight:700}
+  .def-sub{font-size:11px;color:var(--muted);margin:0 0 10px}
+  .sense{padding:11px 0;border-top:1px solid var(--line)}
+  .sense:first-of-type{border-top:none;padding-top:4px}
+  .sense-n{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:6px;font-size:11px;font-weight:800;margin-right:7px;vertical-align:middle}
+  .sense-uz{font-size:14.5px;font-weight:700;color:var(--text)}
+  .sense-note{font-size:12.5px;color:var(--muted);margin:5px 0 0;line-height:1.4}
+  .sense-ex{margin-top:7px;padding:8px 10px;background:var(--card-2);border-radius:10px;border-left:2px solid var(--accent-2)}
+  .sense-ex .ex-t{font-size:13px;color:var(--text);font-weight:600}
+  .sense-ex .ex-u{font-size:12px;color:var(--muted);margin-top:2px}
+  .sense-syn{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .sense-syn .lbl{font-size:10.5px;color:var(--muted);font-weight:700}
+  .syn-chip{font-size:11.5px;color:var(--text);background:var(--card-2);border:1px solid var(--line);border-radius:99px;padding:2px 9px}
   .fb-row{padding:9px 11px;background:var(--card-2);border:1px solid var(--line);border-radius:10px;margin-bottom:7px}
   .fb-top{display:flex;align-items:center;gap:8px}
   .fb-score{font-size:14px;font-weight:800}
@@ -210,7 +228,7 @@
 <!-- ============ QIDIRUV ============ -->
 <div class="page" id="pg-search">
   <h2 style="margin:2px 0 4px;font-size:20px">🔍 So'z qidirish</h2>
-  <p class="muted" style="font-size:12.5px;margin:0 0 14px">Istalgan ruscha so'z yoki iborani yozing — real videolarda qanday aytilishini ko'rasiz.</p>
+  <p class="muted" style="font-size:12.5px;margin:0 0 14px">Istalgan so'z yoki iborani yozing — real videolarda qanday aytilishini va ma'nolarini ko'rasiz.</p>
   <div class="searchbar">
     <input id="sInput" type="text" placeholder="Masalan: спасибо" autocomplete="off">
     <button onclick="doSearch()">🔍</button>
@@ -222,6 +240,7 @@
     <button class="cbtn" onclick="sCtl('slow')">🐢 Sekin</button>
     <button class="cbtn" onclick="sCtl('next')">Keyingi ⏭</button>
   </div>
+  <div class="defcard" id="sDefine" style="display:none"></div>
   <div class="lockmsg" id="sLock" style="display:none">
     Bugungi bepul qidiruvlar tugadi 😔<br><br>
     <button class="btn gold" onclick="go('pro')">⭐ Pro — cheksiz qidiruv</button>
@@ -744,6 +763,7 @@ function doSearch(){
   resetDaily();
   var q=document.getElementById('sInput').value.trim();
   if(!q){ toast("So'z yozing 🙂"); return; }
+  var _dc=document.getElementById('sDefine'); if(_dc) _dc.style.display='none';  // eski ma'nolarni yopamiz
 
   if(SERVER){
     if(searchBusy) return;
@@ -751,7 +771,7 @@ function doSearch(){
     api('search').then(function(res){
       searchBusy=false;
       if(res && res.error==='limit'){ if(typeof res.searchCount==='number') S.sCount=res.searchCount; renderSearchMeta(); toast("Bugungi bepul qidiruvlar tugadi"); return; }
-      if(res && res.ok){ S.sCount=res.searchCount; save(); renderSearchMeta(); runSearchWidget(q); }
+      if(res && res.ok){ S.sCount=res.searchCount; save(); renderSearchMeta(); runSearchWidget(q); loadDefine(q); }
       else toast("Xatolik — qayta urinib ko'ring");
     }).catch(function(){ searchBusy=false; toast("Internet xatosi"); });
     return;
@@ -764,6 +784,50 @@ function doSearch(){
 function sCtl(act){
   if(!sWidget) return;
   try{ if(act==='next')sWidget.next(); else if(act==='prev')sWidget.previous(); else if(act==='slow')sWidget.setSpeed(0.5);}catch(e){}
+}
+
+/* ---- So'z ma'nolari (AI lug'at) ---- */
+var defBusy=false;
+function loadDefine(q){
+  var el=document.getElementById('sDefine'); if(!el) return;
+  if(!SERVER){ el.style.display='none'; return; }   // ma'nolar faqat server rejimida
+  defBusy=true;
+  el.className='defcard loading';
+  el.style.display='block';
+  el.innerHTML='📖 Ma\'nolar tayyorlanmoqda…';
+  api('define',{q:q, lang:S.curLang}).then(function(res){
+    defBusy=false;
+    if(res && res.ok && res.def && res.def.senses && res.def.senses.length){
+      renderDefine(res.def);
+    } else {
+      el.style.display='none';   // ma'no topilmasa kartani ko'rsatmaymiz
+    }
+  }).catch(function(){ defBusy=false; el.style.display='none'; });
+}
+function renderDefine(d){
+  var el=document.getElementById('sDefine'); if(!el) return;
+  el.className='defcard';
+  var h='<div class="def-head"><span class="def-word">'+escHtml(d.word||'')+'</span>'+
+        (d.translit?'<span class="def-tr">['+escHtml(d.translit)+']</span>':'')+
+        (d.pos?'<span class="def-pos">'+escHtml(d.pos)+'</span>':'')+'</div>'+
+        '<p class="def-sub">Ma\'nolari '+langInfo(S.curLang).flag+'</p>';
+  (d.senses||[]).forEach(function(s,i){
+    h+='<div class="sense"><span class="sense-uz"><span class="sense-n">'+(i+1)+'</span>'+escHtml(s.uz||'')+'</span>';
+    if(s.note) h+='<div class="sense-note">'+escHtml(s.note)+'</div>';
+    if(s.example && (s.example.t||s.example.u)){
+      h+='<div class="sense-ex">'+
+         (s.example.t?'<div class="ex-t">“'+escHtml(s.example.t)+'”</div>':'')+
+         (s.example.u?'<div class="ex-u">'+escHtml(s.example.u)+'</div>':'')+'</div>';
+    }
+    if(s.syn && s.syn.length){
+      h+='<div class="sense-syn"><span class="lbl">Sinonim:</span>';
+      s.syn.slice(0,5).forEach(function(w){ h+='<span class="syn-chip">'+escHtml(w)+'</span>'; });
+      h+='</div>';
+    }
+    h+='</div>';
+  });
+  el.innerHTML=h;
+  el.style.display='block';
 }
 document.getElementById('sInput').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); });
 
