@@ -139,6 +139,14 @@
   .code-badge.active{background:rgba(55,211,155,.16);color:var(--ok);border:1px solid rgba(55,211,155,.4)}
   .code-badge.used{background:rgba(150,160,175,.14);color:var(--muted);border:1px solid var(--line)}
   .code-who{font-size:10px;color:var(--muted);margin-left:6px;font-weight:600}
+  .lvl-lang{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--text);margin:14px 0 8px}
+  .lvl-lang .fl{font-size:19px}
+  .lvl-row{display:flex;gap:8px}
+  .lvl-opt{flex:1;text-align:center;border:1.5px solid var(--line);background:var(--card);border-radius:13px;padding:11px 6px;cursor:pointer;transition:border-color .15s,background .15s}
+  .lvl-opt .em{font-size:20px;display:block;margin-bottom:4px}
+  .lvl-opt b{display:block;font-size:12px;color:var(--text);line-height:1.25}
+  .lvl-opt small{display:block;font-size:9.5px;color:var(--muted);margin-top:3px;line-height:1.2}
+  .lvl-opt.sel{border-color:var(--accent-2);background:linear-gradient(135deg,rgba(91,140,255,.12),rgba(139,91,255,.12))}
   .lswitch{display:flex;gap:8px;margin:2px 0 12px;flex-wrap:wrap;align-items:center}
   .lbtn{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;font-weight:700;cursor:pointer}
   .lbtn.on{border-color:var(--accent-2);color:var(--text);background:linear-gradient(135deg,rgba(91,140,255,.14),rgba(139,91,255,.14))}
@@ -398,7 +406,7 @@ function api(action, extra){
 }
 
 /* ================== HOLAT (localStorage) ================== */
-var DEF = { onboarded:false, level:null, goal:null, interests:[], daily:10, pro:false,
+var DEF = { onboarded:false, level:null, levels:{}, goal:null, interests:[], daily:10, pro:false,
             langs:['ru'], curLang:'ru', saved:{},
             learned:{}, day:"", todayNew:0, sDay:"", sCount:0, streak:0, lastDay:"" };
 var S;
@@ -466,15 +474,18 @@ function toast(msg){
 }
 
 /* ================== ONBOARDING ================== */
-var ob = { step:0, langs:['ru'], level:null, goal:null, interests:[], daily:10 };
+var ob = { step:0, langs:['ru'], levels:{}, goal:null, interests:[], daily:10 };
+var LEVEL_OPTS = [
+  {v:"new", em:"🌱", t:"Umuman bilmayman", s:"Noldan boshlaymiz"},
+  {v:"some",em:"🌿", t:"Bir oz bilaman", s:"Tushunaman, lekin gapirish qiyin"},
+  {v:"good",em:"🌳", t:"Yaxshi bilaman", s:"Erkin gaplashaman, boyitmoqchiman"}
+];
 var OB_STEPS = [
   { title:"Qaysi tillarni o'rganmoqchisiz?", sub:"Bir nechtasini tanlashingiz mumkin — keyin xohlagan payt almashtirasiz.",
     opts: LANGS.map(function(L){ return {v:L.code, em:L.flag, t:L.name, s:L.hint}; }),
     key:"langs", multi:true },
-  { title:"Til darajangiz qanday?", sub:"Darslarni darajangizga moslaymiz.",
-    opts:[ {v:"new", em:"🌱", t:"Umuman bilmayman", s:"Noldan boshlaymiz"},
-           {v:"some",em:"🌿", t:"Bir oz bilaman", s:"Tushunaman, lekin gapirish qiyin"},
-           {v:"good",em:"🌳", t:"Yaxshi bilaman", s:"Erkin gaplashaman, boyitmoqchiman"} ], key:"level", multi:false },
+  { title:"Har bir til uchun darajangiz?", sub:"Tanlagan tillaringiz bo'yicha alohida belgilang.",
+    perLang:true, key:"levels" },
   { title:"Nima uchun o'rganyapsiz?", sub:"Sizga kerakli iboralarni birinchi beramiz.",
     opts:[ {v:"work", em:"🏗️", t:"Rossiyada ish / patent", s:"Ish, hujjatlar, intervyu"},
            {v:"daily",em:"🗣️", t:"Kundalik muloqot", s:"Bozor, transport, qo'shnilar"},
@@ -492,6 +503,25 @@ function renderOb(){
   var prog=''; for(var i=0;i<OB_STEPS.length;i++) prog+='<i class="'+(i<=ob.step?'on':'')+'"></i>';
   document.getElementById('obProg').innerHTML=prog;
   var h='<h2 class="ob-title">'+st.title+'</h2><p class="ob-sub">'+st.sub+'</p>';
+
+  /* Har bir til uchun alohida daraja */
+  if(st.perLang){
+    ob.langs.forEach(function(code){
+      var L=langInfo(code);
+      h+='<div class="lvl-lang"><span class="fl">'+L.flag+'</span>'+L.name+'</div>';
+      h+='<div class="lvl-row">';
+      LEVEL_OPTS.forEach(function(o){
+        var sel = ob.levels[code]===o.v;
+        h+='<div class="lvl-opt'+(sel?' sel':'')+'" onclick="obPickLevel(\''+code+'\',\''+o.v+'\')">'+
+           '<span class="em">'+o.em+'</span><b>'+o.t+'</b><small>'+o.s+'</small></div>';
+      });
+      h+='</div>';
+    });
+    h+='<div style="height:8px"></div><button class="btn primary" onclick="obNext()">Davom etish →</button>';
+    document.getElementById('obStep').innerHTML=h;
+    return;
+  }
+
   var opts = st.key==='interests'
     ? CAT_META.map(function(m){
         var rc=LDATA.ru.categories.find(function(c){return c.key===m.key;});
@@ -508,6 +538,7 @@ function renderOb(){
   document.getElementById('obStep').innerHTML=h;
   window._obOpts=opts;
 }
+function obPickLevel(code, val){ ob.levels[code]=val; renderOb(); }
 function obPick(i){
   var st=OB_STEPS[ob.step], o=window._obOpts[i];
   if(st.multi){
@@ -518,17 +549,24 @@ function obPick(i){
 }
 function obNext(){
   var st=OB_STEPS[ob.step];
-  if(st.multi ? ob[st.key].length===0 : (ob[st.key]===null||ob[st.key]===undefined)){
+  if(st.perLang){
+    var allSet = ob.langs.every(function(c){ return !!ob.levels[c]; });
+    if(!allSet){ toast("Har bir til uchun darajani tanlang 🙂"); return; }
+  } else if(st.multi ? ob[st.key].length===0 : (ob[st.key]===null||ob[st.key]===undefined)){
     toast("Iltimos, tanlang 🙂"); return;
   }
   if(ob.step<OB_STEPS.length-1){ ob.step++; renderOb(); return; }
-  S.onboarded=true; S.level=ob.level; S.goal=ob.goal; S.interests=ob.interests.slice();
+  S.onboarded=true;
+  S.levels={}; ob.langs.forEach(function(c){ if(ob.levels[c]) S.levels[c]=ob.levels[c]; });
+  var primary = ob.langs.indexOf('ru')>=0 ? 'ru' : ob.langs[0];
+  S.level = S.levels[primary] || null;   // eski maydonlar bilan moslik
+  S.goal=ob.goal; S.interests=ob.interests.slice();
   S.langs=ob.langs.slice();
-  S.curLang = ob.langs.indexOf('ru')>=0 ? 'ru' : ob.langs[0];
+  S.curLang = primary;
   S.daily=ob.daily;   // maqsad (cheklov emas). Bepul cheklov = FREE_DAILY, alohida.
   save();
   if(SERVER){
-    api('onboard',{level:ob.level, goal:ob.goal, interests:ob.interests, daily:ob.daily, langs:ob.langs})
+    api('onboard',{levels:S.levels, level:S.level, goal:ob.goal, interests:ob.interests, daily:ob.daily, langs:ob.langs})
       .catch(function(){ /* keyingi safar qayta uriniladi */ });
   }
   go('home');
@@ -1140,7 +1178,7 @@ function boot(d){
     if(res===null){ toast("Server bilan aloqa yo'q — vaqtincha oflayn rejim"); }
     if(res && res.user){
       S.onboarded = !!res.user.onboarded;
-      S.level=res.user.level; S.goal=res.user.goal;
+      S.level=res.user.level; S.levels=res.user.levels||{}; S.goal=res.user.goal;
       S.interests=res.user.interests||[];
       S.langs=(res.user.langs&&res.user.langs.length)?res.user.langs:(S.langs&&S.langs.length?S.langs:['ru']);
       if(S.langs.indexOf(S.curLang)<0) S.curLang=S.langs[0];
