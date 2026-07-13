@@ -299,6 +299,7 @@
     <h2>Seyly <span class="pro-word">PRO</span></h2>
     <p>Cheklovlarsiz o'rganing</p>
   </div>
+  <div id="proStatus" style="display:none"></div>
   <div class="card">
     <div class="feat"><span class="em">♾️</span><div><b>Cheksiz yangi iboralar</b><small>Bepul: kuniga 5 ta. Pro: xohlaganingizcha.</small></div></div>
     <div class="feat"><span class="em">🔍</span><div><b>Cheksiz qidiruv</b><small>Bepul: kuniga 3 ta. Pro: istalgan so'zni istalgancha qidiring.</small></div></div>
@@ -406,7 +407,7 @@ function api(action, extra){
 }
 
 /* ================== HOLAT (localStorage) ================== */
-var DEF = { onboarded:false, level:null, levels:{}, goal:null, interests:[], daily:10, pro:false,
+var DEF = { onboarded:false, level:null, levels:{}, goal:null, interests:[], daily:10, pro:false, proUntil:null,
             langs:['ru'], curLang:'ru', saved:{},
             learned:{}, day:"", todayNew:0, sDay:"", sCount:0, streak:0, lastDay:"" };
 var S;
@@ -465,7 +466,7 @@ function go(p){
   if(p==='home') renderHome();
   if(p==='search') renderSearchMeta();
   if(p==='saved') renderSaved();
-  if(p==='pro' && IS_OWNER){ loadCodes(); loadFeedback(); }
+  if(p==='pro'){ updateProStatus(); if(IS_OWNER){ loadCodes(); loadFeedback(); } }
   window.scrollTo(0,0);
 }
 function toast(msg){
@@ -1047,16 +1048,35 @@ function contactPro(){
   if(tg&&tg.openTelegramLink){ try{ tg.openTelegramLink(PRO_CONTACT); return; }catch(e){} }
   window.open(PRO_CONTACT,'_blank');
 }
+function proDaysLeft(){
+  if(!S.proUntil) return null;
+  var ms=new Date(S.proUntil).getTime()-Date.now();
+  if(isNaN(ms)) return null;
+  return Math.max(0, Math.ceil(ms/86400000));
+}
+function updateProStatus(){
+  var el=document.getElementById('proStatus'); if(!el) return;
+  if(!S.pro){ el.style.display='none'; return; }
+  var d=proDaysLeft(), dt='';
+  try{ if(S.proUntil) dt=new Date(S.proUntil).toLocaleDateString('ru-RU'); }catch(e){}
+  el.style.display='block';
+  el.innerHTML='<div style="background:linear-gradient(135deg,rgba(246,196,69,.16),rgba(139,91,255,.12));border:1px solid var(--gold);border-radius:14px;padding:12px 14px;margin-bottom:12px;text-align:center">'+
+    '<b style="color:var(--gold);font-size:14px">✅ Pro faol</b>'+
+    (d!=null ? '<div style="font-size:12.5px;color:var(--text);margin-top:3px"><b>'+d+' kun</b> qoldi'+(dt?' · tugash: '+dt:'')+'</div>'
+             : '<div style="font-size:12px;color:var(--muted);margin-top:3px">Muddatsiz</div>')+
+    '</div>';
+}
 function applyCode(){
   var c=document.getElementById('proCode').value.trim().toUpperCase();
   if(!c){ toast("Kodni kiriting"); return; }
   if(!SERVER){ toast("Kodni faollashtirish uchun ilovani Telegram ichida oching"); return; }
   api('redeem',{code:c}).then(function(res){
     if(res && res.ok){
-      S.pro=true; save();
-      toast("🎉 PRO faollashtirildi! Cheksiz o'rganing!");
-      renderHome(); renderSearchMeta();
-      setTimeout(function(){ go('home'); }, 800);
+      S.pro=true; S.proUntil=res.pro_until||null; save();
+      var dl=proDaysLeft();
+      toast(dl!=null ? ("🎉 PRO faollashtirildi! "+dl+" kun amal qiladi.") : "🎉 PRO faollashtirildi!");
+      updateProStatus(); renderHome(); renderSearchMeta();
+      setTimeout(function(){ go('home'); }, 900);
     } else toast("Kod noto'g'ri yoki ishlatilgan 😔");
   }).catch(function(){ toast("Internet xatosi"); });
 }
@@ -1184,7 +1204,7 @@ function boot(d){
       S.langs=(res.user.langs&&res.user.langs.length)?res.user.langs:(S.langs&&S.langs.length?S.langs:['ru']);
       if(S.langs.indexOf(S.curLang)<0) S.curLang=S.langs[0];
       S.daily=res.user.daily||10;
-      S.pro=!!res.user.pro;
+      S.pro=!!res.user.pro; S.proUntil=res.user.pro_until||null;
       S.streak=res.user.streak||0;
       S.learned={};
       (res.learned||[]).forEach(function(pid){ S.learned[pid]=1; });
