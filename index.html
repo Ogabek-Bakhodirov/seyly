@@ -105,11 +105,9 @@
   .spbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;margin-top:10px;box-shadow:0 6px 18px var(--shadow)}
   .spvid{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
   .spvid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .spsub{padding:12px 6px 4px;text-align:center;font-size:15.5px;line-height:2.05;font-weight:600}
-  .spsub .w{padding:1px 4px;border-radius:6px;color:var(--muted);transition:color .12s,background .12s}
-  .spsub .w.cur{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .spsub{padding:12px 6px 4px;text-align:center;font-size:15.5px;line-height:1.65;font-weight:600;min-height:52px;transition:opacity .18s}
+  .spsub .w{padding:1px 4px;border-radius:6px;color:var(--text)}
   .spsub .w.q{color:var(--text);background:rgba(246,196,69,.26);box-shadow:inset 0 -2px 0 var(--gold);font-weight:800}
-  .spsub .w.q.cur{background:var(--gold);color:#141720}
   .spcnt{text-align:center;color:var(--muted);font-size:11.5px;margin:2px 0 8px}
   .spad{display:block;margin:4px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
   .spad img{display:block;width:100%;height:auto}
@@ -1002,8 +1000,27 @@ function ensureYT(cb){
 window.onYouTubeIframeAPIReady=function(){ ytState="ready"; flushYT(); };
 function flushYT(err){ var q=ytQueue.slice(); ytQueue=[]; q.forEach(function(f){f(err);}); }
 
-var sp={results:[], q:'', idx:0, player:null, timer:null, seg:null, slow:false};
+var sp={results:[], q:'', idx:0, player:null, timer:null, cues:[], curCue:-1, slow:false};
 function normTok(w){ return String(w).toLowerCase().replace(/[^a-z0-9']/g,''); }
+/* Cue matnini so'zlarga bo'lib, qidirilgan so'zlarni gold rangda ajratadi. */
+function renderCueText(text, qset){
+  var words=String(text||'').split(/\s+/).filter(Boolean);
+  var h='';
+  words.forEach(function(w){
+    h+='<span class="w'+(qset[normTok(w)]?' q':'')+'">'+escHtml(w)+'</span> ';
+  });
+  return h;
+}
+/* Videoga tegishli cue'larni backenddan olamiz (fon'da, natijaga bog'liq emas).
+   Yiqilsa — spLoad'ning fallback matni qoladi. */
+function fetchCuesFor(videoId, cbToken){
+  if(!SERVER) return;
+  api('en_video_cues',{video_id:videoId}).then(function(res){
+    if(sp.__ctok!==cbToken) return;   // boshqa videoga o'tib ketgan bo'lsa — e'tibor bermaymiz
+    sp.cues = (res && Array.isArray(res.cues)) ? res.cues : [];
+    sp.curCue=-1;
+  }).catch(function(){});
+}
 
 /* Har videodan faqat bitta (eng mos) segment — "Keyingi" turli videolarga o'tsin,
    bir xil videoni ozgina siljitib qayta ko'rsatmasin. results rank bo'yicha tartiblangan. */
@@ -1038,22 +1055,19 @@ function spLoad(i){
   var r=sp.results[i];
   var start=Math.max(0, Math.floor(Number(r.start_time)||0));
 
-  /* Subtitr: so'zlarga bo'lib chizamiz. Qidirilgan so'z(lar) — sariq (q),
-     hozir aytilayotgan so'z — brend gradient (cur, spTick'da yuritiladi). */
-  var qset={};
-  String(sp.q||'').split(/\s+/).forEach(function(w){ var n=normTok(w); if(n) qset[n]=1; });
-  var words=String(r.text||'').split(/\s+/).filter(Boolean);
-  var h='';
-  words.forEach(function(w,wi){
-    h+='<span class="w'+(qset[normTok(w)]?' q':'')+'" id="spw-'+wi+'">'+escHtml(w)+'</span> ';
-  });
-  document.getElementById('spSub').innerHTML=h;
+  /* Qidirilgan so'zlar to'plami (normallashtirilgan) — cue matnida ajratish uchun */
+  sp.qset={};
+  String(sp.q||'').split(/\s+/).forEach(function(w){ var n=normTok(w); if(n) sp.qset[n]=1; });
+
+  /* Boshlang'ich matn: qidiruvdan kelgan segment (cue'lar yuklanmaguncha ko'rinadi) */
+  document.getElementById('spSub').innerHTML=renderCueText(r.text||'', sp.qset);
   document.getElementById('spCnt').textContent=(i+1)+' / '+sp.results.length;
 
-  /* Segment vaqti: end bo'lmasa so'z boshiga ~0.45s deb baholaymiz */
-  var st=Number(r.start_time)||0;
-  var en=(r.end_time!=null && Number(r.end_time)>st) ? Number(r.end_time) : st + words.length*0.45;
-  sp.seg={start:st, end:en, n:words.length};
+  /* Video davom etgani sari matn yangilansin — bu videoning to'liq cue'larini so'raymiz.
+     Token bilan — foydalanuvchi keyingi videoga o'tsa, eski javob e'tiborsiz qoladi. */
+  sp.cues=[]; sp.curCue=-1;
+  sp.__ctok = (sp.__ctok||0)+1;
+  fetchCuesFor(r.video_id, sp.__ctok);
 
   if(sp.player && sp.player.loadVideoById){
     sp.player.loadVideoById({videoId:r.video_id, startSeconds:start});
@@ -1068,18 +1082,20 @@ function spLoad(i){
   sp.timer=setInterval(spTick, 250);
   if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
 }
-/* Karaoke-sinxron: pleyer vaqtiga qarab joriy so'zni belgilaydi.
-   So'z-darajali timestamp yo'q — segment [start,end] oralig'iga teng taqsimlaymiz. */
+/* Pleyer vaqti bo'yicha cue matnini yangilash: cue'lar start_time bo'yicha tartiblangan.
+   Karaoke (so'z-darajali) animatsiya YO'Q — chalg'ituvchi bo'lgani uchun olib tashlandi. */
 function spTick(){
-  if(!sp.player || !sp.seg || !sp.player.getCurrentTime) return;
+  if(!sp.player || !sp.player.getCurrentTime || !sp.cues || !sp.cues.length) return;
   var t; try{ t=sp.player.getCurrentTime(); }catch(e){ return; }
-  var g=sp.seg, idx=-1;
-  if(typeof t==='number' && t>=g.start && t<=g.end+0.4 && g.end>g.start){
-    idx=Math.min(g.n-1, Math.floor((t-g.start)/(g.end-g.start)*g.n));
+  if(typeof t!=='number') return;
+  /* Joriy cue: eng katta cue.start_time <= t. Lineer izlash (100-500 element, tez). */
+  var idx=-1;
+  for(var i=0;i<sp.cues.length;i++){
+    if(Number(sp.cues[i].start_time) <= t) idx=i; else break;
   }
-  for(var i=0;i<g.n;i++){
-    var el=document.getElementById('spw-'+i);
-    if(el) el.classList.toggle('cur', i===idx);
+  if(idx>=0 && idx!==sp.curCue){
+    sp.curCue=idx;
+    document.getElementById('spSub').innerHTML=renderCueText(sp.cues[idx].text||'', sp.qset||{});
   }
 }
 function spCtl(act){
