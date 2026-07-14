@@ -110,6 +110,9 @@
   .spcnt{text-align:center;color:var(--muted);font-size:11.5px;margin:2px 0 8px}
   .spad{display:block;margin:4px 0 6px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
   .spad img{display:block;width:100%;height:auto}
+  .sload{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:10px;color:var(--muted);font-size:13px;font-weight:600}
+  .sload .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
+  @keyframes spspin{to{transform:rotate(360deg)}}
   .locked{opacity:.55}
   .lockmsg{background:linear-gradient(135deg,rgba(246,196,69,.12),rgba(240,152,25,.08));border:1px solid var(--line);border-radius:15px;padding:14px;text-align:center;font-size:13px;margin:10px 0}
 
@@ -284,6 +287,11 @@
     <button onclick="doSearch()">🔍</button>
   </div>
   <div style="margin-bottom:12px"><span class="pill"><span data-i18n="Bugun:">Bugun:</span> <b id="sCount">0/3</b> <span data-i18n="qidiruv">qidiruv</span></span></div>
+
+  <!-- Qidiruv loading holati -->
+  <div class="sload" id="sLoad" style="display:none">
+    <span class="spin"></span><span data-i18n="Videolar qidirilmoqda…">Videolar qidirilmoqda…</span>
+  </div>
 
   <!-- Seyly pleyer: o'z bazamizdan topilgan video (YouTube + sinxron subtitr + reklama) -->
   <div class="spbox" id="spBox" style="display:none">
@@ -947,6 +955,7 @@ function openSeylyPlayer(results, q){
       /* IFrame API yuklanmasa — YouGlish zaxira yo'li */
       hideSeylyPlayer(); runSearchWidget(q); return;
     }
+    hideSearchLoading();
     document.getElementById('spBox').style.display='block';
     spLoad(0);
   });
@@ -1020,6 +1029,15 @@ function hideSeylyPlayer(){
 function hideYGSearch(){
   document.getElementById('sSlot').style.display='none';
   document.getElementById('sCtrl').style.display='none';
+}
+/* Qidiruv loading: eski natija (pleyer/YouGlish) yashirinadi, spinner chiqadi.
+   Ikkinchi qidiruvda ham video to'xtab, loading ko'rinadi. */
+function showSearchLoading(){
+  hideSeylyPlayer(); hideYGSearch();
+  var e=document.getElementById('sLoad'); if(e) e.style.display='flex';
+}
+function hideSearchLoading(){
+  var e=document.getElementById('sLoad'); if(e) e.style.display='none';
 }
 function renderAd(){
   var a=document.getElementById('spAd');
@@ -1106,6 +1124,7 @@ function renderSearchMeta(){
   }
 }
 function runSearchWidget(q){
+  hideSearchLoading();
   var slot=document.getElementById('sSlot'); slot.style.display='block';
   document.getElementById('sCtrl').style.display='flex';
   ensureYG(function(err){
@@ -1130,29 +1149,30 @@ function doSearch(){
   if(SERVER){
     if(searchBusy) return;
     searchBusy=true;
+    showSearchLoading();   // eski natija yashirinadi, spinner chiqadi (2-qidiruvda ham)
 
     /* Ingliz: avval O'Z BAZAMIZdan (en_search — limit server ichida hisoblanadi).
        Topilsa Seyly pleyer, topilmasa YouGlish (zaxira) + fon'da bazani boyitish. */
     if(S.curLang==='en'){
       api('en_search',{q:q}).then(function(res){
         searchBusy=false;
-        if(res && res.error==='limit'){ if(typeof res.searchCount==='number') S.sCount=res.searchCount; renderSearchMeta(); toast(t("Bugungi bepul qidiruvlar tugadi")); return; }
+        if(res && res.error==='limit'){ hideSearchLoading(); if(typeof res.searchCount==='number') S.sCount=res.searchCount; renderSearchMeta(); toast(t("Bugungi bepul qidiruvlar tugadi")); return; }
         if(res && res.ok){
           if(!S.pro) S.sCount++;   // server 1 taga oshirdi (en_search ichida)
           save(); renderSearchMeta(); loadDefine(q);
           if(res.results && res.results.length){ openSeylyPlayer(res.results, q); }
-          else { hideSeylyPlayer(); runSearchWidget(q); }
-        } else toast(t("Xatolik — qayta urinib ko'ring"));
-      }).catch(function(){ searchBusy=false; toast(t("Internet xatosi")); });
+          else { runSearchWidget(q); }
+        } else { hideSearchLoading(); toast(t("Xatolik — qayta urinib ko'ring")); }
+      }).catch(function(){ searchBusy=false; hideSearchLoading(); toast(t("Internet xatosi")); });
       return;
     }
 
     api('search').then(function(res){
       searchBusy=false;
-      if(res && res.error==='limit'){ if(typeof res.searchCount==='number') S.sCount=res.searchCount; renderSearchMeta(); toast(t("Bugungi bepul qidiruvlar tugadi")); return; }
-      if(res && res.ok){ S.sCount=res.searchCount; save(); renderSearchMeta(); hideSeylyPlayer(); runSearchWidget(q); loadDefine(q); }
-      else toast(t("Xatolik — qayta urinib ko'ring"));
-    }).catch(function(){ searchBusy=false; toast(t("Internet xatosi")); });
+      if(res && res.error==='limit'){ hideSearchLoading(); if(typeof res.searchCount==='number') S.sCount=res.searchCount; renderSearchMeta(); toast(t("Bugungi bepul qidiruvlar tugadi")); return; }
+      if(res && res.ok){ S.sCount=res.searchCount; save(); renderSearchMeta(); runSearchWidget(q); loadDefine(q); }
+      else { hideSearchLoading(); toast(t("Xatolik — qayta urinib ko'ring")); }
+    }).catch(function(){ searchBusy=false; hideSearchLoading(); toast(t("Internet xatosi")); });
     return;
   }
 
