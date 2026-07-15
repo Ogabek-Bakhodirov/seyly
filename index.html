@@ -505,7 +505,7 @@ var LANGS=[
 function langInfo(c){ for(var i=0;i<LANGS.length;i++) if(LANGS[i].code===c) return LANGS[i]; return LANGS[0]; }
 /* O'z transkript-korpusimiz (Seyly pleyer) bor tillar: ingliz + rus.
    Boshqalar (nemis) YouGlish'da ochiladi. */
-function hasCorpus(c){ return c==='en' || c==='ru'; }
+function hasCorpus(c){ return c==='en' || c==='ru' || c==='de'; }
 /* Oxirgi qidiruv natijasi qaysi tilda topilgani (fallback bo'lishi mumkin):
    define va saqlash shu tilga moslanadi. null = joriy til (S.curLang). */
 var searchLang=null;
@@ -1362,7 +1362,11 @@ function doSearch(){
           save(); renderSearchMeta(); loadDefine(q);
           if(res.results && res.results.length){ openSeylyPlayer(res.results, q, null, eff); }
           else { searchLang=slang; runSearchWidget(q); }
-        } else { hideSearchLoading(); toast(t("Xatolik — qayta urinib ko'ring")); }
+        } else {
+          /* Korpus javob bermadi (server xatosi yoki hali qo'llab-quvvatlanmagan til, masalan de
+             backend deploydan oldin) — xato o'rniga YouGlish zaxira. */
+          searchLang=slang; runSearchWidget(q);
+        }
       }).catch(function(){ searchBusy=false; hideSearchLoading(); toast(t("Internet xatosi")); });
       return;
     }
