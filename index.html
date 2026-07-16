@@ -741,7 +741,12 @@ function obPickLearn(v){
 function obPickLevel(code, val){ ob.levels[code]=val; renderOb(); }
 function obPickLang(code, ready){
   if(!ready){ toast(uiLangInfo(code).flag+" "+t('Bu til tez orada qo\'shiladi 🚧')); return; }
-  ob.uiLang=code; renderOb();
+  ob.uiLang=code;
+  /* Interfeys tilini DARROV jonli qilamiz — onboarding qolgan qadamlari shu tilda davom etsin
+     (t() S.uiLang'ni o'qiydi; avval faqat onboarding oxirida o'rnatilardi). */
+  S.uiLang=code; save();
+  applyI18n();   // statik HTML matnlari ham yangilanadi
+  renderOb();
 }
 function obPick(i){
   var st=OB_STEPS[ob.step], o=window._obOpts[i];
