@@ -441,7 +441,14 @@
 /* ================== SOZLAMALAR ================== */
 var FREE_DAILY = 5;           // bepul: kuniga yangi iboralar
 var FREE_SEARCH = 3;          // bepul: kuniga qidiruvlar
-var API_URL = "https://ubctutftqgbgcevfziil.supabase.co/functions/v1/api"; // backend
+/* Backend manzili. STAGING himoyasi: agar URL'da ?stg=1 bo'lsa (test bot Mini App
+   linki shunday) yoki dev-branch Vercel preview domeni bo'lsa -> api-stg (test EF).
+   Prod domenda bu shart hech qachon rost bo'lmaydi, shuning uchun kod prodда ham
+   xavfsiz turadi (jonli userlar doim 'api' ni oladi). */
+var API_PROD = "https://ubctutftqgbgcevfziil.supabase.co/functions/v1/api";
+var API_STG  = "https://ubctutftqgbgcevfziil.supabase.co/functions/v1/api-stg";
+var IS_STG = /[?&]stg=1/.test(location.search) || /-git-[^.]*\.vercel\.app$/.test(location.hostname);
+var API_URL = IS_STG ? API_STG : API_PROD; // backend
 
 /* ================== INTERFEYS TILI (i18n) ==================
    Kelajakda oson kengaytirish uchun: barcha interfeys matnlari shu qatlamdan o'tadi.
