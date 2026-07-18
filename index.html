@@ -2106,7 +2106,7 @@ function speak(enc, tts){
 }
 
 /* ================== ISHGA TUSHIRISH ================== */
-var PH_VER = "v4";   // phrases.json versiyasi — kontent o'zgarsa oshiring (kesh yangilanadi)
+var PH_VER = "v5";   // phrases.json versiyasi — kontent o'zgarsa oshiring (kesh yangilanadi)
 
 /* 1) init'ni DARROV yuboramiz — phrases yuklanishini KUTMASDAN (parallel, tezlik uchun) */
 var initPromise = SERVER ? api('init').catch(function(){ return null; }) : Promise.resolve(false);
