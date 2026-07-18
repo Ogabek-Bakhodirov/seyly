@@ -1139,6 +1139,8 @@ function celebrateOnboarding(){
     '.cele-t{font-size:16px;font-weight:800;margin-top:2px;color:#fff}'+
     '.cele-goal{margin-top:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600;color:#e7ecf5}'+
     '.cele-goal b{color:#7ea6ff;font-size:16px}'+
+    '.cele-x{position:absolute;top:10px;right:12px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent}'+
+    '.cele-x:active{background:rgba(255,255,255,.22)}'+
     '.confetti{position:absolute;top:38%;left:50%;width:9px;height:9px;border-radius:2px;opacity:0;animation:celeConf 1.5s ease-out forwards}'+
     '@keyframes celeBg{from{opacity:0}to{opacity:1}}'+
     '@keyframes celePop{0%{transform:scale(.5);opacity:0}60%{opacity:1}100%{transform:scale(1);opacity:1}}'+
@@ -1157,6 +1159,7 @@ function celebrateOnboarding(){
   var box=document.createElement('div'); box.className='cele';
   box.innerHTML=conf+
     '<div class="cele-card">'+
+      '<button class="cele-x" aria-label="Yopish">×</button>'+
       '<div class="cele-flame">🔥</div>'+
       '<div class="cele-streak">1</div>'+
       '<div class="cele-t">'+t("1 kunlik seriya boshlandi!")+'</div>'+
@@ -1167,8 +1170,9 @@ function celebrateOnboarding(){
   var closed=false;
   var close=function(){ if(closed)return; closed=true; box.style.transition='opacity .3s'; box.style.opacity='0';
     setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); },320); };
-  box.addEventListener('click', close);
-  setTimeout(close, 2800);
+  // Faqat X tugmasi yoki fon (karta tashqarisi) yopadi — o'zi yo'qolmaydi (avto-timer olib tashlandi).
+  var xbtn=box.querySelector('.cele-x'); if(xbtn) xbtn.addEventListener('click', close);
+  box.addEventListener('click', function(e){ if(e.target===box) close(); });
 }
 function markDone(id){
   var st=document.getElementById('st-'+id);
