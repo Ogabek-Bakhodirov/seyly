@@ -1788,10 +1788,11 @@ function spTick(){
     document.getElementById(sp.mount.sub).innerHTML=renderCueText(sp.cues[idx].text||'', sp.qtoks||[]);
   }
 }
-/* Navigatsiya throttle: tez-tez "Keyingi" bosish YouTube'ni "bot" deb belgilashiga sabab
-   bo'ladi (har bosish = bitta YouTube yuklash). Yakka bosishda kechikish yo'q; tez ketma-ket
-   bosishda esa faqat OXIRGI tanlangan klip yuklanadi (throttle), ortiqcha yuklash bo'lmaydi. */
-var NAV_COOLDOWN=2600;
+/* Navigatsiya debounce: tez-tez "Keyingi" bosish YouTube'ni "bot" deb belgilaydi (har bosish =
+   bitta YouTube yuklash). Sof trailing debounce — bosilgach ko'rsatkich DARHOL yangilanadi, lekin
+   video FAQAT oxirgi bosishdan NAV_DEBOUNCE ms jim o'tgach yuklanadi. Shunda 1->5 tez o'tkazsangiz
+   o'rtadagi videolar umuman yuklanmaydi, faqat oxirgisi (5) yuklanadi — bitta zapros. */
+var NAV_DEBOUNCE=700;
 function spNav(delta){
   if(!sp.results || !sp.results.length || !sp.mount) return;
   var n=sp.results.length;
@@ -1800,17 +1801,12 @@ function spNav(delta){
   var wrapped=((sp.navTarget % n)+n)%n;
   var cnt=document.getElementById(sp.mount.cnt); if(cnt) cnt.textContent=(wrapped+1)+' / '+n;   // darhol javob (video hali yuklanmaydi)
   if(tg&&tg.HapticFeedback){ try{ tg.HapticFeedback.selectionChanged(); }catch(e){} }
-  var now=Date.now(), since=now-(sp.lastNavLoad||0);
   if(sp.navTimer){ clearTimeout(sp.navTimer); sp.navTimer=null; }
-  if(since>=NAV_COOLDOWN){
-    sp.lastNavLoad=now; sp.navTarget=null; spLoad(wrapped);
-  } else {
-    sp.navTimer=setTimeout(function(){
-      sp.navTimer=null; if(sp.navTarget==null || !sp.results.length) return;
-      var w=((sp.navTarget % sp.results.length)+sp.results.length)%sp.results.length;
-      sp.lastNavLoad=Date.now(); sp.navTarget=null; spLoad(w);
-    }, NAV_COOLDOWN-since);
-  }
+  sp.navTimer=setTimeout(function(){
+    sp.navTimer=null; if(sp.navTarget==null || !sp.results.length) return;
+    var w=((sp.navTarget % sp.results.length)+sp.results.length)%sp.results.length;
+    sp.navTarget=null; spLoad(w);
+  }, NAV_DEBOUNCE);
 }
 function spCtl(act){
   if(act==='next'){ sp.errSkips=0; spNav(1); return; }
