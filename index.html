@@ -1461,8 +1461,15 @@ function cueWordMatch(cw, qtoks){
   if(!cw) return false;
   for(var i=0;i<qtoks.length;i++){
     var q=qtoks[i];
+    if(!q) continue;
     if(cw===q) return true;
+    // ingliz egalik/ko'plik: cw = q + (<=2 belgi), masalan cats->cat, Nancy's->Nancy
     if(cw.indexOf(q)===0 && (cw.length-q.length)<=2) return true;
+    // rus/nemis kabi tuslanuvchi tillar: OXIRI o'zgargan shakllar (брезгую <-> брезгуйте,
+    // стоит <-> стоил). Umumiy o'zak (prefiks) yetarli uzun bo'lsa mos deb belgilaymiz.
+    var mn=Math.min(cw.length, q.length), cp=0;
+    while(cp<mn && cw.charCodeAt(cp)===q.charCodeAt(cp)) cp++;
+    if(cp>=4 && cp>=0.7*mn) return true;
   }
   return false;
 }
