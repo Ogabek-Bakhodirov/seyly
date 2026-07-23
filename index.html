@@ -1211,7 +1211,7 @@ function showLock(id){
   }
   msg += '<br>' + t("Ertaga limitingiz yangilanadi — yoki Pro bilan bugun cheksiz davom eting 🚀");
   body.innerHTML='<div class="lockmsg">'+msg+'<br><br>'+
-    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'daily_lock\');go(\'pro\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
+    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'daily_lock\');go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
   document.getElementById('phi-'+id).classList.add('open');
   logEv('pro_popup_show','daily_lock');
 }
@@ -1566,7 +1566,7 @@ var corpusCache={};
 function corpusLockInner(){
   return t("Bugungi bepul limit tugadi 😔")+'<br>'+
     t("Pro bilan videolar va tarjimalar cheksiz, istalgancha o'rganing 🚀")+
-    '<br><br><button class="btn gold" onclick="logEv(\'pro_popup_click\',\'video_lock\');go(\'pro\')">'+t("⭐ Pro olish")+'</button>';
+    '<br><br><button class="btn gold" onclick="logEv(\'pro_popup_click\',\'video_lock\');go(\'profile\')">'+t("⭐ Pro olish")+'</button>';
 }
 function corpusFirstVideo(q, lang, mount, loadId, fallback){
   if(!(hasCorpus(lang) && SERVER)){ fallback(); return; }
@@ -1682,7 +1682,7 @@ function closeCwPop(){
 function cwProLockHtml(){
   logEv('pro_popup_show','define_lock');   // faqat lock render bo'lganda chaqiriladi
   return '<div class="cw-lock">'+t("Bugungi bepul tarjimalar tugadi 😔 Pro bilan istalgancha — har so'zning o'zbekcha ma'nosini bir bosishda ko'ring.")+
-    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'define_lock\');closeCwPop();go(\'pro\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
+    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'define_lock\');closeCwPop();go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
 }
 function cueTap(el){
   if(!SERVER) return;                       // ma'no faqat server rejimida
@@ -2457,7 +2457,7 @@ function renderSaved(){
     var defH=defInnerHtml(it.def||{}); if(!defH) defH='<div class="sense-note">'+t("Ma'no saqlanmagan")+'</div>';
     var vid = S.pro
       ? '<button class="svid" onclick="event.stopPropagation();savedVideo('+i+')">'+t("▶ Videoni ko'rish")+'</button>'+spVideoBlockHtml('sv'+i, 'svload-'+i, 'svslot-'+i)
-      : '<button class="btn gold" onclick="event.stopPropagation();go(\'pro\')">'+t("🎬 Pro bilan videosini ko'ring")+'</button>';
+      : '<button class="btn gold" onclick="event.stopPropagation();go(\'profile\')">'+t("🎬 Pro bilan videosini ko'ring")+'</button>';
     h+='<div class="sv-item" id="svi-'+i+'">'+
          '<div class="sv-top" onclick="toggleSavedItem('+i+')">'+
            '<span class="sv-w">'+escHtml(it.word)+'</span>'+
