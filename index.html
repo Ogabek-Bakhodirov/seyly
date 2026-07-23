@@ -1042,7 +1042,7 @@ function obNext(){
   S.daily=ob.daily;   // maqsad (cheklov emas). Bepul cheklov = FREE_DAILY, alohida.
   // Endowed progress (video prinsipi): user tatib ko'rdi = haqiqiy 1-kun faoliyati ->
   // streak=1 va kunlik maqsaddan 1 ta bajarildi. 0% emas, momentum bilan boshlanadi.
-  if(ob.tasted){ S.streak=1; S.lastDay=today(); S.todayNew=1; }
+  if(ob.tasted){ S.streak=1; if(!S.bestStreak) S.bestStreak=1; S.lastDay=today(); S.todayNew=1; }
   save();
   applyI18n();   // statik matnlarni tanlangan interfeys tiliga moslash
   hideSeylyPlayer();   // onboarding widgetini to'xtatamiz (home'ga o'tishдан oldin)
@@ -1438,6 +1438,7 @@ function togglePh(id){
         S.learned[id]=today();
         if(typeof res.todayNew==='number') S.todayNew=res.todayNew;
         if(typeof res.streak==='number') S.streak=res.streak;
+        if((S.streak||0)>(S.bestStreak||0)) S.bestStreak=S.streak;   // rekord yangilansa profil darhol ko'rsin
         if(typeof res.freezes==='number') S.freezes=res.freezes;
         save();
         if(res.used_freeze) toast(t("❄️ Muzlatish ishlatildi — seriyangiz saqlanib qoldi!"));
@@ -1456,6 +1457,7 @@ function togglePh(id){
   if(S.lastDay!==td){
     var y=new Date(Date.now()-86400000).toISOString().slice(0,10);
     S.streak=(S.lastDay===y)?S.streak+1:1;
+    if((S.streak||0)>(S.bestStreak||0)) S.bestStreak=S.streak;
     S.lastDay=td;
   }
   save(); markDone(id); openBody(id);
@@ -2577,7 +2579,6 @@ function pfToggleRemind(){
   try{ localStorage.setItem('seyly_remind', on?'1':'0'); }catch(e){}
   var sw=document.getElementById('pfRemind'); if(sw) sw.classList.toggle('on', on);
 }
-function pfSoon(){ toast(t('Tez orada')); }
 function pfInvite(){
   var link='https://t.me/seyly_bot';
   var share='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(t("Men Seyly'da til o'rganyapman — sen ham qo'shil!"));
@@ -2600,7 +2601,7 @@ function renderProfile(){
   var nm=document.getElementById('pfName'); if(nm) nm.textContent=name;
   var av=document.getElementById('pfAvatar'); if(av) av.textContent=(name&&name.trim()?name.trim().charAt(0):'S');
   var stEl=document.getElementById('pfStreak'); if(stEl) stEl.textContent=t('🔥 {d} kunlik seriya',{d:(S.streak||0)});
-  var bsEl=document.getElementById('pfBest'); if(bsEl){ bsEl.classList.remove('pf-soon'); bsEl.textContent=String(S.bestStreak||0); }
+  var bsEl=document.getElementById('pfBest'); if(bsEl){ bsEl.classList.remove('pf-soon'); bsEl.textContent=String(Math.max(S.bestStreak||0, S.streak||0)); }
   var langs=(S.langs&&S.langs.length)?S.langs:['ru'];
   var lg=document.getElementById('pfLangs'); if(lg) lg.textContent=langs.map(function(c){ return langInfo(c).flag; }).join(' ');
   var lv=document.getElementById('pfLevels');
@@ -2652,9 +2653,7 @@ function pfEditSave(){
   /* Optimistik: darhol S'ga yozamiz va header'ni yangilaymiz */
   S.firstName=first; S.lastName=last; S.phone=phone; S.age=age||null; S.gender=gender; S.region=region;
   save();
-  var nm=document.getElementById('pfName'); if(nm && first) nm.textContent=first;
-  var av=document.getElementById('pfAvatar'); if(av) av.textContent=(first&&first.trim()?first.trim().charAt(0):'S');
-  try{ renderProfile(); }catch(e){}
+  try{ renderProfile(); }catch(e){}   // ism/avatar shu yerda yangilanadi (bitta manba)
   if(!SERVER){ closePfEdit(); toast(t('Saqlandi')); return; }
   if(btn) btn.disabled=true;
   api('set_profile',{ first_name:first, last_name:last, phone:phone, age:age, gender:gender, region:region }).then(function(res){
@@ -2820,7 +2819,6 @@ function pfmSaveUi(){
   applyI18n(document);
   window._pfm.box._close();
   renderProfile();
-  applyI18n(document);
 }
 function applyCode(){
   var c=document.getElementById('proCode').value.trim().toUpperCase();
