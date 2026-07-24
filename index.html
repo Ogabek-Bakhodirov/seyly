@@ -3027,7 +3027,7 @@ try{ ['ru_phrases_v1','ru_phrases_v2'].forEach(function(k){ localStorage.removeI
 (function(){
   var cached=null;
   try{ cached = JSON.parse(localStorage.getItem('ru_phrases_'+PH_VER)||'null'); }catch(e){}
-  var cacheOk = cached && (cached.version===2
+  var cacheOk = cached && (cached.version>=2
       ? (cached.ru && cached.ru.categories && cached.ru.categories.length)
       : (cached.categories && cached.categories.length));
   if(cacheOk){
@@ -3044,8 +3044,8 @@ try{ ['ru_phrases_v1','ru_phrases_v2'].forEach(function(k){ localStorage.removeI
     });
 })();
 function boot(d){
-  if(d && d.version===2){
-    /* yangi ko'p tilli format */
+  if(d && d.version>=2){
+    /* yangi ko'p tilli format (v2+) */
     if(d.ru) LDATA.ru=d.ru;
     if(d.en) LDATA.en=d.en;
     if(d.de) LDATA.de=d.de;
