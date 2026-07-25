@@ -717,6 +717,9 @@ function logEv(type, ref){
   if(!SERVER) return;
   try{ api('log_event',{type:type, ref:ref||null}).catch(function(){}); }catch(e){}
 }
+/* Onboarding qadam-tracking: har qadam bir marta (sessiyada) yoziladi -> voronka qayerda qonashini ko'ramiz. */
+var _obLogged={};
+function logObStep(s, key){ if(_obLogged[s]) return; _obLogged[s]=1; logEv('onboard_step', s+':'+(key||'')); }
 
 /* ================== HOLAT (localStorage) ================== */
 var DEF = { onboarded:false, uiLang:'uz', level:null, levels:{}, goal:null, interests:[], daily:10, pro:false, proUntil:null, proTrial:false, trialUntil:null,
@@ -936,6 +939,7 @@ var OB_STEPS = [
 ];
 function renderOb(){
   var st=OB_STEPS[ob.step];
+  logObStep(ob.step, st.key);   // voronka: bu qadamga yetdi
   var prog=''; for(var i=0;i<OB_STEPS.length;i++) prog+='<i class="'+(i<=ob.step?'on':'')+'"></i>';
   document.getElementById('obProg').innerHTML=prog;
   var h='<h2 class="ob-title">'+t(st.title)+'</h2><p class="ob-sub">'+t(st.sub)+'</p>';
@@ -1095,6 +1099,7 @@ function obNext(){
     toast(t("Iltimos, tanlang 🙂")); return;
   }
   if(ob.step<OB_STEPS.length-1){ ob.step++; renderOb(); return; }
+  logEv('onboard_step','done');   // voronka: onboarding to'liq tugadi
   S.onboarded=true;
   S.uiLang = ob.uiLang || 'uz';   // interfeys tili (hozircha uz faol)
   S.levels={}; ob.langs.forEach(function(c){ if(ob.levels[c]) S.levels[c]=ob.levels[c]; });
