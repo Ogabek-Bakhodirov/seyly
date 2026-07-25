@@ -608,6 +608,15 @@ var CARD_Q = (function(){
     return { w:w, lang:(['ru','en','de'].indexOf(lg)>=0 ? lg : null), cid:(/^\d+$/.test(cid)?cid:null) };
   }catch(e){ return null; }
 })();
+/* PUSH CTR (real o'lchov): push tugmasi URL'ida ?pc=<slot>.<segment>.<sana> keladi.
+   Ilova shu belgi bilan ochilsa — user pushni BOSGAN. Telegram web_app bosishni bermaydi,
+   shu belgi yagona halol o'lchov. Event vaqti = bosish vaqti (events.at). */
+var PUSH_C = (function(){
+  try{
+    var pc = (new URLSearchParams(location.search).get('pc')||'').trim().slice(0,60);
+    return /^[\w.\-]+$/.test(pc) ? pc : null;
+  }catch(e){ return null; }
+})();
 function runCardSearch(){
   if(!CARD_Q) return false;
   var cq = CARD_Q; CARD_Q = null;   // faqat bir marta
@@ -3204,6 +3213,7 @@ function boot(d){
 var _started=false;
 function start(){
   if(_started) return; _started=true;   // ikki marta chaqirilmasin
+  if(PUSH_C){ logEv('push_click', PUSH_C); PUSH_C=null; }   // push CTR: bir marta yoziladi
   applyI18n();   // statik interfeys matnlarini joriy tilga moslash
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
