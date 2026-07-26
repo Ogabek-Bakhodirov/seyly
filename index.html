@@ -2058,16 +2058,34 @@ function spRenderCnt(){
   // Oddiy user: hisob + ko'zga tashlanmaydigan "mos emas" OGOHLANTIRISH (blok emas — adminka ko'radi)
   var rep=!!r.reported;
   el.innerHTML='<div>'+base+'</div>'+
-    (SERVER ? '<button class="sp-report'+(rep?' done':'')+'"'+(rep?' disabled':'')+' onclick="spReport()">'+
-      (rep?t("✓ Ogohlantirdingiz, rahmat"):t("⚑ Video iboraga mos emas"))+'</button>' : '');
+    (SERVER ? '<button class="sp-report'+(rep?' done':'')+'"'+(rep?' disabled':'')+' onclick="spReportMismatch()">'+
+      (rep?t("✓ Ogohlantirdingiz, rahmat"):t("⚑ Video iboraga mos emasmi?"))+'</button>' : '');
 }
-/* Oddiy user ogohlantirishi (SIGNAL): videoni yashirmaydi, adminkaga tushadi. */
-function spReport(){
+/* Tasdiqlash dialogi (Telegram native -> confirm fallback). onYes faqat "Ha" bosilsa. */
+function askYesNo(msg, onYes){
+  try{
+    if(tg && typeof tg.showPopup==='function'){
+      tg.showPopup({ message: msg, buttons: [
+        { id:'no',  type:'cancel', text: t("Yo'q") },
+        { id:'yes', type:'destructive', text: t("Ha") }
+      ]}, function(id){ if(id==='yes') onYes(); });
+      return;
+    }
+    if(tg && typeof tg.showConfirm==='function'){ tg.showConfirm(msg, function(ok){ if(ok) onYes(); }); return; }
+  }catch(e){}
+  if(window.confirm(msg)) onYes();
+}
+/* Oddiy user ogohlantirishi (SIGNAL): videoni yashirmaydi, adminkaga tushadi.
+   Bilmay bosib yuborilmasin uchun AVVAL tasdiqlatamiz. */
+function spReportMismatch(){
   var r=sp.results[sp.idx]; if(!r || !r.video_id || r.reported) return;
-  r.reported=true; spRenderCnt();
-  api('report_mismatch',{lang:sp.lang||'ru', word:sp.q, video_id:r.video_id,
-    start_time:Math.max(0,Math.floor(Number(r.start_time)||0)), snippet:String(r.text||'').slice(0,300)}).catch(function(){});
-  if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
+  askYesNo(t("Video iboraga mos emas deb hisoblaysizmi?"), function(){
+    if(!r || !r.video_id || r.reported) return;   // tasdiq oralig'ida holat o'zgargan bo'lsa
+    r.reported=true; spRenderCnt();
+    api('report_mismatch',{lang:sp.lang||'ru', word:sp.q, video_id:r.video_id,
+      start_time:Math.max(0,Math.floor(Number(r.start_time)||0)), snippet:String(r.text||'').slice(0,300)}).catch(function(){});
+    if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
+  });
 }
 function spModVerdict(){
   if(!IS_OWNER) return;
@@ -3056,8 +3074,11 @@ try{
     I18N.ru["Saqlashda xatolik"]="Ошибка при сохранении";
     I18N.ru["Rad etildi"]="Отклонено";
     I18N.ru["Tiklandi"]="Восстановлено";
-    I18N.ru["⚑ Video iboraga mos emas"]="⚑ Видео не подходит к фразе";
+    I18N.ru["⚑ Video iboraga mos emasmi?"]="⚑ Видео не подходит к фразе?";
     I18N.ru["✓ Ogohlantirdingiz, rahmat"]="✓ Спасибо, отмечено";
+    I18N.ru["Video iboraga mos emas deb hisoblaysizmi?"]="Считаете, что видео не подходит к фразе?";
+    I18N.ru["Ha"]="Да";
+    I18N.ru["Yo'q"]="Нет";
   }
   if(I18N && I18N.kz){
     I18N.kz["Haftalik ball"]="Апталық ұпай";
