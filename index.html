@@ -2995,8 +2995,12 @@ function fdCloseStudy(){
   fdEl('fdStudy').classList.remove('open');
   if(fdDone){
     logEv('sr_done', fdCurLang()+':'+fdDone);
-    /* Fondagi baholar yozilib bo'lgunicha kutamiz — bo'lmasa statistikalar eski chiqadi. */
-    if(SERVER) fdOut.flush().then(fdRenderDeck);
+    /* Fondagi baholar yozilib bo'lgunicha kutamiz — bo'lmasa statistikalar eski chiqadi.
+       MUHIM: flush kutish payti user sessiyani QAYTA ochgan bo'lishi mumkin —
+       u holda fdCards'ni almashtirib yubormaymiz (ochiq sessiya buzilardi). */
+    if(SERVER) fdOut.flush().then(function(){
+      if(!fdEl('fdStudy').classList.contains('open')) fdRenderDeck();
+    });
     fdDone=0;
   }
 }
@@ -3037,9 +3041,17 @@ var fdOut = {
   waiters: [],   /* flush() ni kutayotganlar */
   send: function(card, grade, onDone){
     var self=this, tries=0; self.n++;
+    /* Vaqt chegarasi: mobil tarmoqda fetch javobsiz osilib qolishi mumkin.
+       Chegarasiz flush() hech qachon tugamaydi va _sending bayrog'i abadiy qoladi. */
+    function withTimeout(p){
+      return new Promise(function(res,rej){
+        var to=setTimeout(function(){ rej(0); }, FD_OUT_TIMEOUT);
+        p.then(function(v){ clearTimeout(to); res(v); }, function(e){ clearTimeout(to); rej(e); });
+      });
+    }
     function attempt(){
       tries++;
-      return api('sr_review',{ lang:card.lang, item_type:card.item_type, item_id:card.item_id, grade:grade, rev:card.rev })
+      return withTimeout(api('sr_review',{ lang:card.lang, item_type:card.item_type, item_id:card.item_id, grade:grade, rev:card.rev }))
         .then(function(r){
           /* Faqat vaqtinchalik xatolarda qayta urinamiz. limit/stale — bu javob, xato emas. */
           if(!r || r.error==='db') throw 0;
@@ -3064,7 +3076,7 @@ var fdOut = {
     return new Promise(function(res){ self.waiters.push(res); });
   }
 };
-var FD_OUT_TRIES=3;
+var FD_OUT_TRIES=3, FD_OUT_TIMEOUT=12000;
 
 /* Server javobini kartaga yozish. Kelmagan maydonni TEGMAYMIZ. */
 function fdSyncCard(c, n){
@@ -3078,6 +3090,8 @@ function fdSyncCard(c, n){
   if(fdCards[fdIdx]===c) fdPaintCard();
 }
 function fdOnLimit(reason){
+  /* Bir nechta fon so'rovi ketma-ket limit qaytarishi mumkin — faqat birinchisi gapiradi. */
+  if(!fdEl('fdStudy').classList.contains('open')) return;
   toast(reason==='new_limit' ? t('Bugungi yangi kartalar tugadi') : t('Bugungi limit tugadi — Pro bilan cheksiz'));
   logEv('pro_popup_view','sr_limit');
   fdCloseStudy();
@@ -3094,7 +3108,10 @@ function fdGrade(g){
      avvalgi so'rov hali javob bermagan. rev eskirmasligi uchun kutamiz. */
   if(c._sending){
     fdGradesBusy(true);
-    fdOut.flush().then(function(){ fdGradesBusy(false); if(fdCards[fdIdx]===c) fdGrade(g); });
+    fdOut.flush().then(function(){
+      fdGradesBusy(false);
+      if(fdEl('fdStudy').classList.contains('open') && fdCards[fdIdx]===c) fdGrade(g);
+    });
     return;
   }
 
