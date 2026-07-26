@@ -2832,7 +2832,7 @@ function soonToast(){ toast(t('Tez kunda')); }
      deck sahifasi : sr_profile (holat xaritasi) + sr_due (bugungi navbat)
      o'rganish     : sr_review (atomik, limit serverda tekshiriladi)
    Guest rejim (Telegram'siz brauzer): lokal S.saved'dan preview, saqlanmaydi. */
-var fdDeck=[], fdCards=[], fdIdx=0, fdDone=0, fdRevealed=false, fdBusy=false, fdLoading=false, fdGate=null;
+var fdDeck=[], fdCards=[], fdIdx=0, fdDone=0, fdRevealed=false, fdLoading=false, fdGate=null;
 var FD_GRADE={ again:2, hard:3, good:4, easy:5 };   // ADR-003: q = 2/3/4/5
 
 function fdEl(id){ return document.getElementById(id); }
@@ -2984,7 +2984,7 @@ function fdOpenStudy(){
     toast(fdDeck.length ? t('Bugun takrorlash yo’q 🎉') : t("Hali so'z saqlanmagan"));
     return;
   }
-  fdIdx=0; fdDone=0; fdRevealed=false; fdBusy=false;
+  fdIdx=0; fdDone=0; fdRevealed=false;
   var u=document.querySelector('.fd-undo'); if(u) u.style.display = SERVER ? 'none' : '';
   fdEl('fdStTotal').textContent=fdCards.length;
   fdPaintCard();
@@ -2993,7 +2993,12 @@ function fdOpenStudy(){
 }
 function fdCloseStudy(){
   fdEl('fdStudy').classList.remove('open');
-  if(fdDone){ logEv('sr_done', fdCurLang()+':'+fdDone); if(SERVER) fdRenderDeck(); fdDone=0; }
+  if(fdDone){
+    logEv('sr_done', fdCurLang()+':'+fdDone);
+    /* Fondagi baholar yozilib bo'lgunicha kutamiz — bo'lmasa statistikalar eski chiqadi. */
+    if(SERVER) fdOut.flush().then(fdRenderDeck);
+    fdDone=0;
+  }
 }
 function fdPaintCard(){
   var c=fdCards[fdIdx]; if(!c) return;
@@ -3022,36 +3027,106 @@ function fdGradesBusy(on){
   g.style.opacity = on ? '.55' : '';
   g.style.pointerEvents = on ? 'none' : '';
 }
+/* ---------- BAHOLASH NAVBATI (outbox) ----------
+   Ilgari UI server javobini KUTARDI — karta almashishdan oldin 1-2 sekund qotardi.
+   Endi: karta darhol almashadi, so'rov fonda ketadi (optimistik UI).
+   Bu qatlamning yagona vazifasi — yuborish, xato bo'lsa qayta urinish va
+   "hammasi yozildimi?" degan savolga javob berish. UI mantiq bu yerda YO'Q. */
+var fdOut = {
+  n: 0,          /* yo'ldagi so'rovlar */
+  waiters: [],   /* flush() ni kutayotganlar */
+  send: function(card, grade, onDone){
+    var self=this, tries=0; self.n++;
+    function attempt(){
+      tries++;
+      return api('sr_review',{ lang:card.lang, item_type:card.item_type, item_id:card.item_id, grade:grade, rev:card.rev })
+        .then(function(r){
+          /* Faqat vaqtinchalik xatolarda qayta urinamiz. limit/stale — bu javob, xato emas. */
+          if(!r || r.error==='db') throw 0;
+          return r;
+        })
+        .catch(function(){
+          if(tries>=FD_OUT_TRIES) return null;
+          return new Promise(function(res){ setTimeout(res, 500*tries); }).then(attempt);
+        });
+    }
+    return attempt().then(function(r){
+      try{ onDone(r); }catch(e){}
+      self.n--;
+      if(!self.n){ var w=self.waiters; self.waiters=[]; w.forEach(function(f){ f(); }); }
+      return r;
+    });
+  },
+  /* Hamma baho serverga yozilib bo'lgunicha kutish (sessiya yopilganda kerak). */
+  flush: function(){
+    var self=this;
+    if(!self.n) return Promise.resolve();
+    return new Promise(function(res){ self.waiters.push(res); });
+  }
+};
+var FD_OUT_TRIES=3;
+
+/* Server javobini kartaga yozish. Kelmagan maydonni TEGMAYMIZ. */
+function fdSyncCard(c, n){
+  if(!c || !n) return;
+  if(n.rev!=null) c.rev=n.rev;
+  if(n.state!=null) c.state=n.state;
+  if(n.interval_days!=null) c.interval_days=n.interval_days;
+  if(n.due_date!=null) c.due_date=n.due_date;
+  if(n.preview!==undefined) c.preview=n.preview;
+  /* Aynan shu karta hozir ekranda bo'lsa — tugmalardagi intervallarni yangilaymiz. */
+  if(fdCards[fdIdx]===c) fdPaintCard();
+}
+function fdOnLimit(reason){
+  toast(reason==='new_limit' ? t('Bugungi yangi kartalar tugadi') : t('Bugungi limit tugadi — Pro bilan cheksiz'));
+  logEv('pro_popup_view','sr_limit');
+  fdCloseStudy();
+}
 function fdGrade(g){
-  if(fdBusy) return;
   var c=fdCards[fdIdx]; if(!c) return;
   var grade=FD_GRADE[g]||4;
-  if(!SERVER || c._local){ fdAdvance(grade<3 ? c : null); return; }
-  fdBusy=true; fdGradesBusy(true);
-  api('sr_review',{ lang:c.lang, item_type:c.item_type, item_id:c.item_id, grade:grade, rev:c.rev })
-    .then(function(r){
-      if(!r){ toast(t('Aloqa yo’q')); return; }
-      if(r.limit){
-        toast(r.limit==='new_limit' ? t('Bugungi yangi kartalar tugadi') : t('Bugungi limit tugadi — Pro bilan cheksiz'));
-        logEv('pro_popup_view','sr_limit');
-        fdCloseStudy(); return;
-      }
-      if(r.stale){ fdAdvance(null); return; }            // boshqa qurilmada allaqachon baholangan
-      if(!r.ok){ toast(t('Xatolik — qayta urinib ko’ring')); return; }
-      if(r.next){
-        c.rev=r.next.rev; c.state=r.next.state;
-        c.interval_days=r.next.interval_days; c.due_date=r.next.due_date;
-        c.preview=r.next.preview;
-      }
-      if(r.gate) fdGate=r.gate;
-      fdAdvance(r.requeue ? c : null);                    // Again -> sessiya oxiriga (ADR qaror 3)
-    })
-    .catch(function(){ toast(t('Aloqa yo’q')); })
-    .then(function(){ fdBusy=false; fdGradesBusy(false); });
+  var requeue = grade<3;                      /* Again -> sessiya oxiriga (ADR qaror 3) */
+
+  /* Guest rejim yoki hali serverga yozilmagan karta — hammasi mahalliy. */
+  if(!SERVER || c._local){ fdAdvance(requeue ? Object.assign({}, c) : null); return; }
+
+  /* Juda kam holat: oxirgi kartani "Again" qilib, u darhol qaytib keldi va
+     avvalgi so'rov hali javob bermagan. rev eskirmasligi uchun kutamiz. */
+  if(c._sending){
+    fdGradesBusy(true);
+    fdOut.flush().then(function(){ fdGradesBusy(false); if(fdCards[fdIdx]===c) fdGrade(g); });
+    return;
+  }
+
+  /* Limitni MAHALLIY sanaymiz — serverni kutmasdan darhol bilamiz.
+     Server baribir atomik tekshiradi; bu faqat tezkor ko'rsatkich. */
+  if(fdGate && fdGate.unlimited===false && fdGate.remainingTotal!=null){
+    if(fdGate.remainingTotal<=0){ fdOnLimit('daily_limit'); return; }
+    fdGate.remainingTotal--;
+    if(c.state==='new' && fdGate.remainingNew>0) fdGate.remainingNew--;
+  }
+
+  /* 1) UI DARHOL oldinga — kutish yo'q. */
+  var twin = requeue ? Object.assign({}, c) : null;
+  c._sending=true; if(twin) twin._sending=true;
+  fdAdvance(twin);
+
+  /* 2) So'rov fonda; javob kelganda karta holati sinxronlanadi. */
+  fdOut.send(c, grade, function(r){
+    c._sending=false; if(twin) twin._sending=false;
+    if(!r){ toast(t('Aloqa yo’q')); return; }        /* 3 urinish ham natija bermadi */
+    if(r.gate) fdGate=r.gate;
+    if(r.limit){ fdOnLimit(r.limit); return; }
+    if(r.stale){ fdSyncCard(c, r.next); fdSyncCard(twin, r.next); return; }
+    if(!r.ok) return;
+    fdSyncCard(c, r.next); fdSyncCard(twin, r.next);
+  });
 }
 function fdAdvance(requeueCard){
   fdDone++;
-  if(requeueCard) fdCards.push(Object.assign({}, requeueCard));
+  /* Nusxa CHAQIRUVCHI tomonda tayyorlanadi — chunki fon so'rovi aynan shu nusxaga
+     javobni yozib qo'yishi kerak (rev/preview). Bu yerda yana nusxa olsak, aloqa uziladi. */
+  if(requeueCard) fdCards.push(requeueCard);
   fdIdx++; fdRevealed=false;
   if(fdIdx>=fdCards.length){ toast(t('Maqsad bajarildi! 🎉')); fdCloseStudy(); return; }
   fdPaintCard();
