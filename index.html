@@ -514,7 +514,7 @@
 </div>
 
 <div class="page" id="pg-saved">
-  <button class="back" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
+  <button class="back" id="savedBack" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
   <div id="savedTop"><div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z"></path></svg></div><h2 data-i18n="Saqlangan so'zlar">Saqlangan so'zlar</h2></div>
   <p class="muted" style="font-size:12.5px;margin:0 0 14px" data-i18n="Qidiruvda saqlagan so'zlaringiz — til bo'yicha guruhlangan. Ustiga bosib ma'nosini ko'ring.">Qidiruvda saqlagan so'zlaringiz — til bo'yicha guruhlangan. Ustiga bosib ma'nosini ko'ring.</p></div>
   <div id="savedList"></div>
@@ -2629,6 +2629,7 @@ function renderPractice(){
 function soonToast(){ toast(t('Tez kunda')); }
 function renderSaved(){
   var el=document.getElementById('savedList'); if(!el) return;
+  var sb=document.getElementById('savedBack');   // statik "Practice'ga qaytish" — faqat til ro'yxatida
   /* Qayta chizishda eski sv-* vidjet keshini bo'shatamiz (DOM baribir yangi —
      fabrika o'zi ham tekshiradi, bu faqat xotirani toza tutish uchun) */
   Object.keys(ygWidgets).forEach(function(k){ if(k.indexOf('sv')===0) delete ygWidgets[k]; });
@@ -2636,7 +2637,7 @@ function renderSaved(){
   var keys=Object.keys(S.saved);
   var top=document.getElementById('savedTop');
   if(!keys.length){
-    if(top) top.style.display='';
+    if(top) top.style.display=''; if(sb) sb.style.display='';
     savedLang=null;
     el.innerHTML='<div class="sv-empty"><span class="em"><svg viewBox="0 0 24 24" style="width:36px;height:36px;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linejoin:round"><path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z"></path></svg></span>'+t("Hali saqlangan so'z yo'q.")+'<br>'+t("Qidiruvda so'z topib «Saqlash»ni bosing.")+'</div>';
     return;
@@ -2647,7 +2648,7 @@ function renderSaved(){
   var trashIco='<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"></path></svg>';
   var chevIco='<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M6 9l6 6 6-6"></path></svg>';
   if(!savedLang){
-    if(top) top.style.display='';
+    if(top) top.style.display=''; if(sb) sb.style.display='';
     var h='<div class="grid">';
     LANGS.forEach(function(L){
       var arr=groups[L.code]; if(!arr || !arr.length) return;
@@ -2657,7 +2658,7 @@ function renderSaved(){
     el.innerHTML=h;
     return;
   }
-  if(top) top.style.display='none';
+  if(top) top.style.display='none'; if(sb) sb.style.display='none';
   var L=langInfo(savedLang), arr=groups[savedLang];
   arr.sort(function(a,b){ return (b.at||0)-(a.at||0); });
   var h='<button class="back" onclick="backSaved()">'+t("← Orqaga")+'</button>';
