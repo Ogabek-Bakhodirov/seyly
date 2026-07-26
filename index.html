@@ -337,6 +337,12 @@
   .fd-algo{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}
   .fd-algo button{border:none;background:none;padding:0;cursor:pointer;color:var(--accent);font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:5px}
   .fd-algo button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  /* Til tanlagich — HAR DOIM bitta qator (o'ralmaydi). Til ko'payib ketsa yon tomonga suriladi. */
+  .fd-langbar{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-bottom:16px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+  .fd-langbar::-webkit-scrollbar{display:none}
+  .fd-langbar .lbtn{flex:0 0 auto}
+  .fd-algo-i{flex:0 0 auto;margin-left:auto;border:none;background:none;padding:4px;cursor:pointer;color:var(--muted);display:inline-flex;align-items:center}
+  .fd-algo-i svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .fd-hero{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 22px var(--shadow);padding:24px 20px 20px;margin-bottom:24px}
   .fd-big{font-size:60px;font-weight:800;line-height:1;text-align:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .fd-big-sub{font-size:14.5px;color:var(--muted);font-weight:600;text-align:center;margin:8px 0 18px}
@@ -595,12 +601,10 @@
     <button class="back" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
   </div>
   <h2 class="fd-title" id="fdDeckName" data-i18n="Flashcard">Flashcard</h2>
-  <div class="fd-algo">
-    <span data-i18n="O'rganish algoritmi:">O'rganish algoritmi:</span>
-    <button onclick="fdOpenAlgo()"><span data-i18n="Til o'rganish (SR)">Til o'rganish (SR)</span>
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
-    </button>
-  </div>
+  <!-- Til tanlagich: deck qaysi tilda ekani shu yerda ko'rinadi va almashtiriladi.
+       Chip uslubi qidiruv sahifasidagi bilan bir xil (lbtn) — DRY.
+       O'ng chetdagi ⓘ — SR algoritmi izohi (avvalgi "O'rganish algoritmi" qatori o'rniga). -->
+  <div class="fd-langbar" id="fdLangBar"></div>
   <div class="fd-hero">
     <div class="fd-big" id="fdTodayCount">0</div>
     <div class="fd-big-sub" data-i18n="bugungi kartalar">bugungi kartalar</div>
@@ -2830,6 +2834,33 @@ function fdEl(id){ return document.getElementById(id); }
 function fdDotColor(st){ return st==='learning' ? 'var(--ok)' : st==='known' ? 'var(--accent)' : 'var(--dot)'; }
 function fdLangName(code){ for(var i=0;i<LANGS.length;i++){ if(LANGS[i].code===code) return LANGS[i].name; } return ''; }
 
+/* ---------- FLASHCARD TILI ----------
+   Qidiruv sahifasidagi qoida bilan bir xil: sahifaning O'ZINING tili bor.
+   Tanlanmagan bo'lsa default = asosiy til (S.curLang), keyin mustaqil ishlaydi.
+   S.fdLang localStorage'da saqlanadi (save() butun S ni yozadi). */
+function fdCurLang(){
+  var c=S.fdLang;
+  if(c && (S.langs||[]).indexOf(c)>=0) return c;
+  return S.curLang;
+}
+function fdRenderLangs(){
+  var el=fdEl('fdLangBar'); if(!el) return;
+  if(!S.langs || !S.langs.length) S.langs=[S.curLang||'ru'];
+  var cur=fdCurLang(), h='';
+  S.langs.forEach(function(c){ h+=langBtnHtml(c, c===cur, "fdSetLang('"+c+"')"); });
+  h+='<button class="fd-algo-i" onclick="fdOpenAlgo()" aria-label="'+t("Til o'rganish (SR)")+'">'+
+     '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4M12 8h.01"></path></svg></button>';
+  el.innerHTML=h;
+}
+function fdSetLang(c){
+  if(!S.langs || S.langs.indexOf(c)<0) return;
+  if(fdCurLang()===c) return;
+  S.fdLang=c; save();
+  fdRenderLangs();
+  fdRenderDeck();   /* pastdagi ro'yxat va statistikalar yangi tilga yangilanadi */
+  if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
+}
+
 /* Serverdagi kun sonini yorliqqa aylantiramiz. i18n faqat frontendda (ADR qaror 6). */
 function fdFmtDays(d){
   d = Number(d)||0;
@@ -2864,11 +2895,11 @@ function fdTranslitOf(it){
 }
 /* Guest rejim uchun lokal deck (serversiz demo) */
 function fdLocalDeck(){
-  var out=[], s=S.saved||{};
+  var out=[], s=S.saved||{}, lg=fdCurLang();
   Object.keys(s).forEach(function(k){
     var it=s[k]; if(!it) return;
-    if(it.lang && it.lang!==S.curLang) return;
-    out.push({ item_type:'saved', item_id:String(k).split(':').slice(1).join(':'), lang:it.lang||S.curLang,
+    if(it.lang && it.lang!==lg) return;
+    out.push({ item_type:'saved', item_id:String(k).split(':').slice(1).join(':'), lang:it.lang||lg,
                word:it.word||'', state:'new', interval_days:0, rev:0, preview:null, _local:true });
   });
   return out;
@@ -2876,14 +2907,19 @@ function fdLocalDeck(){
 
 /* ---------- DECK SAHIFASI ---------- */
 function fdRenderDeck(){
-  var nm=fdEl('fdDeckName'); if(nm){ var ln=fdLangName(S.curLang); nm.textContent = ln ? (t('Flashcard')+' · '+ln) : t('Flashcard'); }
+  fdRenderLangs();
+  var lg=fdCurLang();
+  var nm=fdEl('fdDeckName'); if(nm){ var ln=fdLangName(lg); nm.textContent = ln ? (t('Flashcard')+' · '+ln) : t('Flashcard'); }
   if(!SERVER){ fdCards=fdLocalDeck(); fdGate=null; fdApplyDeck(fdCards, null, null); return; }
   fdLoading=true;
   ['fdTodayCount','fdStNew','fdStLearning','fdStKnown','fdTotalCount'].forEach(function(id){ var e=fdEl(id); if(e) e.textContent='…'; });
   Promise.all([
-    api('sr_profile',{ lang:S.curLang }).catch(function(){ return null; }),
-    api('sr_due',{ lang:S.curLang }).catch(function(){ return null; })
+    api('sr_profile',{ lang:lg }).catch(function(){ return null; }),
+    api('sr_due',{ lang:lg }).catch(function(){ return null; })
   ]).then(function(r){
+    /* Javob kechikib kelganda til allaqachon almashgan bo'lishi mumkin —
+       eski javobni yangi til ustiga yozib yubormaymiz (race guard). */
+    if(fdCurLang()!==lg) return;
     fdLoading=false;
     var prof = (r[0] && r[0].ok && r[0].items) ? r[0].items : [];
     var due  = (r[1] && r[1].ok) ? r[1] : null;
@@ -2951,11 +2987,11 @@ function fdOpenStudy(){
   fdEl('fdStTotal').textContent=fdCards.length;
   fdPaintCard();
   fdEl('fdStudy').classList.add('open');
-  logEv('sr_start', S.curLang+':'+fdCards.length);
+  logEv('sr_start', fdCurLang()+':'+fdCards.length);
 }
 function fdCloseStudy(){
   fdEl('fdStudy').classList.remove('open');
-  if(fdDone){ logEv('sr_done', S.curLang+':'+fdDone); if(SERVER) fdRenderDeck(); fdDone=0; }
+  if(fdDone){ logEv('sr_done', fdCurLang()+':'+fdDone); if(SERVER) fdRenderDeck(); fdDone=0; }
 }
 function fdPaintCard(){
   var c=fdCards[fdIdx]; if(!c) return;
