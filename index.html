@@ -908,6 +908,9 @@
       <div id="fdBack" class="fd-hide">
         <div class="rule"></div>
         <div class="back-tr" id="fdTr"></div>
+        <!-- Reklamasiz video widget (ADR): so'zga oid real videolar. JS to'ldiradi (spVideoBlockHtml).
+             stopPropagation — control tugmalari kartani "reveal" qilib yubormasin. -->
+        <div id="fdVideoWrap" style="margin-top:14px" onclick="event.stopPropagation()"></div>
       </div>
     </div>
   </div>
@@ -1998,6 +2001,8 @@ function spMountSaved(i){ var s='sv'+i; return {key:'saved-'+i, box:s+'Box', yt:
 function spMountCat(id){ var s='cat'+id; return {key:'cat-'+id, box:s+'Box', yt:s+'YT', sub:s+'Sub', cnt:s+'Cnt', ad:s+'Ad', adImg:s+'AdImg'}; }
 // Onboarding "tatib ko'rish" widgeti — reklamasiz (renderAd 'ob' mount uchun ad ko'rsatmaydi).
 function spMountOb(){ return {key:'ob', box:'obBox', yt:'obYT', sub:'obSub', cnt:'obCnt', ad:'obAd', adImg:'obAdImg'}; }
+/* Flashcard video widgeti — REKLAMASIZ (ADR). key:'fd' renderAd'da reklama ko'rsatmaydi. */
+function spMountFd(){ return {key:'fd', box:'fdvBox', yt:'fdvYT', sub:'fdvSub', cnt:'fdvCnt', ad:'fdvAd', adImg:'fdvAdImg'}; }
 // Onboarding tatib ko'rish uchun kafolatlangan example so'zlar (har til uchun ~20 video ingest qilinadi).
 var OB_EXAMPLES = { ru:['конечно','вкусно','красиво'], en:['exactly','delicious','beautiful'], de:['natürlich','lecker','schön'] };
 function obTasteLang(){ return (ob.langs && ob.langs.length) ? ob.langs[0] : 'ru'; }   // birinchi tanlagan o'rganish tili
@@ -2654,7 +2659,7 @@ function hideSearchLoading(){
 function renderAd(){
   if(!sp.mount) return;
   var a=document.getElementById(sp.mount.ad); if(!a) return;
-  if(sp.mount.key==='ob'){ a.style.display='none'; return; }   // onboarding tatib ko'rish — reklamasiz
+  if(sp.mount.key==='ob' || sp.mount.key==='fd'){ a.style.display='none'; return; }   // onboarding tatib ko'rish + flashcard — reklamasiz
   /* Widget tiliga mos banner (ru pleyer -> ru banner). Shu til uchun banner yo'q -> ko'rsatmaymiz. */
   var b = ADS_BY_LANG[sp.lang] || null;
   if(!b || !b.img){ a.style.display='none'; return; }
@@ -3294,14 +3299,30 @@ function fdOpenStudy(){
     return;
   }
   fdIdx=0; fdDone=0; fdRevealed=false;
+  /* Video widgetini bir marta quramiz (spVideoBlockHtml — qidiruvdagi bilan bir xil, DRY). */
+  var vw=fdEl('fdVideoWrap'); if(vw && !vw.innerHTML) vw.innerHTML=spVideoBlockHtml('fdv','fdvload','fdvslot');
   var u=document.querySelector('.fd-undo'); if(u) u.style.display = SERVER ? 'none' : '';
   fdEl('fdStTotal').textContent=fdCards.length;
   fdPaintCard();
   fdEl('fdStudy').classList.add('open');
   logEv('sr_start', fdCurLang()+':'+fdCards.length);
 }
+/* Kartaning videosini to'xtatib yashiramiz (keyingi kartaga o'tishда/yopishда — ovoz qolib ketmasin). */
+function fdStopVideo(){
+  try{ if(sp.player && sp.player.stopVideo) sp.player.stopVideo(); }catch(e){}
+  var bx=fdEl('fdvBox'); if(bx) bx.style.display='none';
+  var ld=fdEl('fdvload'); if(ld) ld.style.display='none';
+}
+/* Javob ochilganda so'zga oid videolarni yuklaymiz (reklamasiz mount: spMountFd). */
+function fdLoadVideo(c){
+  if(!c || !SERVER || c._local) return;
+  var q=fdFrontText(c), lang=c.lang;
+  if(!q){ fdStopVideo(); return; }
+  corpusFirstVideo(q, lang, spMountFd(), 'fdvload', function(){ fdStopVideo(); });   // video topilmasa — faqat ma'no
+}
 function fdCloseStudy(){
   fdEl('fdStudy').classList.remove('open');
+  if(sp.mount && sp.mount.key==='fd') hideSeylyPlayer();   // videoni to'liq to'xtatib tozalaymiz
   if(fdDone){
     logEv('sr_done', fdCurLang()+':'+fdDone);
     /* Fondagi baholar yozilib bo'lgunicha kutamiz — bo'lmasa statistikalar eski chiqadi.
@@ -3351,7 +3372,7 @@ function fdPaintCard(){
   fdEl('fdIntGood').textContent=pv&&pv.good?fdFmtStep(pv.good):'';
   fdEl('fdIntEasy').textContent=pv&&pv.easy?fdFmtStep(pv.easy):'';
 }
-function fdReveal(){ if(fdRevealed) return; fdRevealed=true; fdPaintCard(); }
+function fdReveal(){ if(fdRevealed) return; fdRevealed=true; fdPaintCard(); fdLoadVideo(fdCards[fdIdx]); }
 function fdGradesBusy(on){
   var g=fdEl('fdFootGrades'); if(!g) return;
   g.style.opacity = on ? '.55' : '';
@@ -3466,6 +3487,7 @@ function fdGrade(g){
   });
 }
 function fdAdvance(requeueCard){
+  fdStopVideo();   // oldingi kartaning videosi keyingisiga o'tganda ovoz bermay to'xtasin
   fdDone++;
   /* Nusxa CHAQIRUVCHI tomonda tayyorlanadi — chunki fon so'rovi aynan shu nusxaga
      javobni yozib qo'yishi kerak (rev/preview). Bu yerda yana nusxa olsak, aloqa uziladi. */
