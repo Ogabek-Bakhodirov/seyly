@@ -355,9 +355,12 @@
   .fd-sechead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .fd-sechead h3{margin:0;font-size:18px;font-weight:800}
   .fd-bar{display:flex;gap:3px;height:9px;border-radius:99px;overflow:hidden;margin-bottom:12px}
-  .fd-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-  .fd-legend span{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600}
-  .fd-legend i{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  /* Uch status HAR DOIM bitta qatorda: torroq ekranda ham o'ralib qolmasin.
+     Shuning uchun flex-wrap:nowrap va min-width:0 — matn kerak bo'lsa qisqaradi (ellipsis emas, chunki raqamlar ko'rinishi shart).
+     Gap kichrayadi (16→10), shrift ozgina (13→12) — 3 element mobil kenglikka sig'sin. */
+  .fd-legend{display:flex;gap:10px;flex-wrap:nowrap;margin-bottom:22px;align-items:center}
+  .fd-legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap;min-width:0}
+  .fd-legend i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
   .fd-list{display:flex;flex-direction:column;gap:10px}
   .fd-row{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 14px var(--shadow);padding:15px 15px 15px 16px;display:flex;align-items:center;gap:12px}
   .fd-row i.dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
