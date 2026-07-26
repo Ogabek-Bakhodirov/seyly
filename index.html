@@ -2969,12 +2969,14 @@ function fdPaintCard(){
   fdEl('fdPos').textContent=fdDone;
   fdEl('fdStTotal').textContent=fdCards.length;
   fdEl('fdProgBar').style.width=(fdCards.length?Math.round(fdDone/fdCards.length*100):0)+'%';
-  /* Tugmalardagi intervallar — SERVER hisoblagan preview (klient hisoblamaydi) */
+  /* Tugmalardagi intervallar — SERVER hisoblagan preview (klient SM-2ni bilmaydi).
+     Preview yo'q bo'lsa (masalan Again'dan keyin qayta navbatga tushgan karta) —
+     raqamni TAXMIN QILMAYMIZ, shunchaki ko'rsatmaymiz. Noto'g'ri raqam yo'qidan yomon. */
   var pv=c.preview;
-  fdEl('fdIntAgain').textContent=t('10 daq');
-  fdEl('fdIntHard').textContent=pv&&pv.hard?fdFmtDays(pv.hard.days):'—';
-  fdEl('fdIntGood').textContent=pv&&pv.good?fdFmtDays(pv.good.days):'—';
-  fdEl('fdIntEasy').textContent=pv&&pv.easy?fdFmtDays(pv.easy.days):'—';
+  fdEl('fdIntAgain').textContent=pv?t('10 daq'):'';
+  fdEl('fdIntHard').textContent=pv&&pv.hard?fdFmtDays(pv.hard.days):'';
+  fdEl('fdIntGood').textContent=pv&&pv.good?fdFmtDays(pv.good.days):'';
+  fdEl('fdIntEasy').textContent=pv&&pv.easy?fdFmtDays(pv.easy.days):'';
 }
 function fdReveal(){ if(fdRevealed) return; fdRevealed=true; fdPaintCard(); }
 function fdGradesBusy(on){
