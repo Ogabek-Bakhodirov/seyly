@@ -45,7 +45,14 @@
   #quotaBtn{background:linear-gradient(135deg,#f6c445,#f09819);color:#241a00;border:none;font-weight:800}
 
   /* ---- onboarding ---- */
-  .ob-progress{display:flex;gap:6px;margin:4px 0 20px}
+  /* Onboarding sarlavha qatori: orqaga tugma + progress bar bir qatorda.
+     Birinchi qadamda tugma yashiriladi (qaytadigan joy yo'q). */
+  .ob-head{display:flex;align-items:center;gap:10px;margin:4px 0 20px}
+  .ob-back{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card-2);color:var(--text);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+  .ob-back svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .ob-back:active{transform:scale(.96)}
+  .ob-back.hidden{visibility:hidden}   /* joyni saqlab, faqat ko'rinmaydigan qiladi — progress "sakrab" ketmasin */
+  .ob-progress{display:flex;gap:6px;flex:1;min-width:0}
   .ob-progress i{flex:1;height:4px;border-radius:99px;background:var(--card-2)}
   .ob-progress i.on{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
   .ob-title{font-size:21px;font-weight:800;margin:0 0 6px}
@@ -485,7 +492,14 @@
 
 <!-- ============ ONBOARDING ============ -->
 <div class="page" id="pg-ob">
-  <div class="ob-progress" id="obProg"></div>
+  <!-- Orqaga tugma HAR onboarding sahifasida ko'rinadi (birinchi qadamdan tashqari).
+       renderOb() 'hidden' klassini birinchi qadamda qo'shadi. -->
+  <div class="ob-head">
+    <button class="ob-back" id="obBackBtn" onclick="obBack()" aria-label="Orqaga">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <div class="ob-progress" id="obProg"></div>
+  </div>
   <div id="obStep"></div>
 </div>
 
@@ -1196,6 +1210,8 @@ function renderOb(){
   logObStep(ob.step, st.key);   // voronka: bu qadamga yetdi
   var prog=''; for(var i=0;i<OB_STEPS.length;i++) prog+='<i class="'+(i<=ob.step?'on':'')+'"></i>';
   document.getElementById('obProg').innerHTML=prog;
+  /* Orqaga tugma: birinchi qadamda yashiringan (joy saqlanadi, progress joyidan siljimaydi). */
+  var bb=document.getElementById('obBackBtn'); if(bb) bb.classList.toggle('hidden', ob.step===0);
   var h='<h2 class="ob-title">'+t(st.title)+'</h2><p class="ob-sub">'+t(st.sub)+'</p>';
 
   /* Interfeys tili tanlash (hozircha faqat o'zbekcha faol) */
@@ -1337,6 +1353,16 @@ function obPick(i){
     if(ix>=0) arr.splice(ix,1); else arr.push(o.v);
   } else ob[st.key]=o.v;
   renderOb();
+}
+/* Orqaga qaytish: bir qadam pastga. Tanlovlar o'chirilmaydi — user o'zgartirsa qayta tanlaydi.
+   'taste' qadamidan chiqsak videoni to'xtatamiz (fon uzumini olib tashlash). */
+function obBack(){
+  if(ob.step<=0) return;
+  var cur=OB_STEPS[ob.step];
+  if(cur && cur.taste){ try{ hideSeylyPlayer(); }catch(e){} }
+  ob.step--;
+  renderOb();
+  if(tg&&tg.HapticFeedback){ try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){} }
 }
 function obNext(){
   var st=OB_STEPS[ob.step];
