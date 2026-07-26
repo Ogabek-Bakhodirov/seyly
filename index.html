@@ -621,6 +621,7 @@
       </div>
     </div>
     <button class="fd-btn" onclick="fdOpenStudy()" data-i18n="Kartalarni o'rganish">Kartalarni o'rganish</button>
+    <div id="fdLimitNote" style="display:none;margin-top:10px;font-size:12px;color:var(--muted);text-align:center"></div>
   </div>
   <div class="fd-sechead">
     <h3><span data-i18n="Kartalar to'plami">Kartalar to'plami</span> (<span id="fdTotalCount">0</span>)</h3>
@@ -2806,97 +2807,217 @@ var savedLang=null;   // Saqlangan: tanlangan til (null = tillar ro'yxati)
 /* Practice hub: Saqlangan plitkasi ostidagi meta (til + so'z soni). */
 function renderPractice(){
   var el=document.getElementById('prcSavedMeta'); if(!el) return;
-  var keys=Object.keys(S.saved||{}), n=0;
-  keys.forEach(function(k){ n += (S.saved[k]||[]).length; });
+  var keys=Object.keys(S.saved||{}), langs={};
+  keys.forEach(function(k){ var it=S.saved[k]; if(it && it.lang) langs[it.lang]=1; });
+  var nl=Object.keys(langs).length;
   el.textContent = keys.length
-    ? keys.length+' '+t('til')+' · '+n+' '+t("so'z")
+    ? nl+' '+t('til')+' · '+keys.length+' '+t("so'z")
     : t("Hali so'z saqlanmagan");
 }
 function soonToast(){ toast(t('Tez kunda')); }
 
-/* ================== FLASHCARD (dizayn preview) ==================
-   Real SR moduli (holat/interval/kunlik tanlov/persist) keyin qo'shiladi (tadqiqot asosida).
-   Hozir: deck saqlangan so'zlardan quriladi, baholash faqat keyingi kartaga o'tadi. */
-var fdDeck=[], fdCards=[], fdIdx=0, fdRevealed=false;
+/* ================== FLASHCARD (SR dvigateli — ADR-003) ==================
+   Butun algoritm SERVERDA (sr.ts): interval, ease, kunlik navbat, limit.
+   Bu yerda faqat KO'RSATISH + API chaqiruv. Klient hech qanday SM-2 hisobini
+   takrorlamaydi (DRY) — barcha raqam serverdan `preview` bo'lib keladi.
+     deck sahifasi : sr_profile (holat xaritasi) + sr_due (bugungi navbat)
+     o'rganish     : sr_review (atomik, limit serverda tekshiriladi)
+   Guest rejim (Telegram'siz brauzer): lokal S.saved'dan preview, saqlanmaydi. */
+var fdDeck=[], fdCards=[], fdIdx=0, fdDone=0, fdRevealed=false, fdBusy=false, fdLoading=false, fdGate=null;
+var FD_GRADE={ again:2, hard:3, good:4, easy:5 };   // ADR-003: q = 2/3/4/5
+
+function fdEl(id){ return document.getElementById(id); }
 function fdDotColor(st){ return st==='learning' ? 'var(--ok)' : st==='known' ? 'var(--accent)' : 'var(--dot)'; }
-function fdBuildDeck(){
+function fdLangName(code){ for(var i=0;i<LANGS.length;i++){ if(LANGS[i].code===code) return LANGS[i].name; } return ''; }
+
+/* Serverdagi kun sonini yorliqqa aylantiramiz. i18n faqat frontendda (ADR qaror 6). */
+function fdFmtDays(d){
+  d = Number(d)||0;
+  if(d<1) return t('10 daq');
+  if(d<30) return d+' '+t('kun');
+  if(d<365){ var m=Math.max(1,Math.round(d/30)); return m+' '+t('oy'); }
+  var y=Math.round(d/365*10)/10; return (y%1?y:Math.round(y))+' '+t('yil');
+}
+/* Karta holati -> vizual status (21 kun = "o'zlashtirilgan" chegarasi) */
+function fdStatusOf(it){
+  if(it.state!=='review') return 'new';
+  return (Number(it.interval_days)||0) >= 21 ? 'known' : 'learning';
+}
+/* Old tomon: o'rganilayotgan tildagi matn */
+function fdFrontText(it){
+  if(it.item_type==='phrase'){ var p=byId[it.item_id]; if(p) return p.ru||it.word||''; }
+  return it.word||'';
+}
+/* Orqa tomon: o'zbekcha ma'no (lokal ma'lumotdan — server matn saqlamaydi) */
+function fdMeaning(it){
+  if(it.item_type==='phrase'){ var p=byId[it.item_id]; return p ? (p.uz||'') : ''; }
+  var s=(S.saved||{})[savedKey(it.lang, it.item_id)];
+  if(!s) return '';
+  var d=s.def||{};
+  if(d.senses && d.senses[0]) return senseTxt(d.senses[0])||'';
+  return '';
+}
+function fdTranslitOf(it){
+  if(it.item_type==='phrase'){ var p=byId[it.item_id]; return p ? (p.tr||'') : ''; }
+  var s=(S.saved||{})[savedKey(it.lang, it.item_id)];
+  return s ? (s.translit||'') : '';
+}
+/* Guest rejim uchun lokal deck (serversiz demo) */
+function fdLocalDeck(){
   var out=[], s=S.saved||{};
   Object.keys(s).forEach(function(k){
     var it=s[k]; if(!it) return;
-    var front=it.word||it.word_display||String(k);
-    var uz=(it.def&&it.def.senses&&it.def.senses[0]&&it.def.senses[0].uz) || it.translit || '';
-    out.push({ru:front, uz:uz, st:'new'});   // st: SR moduli qo'shilganda haqiqiy holat keladi
+    if(it.lang && it.lang!==S.curLang) return;
+    out.push({ item_type:'saved', item_id:String(k).split(':').slice(1).join(':'), lang:it.lang||S.curLang,
+               word:it.word||'', state:'new', interval_days:0, rev:0, preview:null, _local:true });
   });
   return out;
 }
+
+/* ---------- DECK SAHIFASI ---------- */
 function fdRenderDeck(){
-  fdDeck=fdBuildDeck();
-  var total=fdDeck.length;
-  var nNew=fdDeck.filter(function(c){return c.st==='new';}).length;
-  var nLearn=fdDeck.filter(function(c){return c.st==='learning';}).length;
-  var nKnown=fdDeck.filter(function(c){return c.st==='known';}).length;
-  document.getElementById('fdTodayCount').textContent=total;   // SR: kunlik "due" kartalar. Hozir hammasi.
-  document.getElementById('fdStNew').textContent=nNew;
-  document.getElementById('fdStLearning').textContent=nLearn;
-  document.getElementById('fdStKnown').textContent=nKnown;
-  document.getElementById('fdTotalCount').textContent=total;
+  var nm=fdEl('fdDeckName'); if(nm){ var ln=fdLangName(S.curLang); nm.textContent = ln ? (t('Flashcard')+' · '+ln) : t('Flashcard'); }
+  if(!SERVER){ fdCards=fdLocalDeck(); fdGate=null; fdApplyDeck(fdCards, null, null); return; }
+  fdLoading=true;
+  ['fdTodayCount','fdStNew','fdStLearning','fdStKnown','fdTotalCount'].forEach(function(id){ var e=fdEl(id); if(e) e.textContent='…'; });
+  Promise.all([
+    api('sr_profile',{ lang:S.curLang }).catch(function(){ return null; }),
+    api('sr_due',{ lang:S.curLang }).catch(function(){ return null; })
+  ]).then(function(r){
+    fdLoading=false;
+    var prof = (r[0] && r[0].ok && r[0].items) ? r[0].items : [];
+    var due  = (r[1] && r[1].ok) ? r[1] : null;
+    fdCards = due ? (due.items||[]).slice() : [];
+    fdGate  = due ? (due.gate||null) : null;
+    fdApplyDeck(prof, due ? fdCards.length : null, fdGate);
+  });
+}
+function fdApplyDeck(items, todayCount, gate){
+  fdDeck = items || [];
+  var total=fdDeck.length, nNew=0, nLearn=0, nKnown=0;
+  fdDeck.forEach(function(it){
+    var st=fdStatusOf(it); it._st=st;
+    if(st==='new') nNew++; else if(st==='learning') nLearn++; else nKnown++;
+  });
+  fdEl('fdTodayCount').textContent = (todayCount==null ? total : todayCount);
+  fdEl('fdStNew').textContent=nNew;
+  fdEl('fdStLearning').textContent=nLearn;
+  fdEl('fdStKnown').textContent=nKnown;
+  fdEl('fdTotalCount').textContent=total;
   var pct=function(x){ return total?Math.round(x/total*100):0; };
-  var bar=document.getElementById('fdBar');
-  bar.innerHTML='<i style="width:'+pct(nNew)+'%;background:var(--dot)"></i>'+
+  fdEl('fdBar').innerHTML='<i style="width:'+pct(nNew)+'%;background:var(--dot)"></i>'+
     '<i style="width:'+pct(nLearn)+'%;background:var(--ok)"></i>'+
     '<i style="width:'+pct(nKnown)+'%;background:var(--accent)"></i>';
-  var lg=document.getElementById('fdLegend');
-  lg.innerHTML='<span><i style="background:var(--dot)"></i>'+nNew+' '+t("O'rganilmagan")+'</span>'+
+  fdEl('fdLegend').innerHTML='<span><i style="background:var(--dot)"></i>'+nNew+' '+t("O'rganilmagan")+'</span>'+
     '<span><i style="background:var(--ok)"></i>'+nLearn+' '+t("O'rganilyapti")+'</span>'+
     '<span><i style="background:var(--accent)"></i>'+nKnown+' '+t("O'zlashtirilgan")+'</span>';
-  var el=document.getElementById('fdDeckList');
+  /* Bepul limit izohi — Pro/trial'da ko'rinmaydi */
+  var note=fdEl('fdLimitNote');
+  if(note){
+    if(gate && gate.unlimited===false && gate.remainingTotal!=null){
+      note.textContent = t('Bugun qoldi')+': '+gate.remainingTotal+' '+t('karta');
+      note.style.display='';
+    } else { note.style.display='none'; }
+  }
+  var el=fdEl('fdDeckList');
   if(!total){ el.innerHTML='<div class="card" style="padding:18px;text-align:center;color:var(--muted);font-size:13px">'+t("Hali so'z saqlanmagan")+'</div>'; return; }
-  el.innerHTML=fdDeck.map(function(){
+  var show=fdDeck.slice(0,300);
+  el.innerHTML=show.map(function(){
     return '<div class="fd-row"><i class="dot"></i><div class="txt"><div class="ru"></div><div class="uz"></div></div></div>';
   }).join('');
   var rows=el.querySelectorAll('.fd-row');
   for(var i=0;i<rows.length;i++){
-    rows[i].querySelector('.dot').style.background=fdDotColor(fdDeck[i].st);
-    rows[i].querySelector('.ru').textContent=fdDeck[i].ru;
-    rows[i].querySelector('.uz').textContent=fdDeck[i].uz;
+    rows[i].querySelector('.dot').style.background=fdDotColor(show[i]._st);
+    rows[i].querySelector('.ru').textContent=fdFrontText(show[i]);
+    rows[i].querySelector('.uz').textContent=fdMeaning(show[i]) || fdTranslitOf(show[i]);
   }
 }
-function fdOpenInfo(){ document.getElementById('fdOvInfo').classList.add('open'); }
-function fdCloseInfo(e){ if(e && e.target!==e.currentTarget) return; document.getElementById('fdOvInfo').classList.remove('open'); }
-function fdOpenAlgo(){ document.getElementById('fdOvAlgo').classList.add('open'); }
-function fdCloseAlgo(e){ if(e && e.target!==e.currentTarget) return; document.getElementById('fdOvAlgo').classList.remove('open'); }
+function fdOpenInfo(){ fdEl('fdOvInfo').classList.add('open'); }
+function fdCloseInfo(e){ if(e && e.target!==e.currentTarget) return; fdEl('fdOvInfo').classList.remove('open'); }
+function fdOpenAlgo(){ fdEl('fdOvAlgo').classList.add('open'); }
+function fdCloseAlgo(e){ if(e && e.target!==e.currentTarget) return; fdEl('fdOvAlgo').classList.remove('open'); }
+
+/* ---------- O'RGANISH SESSIYASI ---------- */
 function fdOpenStudy(){
-  fdCards=fdDeck.length?fdDeck:fdBuildDeck();
-  if(!fdCards.length){ toast(t("Hali so'z saqlanmagan")); return; }
-  fdIdx=0; fdRevealed=false;
-  document.getElementById('fdStTotal').textContent=fdCards.length;
+  if(fdLoading){ toast(t('Yuklanmoqda…')); return; }
+  if(!SERVER) fdCards=fdLocalDeck();
+  if(!fdCards.length){
+    if(fdGate && fdGate.unlimited===false && !fdGate.remainingTotal){ toast(t('Bugungi limit tugadi — Pro bilan cheksiz')); logEv('pro_popup_view','sr_limit'); return; }
+    toast(fdDeck.length ? t('Bugun takrorlash yo’q 🎉') : t("Hali so'z saqlanmagan"));
+    return;
+  }
+  fdIdx=0; fdDone=0; fdRevealed=false; fdBusy=false;
+  var u=document.querySelector('.fd-undo'); if(u) u.style.display = SERVER ? 'none' : '';
+  fdEl('fdStTotal').textContent=fdCards.length;
   fdPaintCard();
-  document.getElementById('fdStudy').classList.add('open');
+  fdEl('fdStudy').classList.add('open');
+  logEv('sr_start', S.curLang+':'+fdCards.length);
 }
-function fdCloseStudy(){ document.getElementById('fdStudy').classList.remove('open'); }
+function fdCloseStudy(){
+  fdEl('fdStudy').classList.remove('open');
+  if(fdDone){ logEv('sr_done', S.curLang+':'+fdDone); if(SERVER) fdRenderDeck(); fdDone=0; }
+}
 function fdPaintCard(){
   var c=fdCards[fdIdx]; if(!c) return;
-  document.getElementById('fdFront').textContent=c.ru;
-  document.getElementById('fdTr').textContent=c.uz;
-  document.getElementById('fdBack').classList.toggle('fd-hide', !fdRevealed);
-  document.getElementById('fdFootFront').classList.toggle('fd-hide', fdRevealed);
-  document.getElementById('fdFootGrades').classList.toggle('fd-hide', !fdRevealed);
-  document.getElementById('fdPos').textContent=fdIdx;
-  document.getElementById('fdProgBar').style.width=Math.round(fdIdx/fdCards.length*100)+'%';
-  /* interval yorliqlari — PLACEHOLDER (SR moduli qo'shilganda haqiqiy hisoblanadi) */
-  document.getElementById('fdIntAgain').textContent='10 daq';
-  document.getElementById('fdIntHard').textContent='1 kun';
-  document.getElementById('fdIntGood').textContent='3 kun';
-  document.getElementById('fdIntEasy').textContent='6 kun';
+  fdEl('fdFront').textContent=fdFrontText(c);
+  var mean=fdMeaning(c), tr=fdTranslitOf(c);
+  fdEl('fdTr').innerHTML = (mean ? escHtml(mean) : '<span style="color:var(--muted)">'+t("Ma'no saqlanmagan")+'</span>')
+    + (tr ? '<div style="font-size:13px;color:var(--muted);margin-top:8px">'+escHtml(tr)+'</div>' : '');
+  fdEl('fdBack').classList.toggle('fd-hide', !fdRevealed);
+  fdEl('fdFootFront').classList.toggle('fd-hide', fdRevealed);
+  fdEl('fdFootGrades').classList.toggle('fd-hide', !fdRevealed);
+  fdEl('fdPos').textContent=fdDone;
+  fdEl('fdStTotal').textContent=fdCards.length;
+  fdEl('fdProgBar').style.width=(fdCards.length?Math.round(fdDone/fdCards.length*100):0)+'%';
+  /* Tugmalardagi intervallar — SERVER hisoblagan preview (klient hisoblamaydi) */
+  var pv=c.preview;
+  fdEl('fdIntAgain').textContent=t('10 daq');
+  fdEl('fdIntHard').textContent=pv&&pv.hard?fdFmtDays(pv.hard.days):'—';
+  fdEl('fdIntGood').textContent=pv&&pv.good?fdFmtDays(pv.good.days):'—';
+  fdEl('fdIntEasy').textContent=pv&&pv.easy?fdFmtDays(pv.easy.days):'—';
 }
 function fdReveal(){ if(fdRevealed) return; fdRevealed=true; fdPaintCard(); }
-function fdGrade(g){   /* SR: g -> keyingi interval + holat, keyin persist. Hozir: keyingi karta. */
+function fdGradesBusy(on){
+  var g=fdEl('fdFootGrades'); if(!g) return;
+  g.style.opacity = on ? '.55' : '';
+  g.style.pointerEvents = on ? 'none' : '';
+}
+function fdGrade(g){
+  if(fdBusy) return;
+  var c=fdCards[fdIdx]; if(!c) return;
+  var grade=FD_GRADE[g]||4;
+  if(!SERVER || c._local){ fdAdvance(grade<3 ? c : null); return; }
+  fdBusy=true; fdGradesBusy(true);
+  api('sr_review',{ lang:c.lang, item_type:c.item_type, item_id:c.item_id, grade:grade, rev:c.rev })
+    .then(function(r){
+      if(!r){ toast(t('Aloqa yo’q')); return; }
+      if(r.limit){
+        toast(r.limit==='new_limit' ? t('Bugungi yangi kartalar tugadi') : t('Bugungi limit tugadi — Pro bilan cheksiz'));
+        logEv('pro_popup_view','sr_limit');
+        fdCloseStudy(); return;
+      }
+      if(r.stale){ fdAdvance(null); return; }            // boshqa qurilmada allaqachon baholangan
+      if(!r.ok){ toast(t('Xatolik — qayta urinib ko’ring')); return; }
+      if(r.next){
+        c.rev=r.next.rev; c.state=r.next.state;
+        c.interval_days=r.next.interval_days; c.due_date=r.next.due_date;
+        c.preview=r.next.preview;
+      }
+      if(r.gate) fdGate=r.gate;
+      fdAdvance(r.requeue ? c : null);                    // Again -> sessiya oxiriga (ADR qaror 3)
+    })
+    .catch(function(){ toast(t('Aloqa yo’q')); })
+    .then(function(){ fdBusy=false; fdGradesBusy(false); });
+}
+function fdAdvance(requeueCard){
+  fdDone++;
+  if(requeueCard) fdCards.push(Object.assign({}, requeueCard));
   fdIdx++; fdRevealed=false;
-  if(fdIdx>=fdCards.length){ fdCloseStudy(); toast(t('Maqsad bajarildi! 🎉')); return; }
+  if(fdIdx>=fdCards.length){ toast(t('Maqsad bajarildi! 🎉')); fdCloseStudy(); return; }
   fdPaintCard();
   var b=document.querySelector('.fd-study-body'); if(b) b.scrollTop=0;
 }
-function fdUndo(){ if(fdIdx>0){ fdIdx--; fdRevealed=false; fdPaintCard(); } }
+function fdUndo(){ if(!SERVER && fdIdx>0){ fdIdx--; fdDone=Math.max(0,fdDone-1); fdRevealed=false; fdPaintCard(); } }
 /* Esc bilan yopish */
 document.addEventListener('keydown', function(e){
   if(e.key!=='Escape') return;
