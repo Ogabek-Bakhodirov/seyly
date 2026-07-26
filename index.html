@@ -610,7 +610,7 @@
   <div class="defcard" id="sDefine" style="display:none"></div>
   <div class="lockmsg" id="sLock" style="display:none">
     <span data-i18n="Bugungi bepul qidiruvlar tugadi 😔">Bugungi bepul qidiruvlar tugadi 😔</span><br><br>
-    <button class="btn gold" onclick="logEv('pro_popup_click','search_lock');go('profile')" data-i18n="⭐ Pro — cheksiz qidiruv">⭐ Pro — cheksiz qidiruv</button>
+    <button class="btn gold" onclick="proUpsell('search_lock');go('profile')" data-i18n="⭐ Pro — cheksiz qidiruv">⭐ Pro — cheksiz qidiruv</button>
   </div>
 </div>
 
@@ -1672,7 +1672,7 @@ function showLock(id){
   }
   msg += '<br>' + t("Ertaga limitingiz yangilanadi — yoki Pro bilan bugun cheksiz davom eting 🚀");
   body.innerHTML='<div class="lockmsg">'+msg+'<br><br>'+
-    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'daily_lock\');go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
+    '<button class="btn gold" onclick="proUpsell(\'daily_lock\');go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
   document.getElementById('phi-'+id).classList.add('open');
   logEv('pro_popup_show','daily_lock');
 }
@@ -2046,7 +2046,7 @@ var corpusCache={};
 function corpusLockInner(){
   return t("Bugungi bepul limit tugadi 😔")+'<br>'+
     t("Pro bilan videolar va tarjimalar cheksiz, istalgancha o'rganing 🚀")+
-    '<br><br><button class="btn gold" onclick="logEv(\'pro_popup_click\',\'video_lock\');go(\'profile\')">'+t("⭐ Pro olish")+'</button>';
+    '<br><br><button class="btn gold" onclick="proUpsell(\'video_lock\');go(\'profile\')">'+t("⭐ Pro olish")+'</button>';
 }
 function corpusFirstVideo(q, lang, mount, loadId, fallback){
   if(!(hasCorpus(lang) && SERVER)){ fallback(); return; }
@@ -2162,7 +2162,7 @@ function closeCwPop(){
 function cwProLockHtml(){
   logEv('pro_popup_show','define_lock');   // faqat lock render bo'lganda chaqiriladi
   return '<div class="cw-lock">'+t("Bugungi bepul tarjimalar tugadi 😔 Pro bilan istalgancha — har so'zning o'zbekcha ma'nosini bir bosishda ko'ring.")+
-    '<button class="btn gold" onclick="logEv(\'pro_popup_click\',\'define_lock\');closeCwPop();go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
+    '<button class="btn gold" onclick="proUpsell(\'define_lock\');closeCwPop();go(\'profile\')">'+t("⭐ Pro — cheksiz o'rganish")+'</button></div>';
 }
 function cueTap(el){
   if(!SERVER) return;                       // ma'no faqat server rejimida
@@ -3467,10 +3467,15 @@ document.addEventListener('visibilitychange',function(){ if(document.hidden) adF
 window.addEventListener('pagehide',function(){ adFlush(true); });
 
 /* ================== PRO ================== */
+/* Pro-niyat manbasi: popup'dan kelgan bo'lsa o'sha popup nomi, aks holda 'profile' (to'g'ridan).
+   proUpsell() popup tugmalarida chaqiriladi; contactPro() bu manbani serverga uzatadi. */
+var _proSrc='profile';
+function proUpsell(src){ _proSrc=src||'profile'; logEv('pro_popup_click',src); }
 function contactPro(){
   if(!SERVER){ toast(t("Pro olish uchun ilovani Telegram ichida oching")); return; }
   var btn=document.getElementById('proBtn'); if(btn) btn.disabled=true;
-  api('request_pro',{}).then(function(res){
+  var src=_proSrc; _proSrc='profile';   /* manbani yuborib, keyingi safar uchun tiklaymiz */
+  api('request_pro',{ref:src}).then(function(res){
     if(btn) btn.disabled=false;
     if(res && res.already_pro){ toast(t("Sizda Pro allaqachon faol ✅")); return; }
     if(res && res.error==='pro_unconfigured'){ toast(t("Pro hozircha sozlanmoqda 🔧 Birozdan so'ng urinib ko'ring.")); return; }
