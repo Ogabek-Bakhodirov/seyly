@@ -34,6 +34,8 @@
   /* ---- umumiy ---- */
   .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 15px;margin-bottom:12px;box-shadow:0 6px 18px var(--shadow)}
   .btn{border:none;cursor:pointer;padding:13px 16px;border-radius:13px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
+  /* Umumiy 'disabled' holati: bosilmaydi, kul rangroq. Onboarding taste'da video ochilgunicha shu holatda turadi. */
+  .btn:disabled{opacity:.45;pointer-events:none;filter:grayscale(.3)}
   .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
   .btn.ghost{background:var(--card-2);color:var(--text);border:1px solid var(--line)}
   .btn.gold{background:linear-gradient(135deg,#f6c445,#f09819);color:#241a00}
@@ -1272,7 +1274,19 @@ function renderOb(){
        'onkeydown="if(event.key===\'Enter\')obTasteGo()">'+
        '<button class="btn primary" style="padding:11px 16px" onclick="obTasteGo()">'+t("Qidirish")+'</button></div>';
     h+= spVideoBlockHtml('ob','obload','obslot');
-    h+='<div style="height:10px"></div><button class="btn ghost" onclick="obNext()">'+t('Davom etish →')+'</button>';
+    /* "Davom etish" AVVAL o'chirilgan turadi — user hech bo'lmasa bir marta video ochib ko'rsin.
+       Video ochilib 2 sekund o'tgach yoqiladi (obTasteReady). Bir marta yoqilgach, orqaga qaytib
+       kelsak ham yoqiq turadi (ob.tasted yordamida qayta yoqiladi). */
+    var okAlready = !!ob.tasted;
+    h+='<div style="height:10px"></div>'+
+       '<button class="btn ghost" id="obTasteCont" onclick="obNext()"'+(okAlready?'':' disabled')+'>'+
+         t('Davom etish →')+
+       '</button>';
+    if(!okAlready){
+      h+='<div id="obTasteHint" style="text-align:center;color:var(--muted);font-size:12px;margin-top:8px">'+
+           t("So'z tanlab, videoni ko'ring — keyin davom etasiz")+
+         '</div>';
+    }
     document.getElementById('obStep').innerHTML=h;
     // Avtomatik video YO'Q — user o'zi so'z tanlab (yoki yozib) Qidirish tugmasini bosadi.
     return;
@@ -1891,6 +1905,23 @@ function obTasteGo(){
   var el=document.getElementById('obTasteInput'); if(!el) return;
   var w=(el.value||'').trim(); if(!w){ toast(t("So'z yozing 🙂")); return; }
   obTaste(w);
+  /* Video jarayoni ishga tushdi. 2 sekunddan keyin "Davom etish" yoqiladi.
+     Video topilmasa ham yoqiladi — user boshqa so'z sinab ko'radi, lekin qamalib qolmaydi.
+     Eslatma matnini olib tashlaymiz — endi tugma jonli. */
+  obTasteArmContinue();
+}
+/* "Davom etish" tugmasini 2 sekunddan keyin yoqadi. Bir necha marta Qidirish bosilsa —
+   eng oxirgi taymer hisoblanadi (avvalgisi bekor qilinadi). */
+var _obTasteTimer=null;
+function obTasteArmContinue(){
+  var btn=document.getElementById('obTasteCont'); if(!btn) return;
+  if(!btn.disabled) return;   // allaqachon yoqilgan
+  if(_obTasteTimer){ clearTimeout(_obTasteTimer); }
+  _obTasteTimer=setTimeout(function(){
+    var b=document.getElementById('obTasteCont'); if(b) b.disabled=false;
+    var hint=document.getElementById('obTasteHint'); if(hint) hint.style.display='none';
+    _obTasteTimer=null;
+  }, 2000);
 }
 
 /* ===== Umumiy video-blok HTML (saqlangan + kategoriya bir xil tuzilma) =====
