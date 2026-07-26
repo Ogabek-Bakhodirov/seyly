@@ -347,6 +347,9 @@
   /* Karta orqasidagi "Ma'noni ko'rsatish" (tap-to-define) tugmasi — saqlangan def topilmasa */
   .fd-def-btn{border:1px solid var(--accent);background:rgba(91,140,255,.10);color:var(--accent);font-weight:700;font-size:14px;border-radius:12px;padding:10px 18px;cursor:pointer}
   .fd-def-btn:active{transform:scale(.97)}
+  /* Tap-to-define yuklanish loaderi — user jarayonni sezib tursin (bo'sh ekran emas) */
+  .fd-def-load{display:inline-flex;align-items:center;gap:9px;color:var(--muted);font-size:13px;font-weight:600}
+  .fd-def-load .spin{width:16px;height:16px;border-radius:50%;border:2.4px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
   .fd-ico{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   .fd-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
   .fd-topbar .acts{display:flex;gap:16px}
@@ -3121,7 +3124,7 @@ function fdTranslitOf(it){
 function fdEnsureMeaning(c){
   if(!c || c._defTried) return;
   c._defTried=true;
-  api('sr_def',{ lang:c.lang, item_type:c.item_type, item_id:c.item_id }).then(function(r){
+  api('sr_def',{ lang:c.lang, item_type:c.item_type, item_id:c.item_id, word:c.word }).then(function(r){
     var good = r && r.ok && r.def && r.def.senses && r.def.senses.length;
     if(good){
       var key=savedKey(c.lang, c.word||c.item_id);
@@ -3131,22 +3134,22 @@ function fdEnsureMeaning(c){
     if(fdCards[fdIdx]===c) fdPaintCard();
   }).catch(function(){ c._defTried=false; });   // tarmoq xatosi — keyin qayta urinsa bo'ladi
 }
-/* Oxirgi chora: saqlangan def umuman yo'q bo'lsa, user bosganda AI orqali aniqlaymiz (metered). */
+/* Saqlangan def umuman yo'q bo'lsa: user bosganda AI orqali yaratiladi.
+   KUNLIK LIMITGA BOG'LANMAYDI (sr_def gen=true) — flashcard o'z so'zlaringizni takrorlash.
+   Server yaratgan ma'noni keshga + saqlangan so'zga yozadi (reserve o'sadi, keyingi safar darhol).
+   Yuklash paytida spinner-loader ko'rinadi — jarayon sezilib tursin. */
 function fdTapDefine(){
   var c=fdCards[fdIdx]; if(!c) return;
-  var el=fdEl('fdTr'); if(el) el.innerHTML='<span style="color:var(--muted)">'+t("📖 Ma'nolar tayyorlanmoqda…")+'</span>';
-  api('define',{ q:c.word||c.item_id, lang:c.lang, tap:true }).then(function(r){
-    if(r && (r.error==='limit'||r.error==='pro')){
-      _proSrc='sr_define'; logEv('pro_popup_click','sr_define');
-      toast(t('Bugungi limit tugadi — Pro bilan cheksiz')); fdPaintCard(); return;
-    }
+  var el=fdEl('fdTr');
+  if(el) el.innerHTML='<span class="fd-def-load"><span class="spin"></span>'+t("📖 Ma'nolar tayyorlanmoqda…")+'</span>';
+  api('sr_def',{ lang:c.lang, item_type:c.item_type, item_id:c.item_id, word:c.word, gen:true }).then(function(r){
     if(r && r.ok && r.def && r.def.senses && r.def.senses.length){
       var key=savedKey(c.lang, c.word||c.item_id);
-      var ex=S.saved[key] || { word:c.word||c.item_id, lang:c.lang, translit:r.def.translit||'', at:Date.now() };
-      ex.def=r.def; if(r.def.translit) ex.translit=r.def.translit; S.saved[key]=ex; save();
+      var ex=S.saved[key] || { word:c.word||c.item_id, lang:c.lang, translit:r.translit||'', at:Date.now() };
+      ex.def=r.def; if(r.translit) ex.translit=r.translit; S.saved[key]=ex; save();
       c._noDef=false; fdPaintCard();
-    } else { toast(t("Bu so'z uchun ma'no topilmadi.")); }
-  }).catch(function(){ toast(t('Internet xatosi')); fdPaintCard(); });
+    } else { toast(t("Bu so'z uchun ma'no topilmadi.")); c._noDef=true; fdPaintCard(); }
+  }).catch(function(){ toast(t('Internet xatosi')); c._noDef=true; fdPaintCard(); });
 }
 /* Guest rejim uchun lokal deck (serversiz demo) */
 function fdLocalDeck(){
