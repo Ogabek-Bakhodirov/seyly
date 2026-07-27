@@ -13,11 +13,13 @@
   :root, html[data-theme="dark"]{
     --bg:#0f1115; --card:#1a1d24; --card-2:#20242d; --text:#eef1f6; --muted:#9aa3b2;
     --accent:#5b8cff; --accent-2:#8b5bff; --ok:#37d39b; --gold:#f6c445; --line:#2a2f3a;
+    --red:#e5646e;
     --shadow:rgba(0,0,0,.22); --nav:rgba(20,23,29,.97); --dot:#454d5c;
   }
   html[data-theme="light"]{
     --bg:#f3f5fb; --card:#ffffff; --card-2:#eceff6; --text:#171a21; --muted:#5f6875;
     --accent:#4f7cff; --accent-2:#7b52ff; --ok:#12a273; --gold:#e08a00; --line:#e2e6ef;
+    --red:#d94f5c;
     --shadow:rgba(16,24,40,.08); --nav:rgba(255,255,255,.97); --dot:#c9cdd6;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -563,6 +565,69 @@
   .pf-sw.on{background:linear-gradient(135deg,var(--accent),var(--accent-2))}
   .pf-sw.on i{left:21px}
   .pf-logout{border:none;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;color:#E5646E;padding:10px 16px 4px}
+
+  /* ============ So'z testi (variantli) ============ */
+  #pg-quiz{padding:0;display:none;flex-direction:column;min-height:100vh}
+  #pg-quiz.active{display:flex}
+  .qz-hd{flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:16px 20px 0}
+  .qz-x{border:none;background:none;cursor:pointer;color:var(--muted);display:flex;padding:2px;flex:0 0 auto}
+  .qz-x svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+  .qz-bar{flex:1;height:5px;border-radius:99px;background:var(--card-2);overflow:hidden}
+  .qz-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s ease}
+  .qz-cnt{font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;flex:0 0 auto}
+  .qz-cnt b{color:var(--text)}
+  .qz-body{flex:1;padding:26px 20px 0;display:flex;flex-direction:column}
+  .qz-sent{font-size:27px;font-weight:700;line-height:1.42;letter-spacing:-.01em}
+  .qz-tw{color:var(--accent);padding:1px 5px;margin:0 -2px;border-radius:7px;background:rgba(91,140,255,.14);box-shadow:inset 0 -3px 0 rgba(91,140,255,.55)}
+  html[data-theme="light"] .qz-tw{background:rgba(79,124,255,.12);box-shadow:inset 0 -3px 0 rgba(79,124,255,.5)}
+  .qz-word{display:inline-block;margin-top:6px;font-size:15px;font-weight:700;color:var(--accent)}
+  .qz-q{margin:22px 0 0;font-size:14.5px;font-weight:600;color:var(--muted);line-height:1.5}
+  .qz-opts{display:flex;flex-direction:column;gap:11px;margin-top:26px}
+  .qz-opt{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;color:var(--text);width:100%;font-family:inherit;transition:border-color .15s,background .15s,opacity .2s,transform .1s}
+  .qz-opt:active{transform:scale(.99)}
+  .qz-opt .k{width:30px;height:30px;border-radius:10px;background:var(--card-2);color:var(--muted);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .qz-opt .v{flex:1;font-size:16px;font-weight:700;min-width:0}
+  .qz-opt .m{width:22px;height:22px;flex:0 0 auto;display:none}
+  .qz-opt .m svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .qz-opt[disabled]{cursor:default}
+  .qz-opt.ok{border-color:var(--ok);background:rgba(55,211,155,.09)}
+  .qz-opt.ok .k{background:var(--ok);color:#0a0c0f}
+  .qz-opt.ok .v,.qz-opt.ok .m{color:var(--ok)}
+  .qz-opt.ok .m{display:block}
+  .qz-opt.bad{border-color:var(--red);background:rgba(229,100,110,.09)}
+  .qz-opt.bad .k{background:var(--red);color:#fff}
+  .qz-opt.bad .v{color:var(--red);text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:rgba(229,100,110,.5)}
+  .qz-opt.bad .m{display:block;color:var(--red)}
+  .qz-opt.dim{opacity:.42}
+  .qz-shake{animation:qzShake .3s ease}
+  @keyframes qzShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .qz-fbcard{margin-top:20px;border-radius:18px;padding:16px 17px;display:flex;gap:13px;align-items:flex-start;animation:qzRise .26s cubic-bezier(.25,.9,.3,1)}
+  .qz-fbcard .ic{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .qz-fbcard .ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+  .qz-fbcard b{font-size:14.5px;font-weight:800;display:block}
+  .qz-fbcard p{margin:3px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+  .qz-fb-ok{background:rgba(55,211,155,.1);border:1px solid rgba(55,211,155,.28)}
+  .qz-fb-ok .ic{background:var(--ok);color:#0a0c0f}
+  .qz-fb-ok b{color:var(--ok)}
+  .qz-fb-bad{background:rgba(229,100,110,.1);border:1px solid rgba(229,100,110,.28)}
+  .qz-fb-bad .ic{background:var(--red);color:#fff}
+  .qz-fb-bad b{color:var(--red)}
+  .qz-fb-right{margin-top:9px;font-size:13.5px;font-weight:700;color:var(--ok);display:flex;align-items:center;gap:7px}
+  .qz-fb-right svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes qzRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .qz-foot{flex:0 0 auto;padding:18px 20px 26px}
+  .qz-cta{width:100%;border:none;cursor:pointer;color:#fff;font-size:17px;font-weight:800;border-radius:18px;padding:18px;font-family:inherit;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 10px 28px rgba(91,140,255,.26)}
+  .qz-cta.wait{background:var(--card);border:1px solid var(--line);color:var(--muted);box-shadow:none;cursor:default}
+  .qz-hint{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-align:center}
+  .qz-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center}
+  .qz-state .badge{width:88px;height:88px;border-radius:50%;background:rgba(55,211,155,.13);color:var(--ok);display:flex;align-items:center;justify-content:center;animation:qzPop .5s cubic-bezier(.2,1.5,.4,1) both}
+  .qz-state .badge.muted{background:var(--card-2);color:var(--muted)}
+  .qz-state .badge svg{width:42px;height:42px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+  .qz-state h2{margin:0;font-size:23px;font-weight:800;letter-spacing:-.02em}
+  .qz-score{font-size:52px;font-weight:800;line-height:1;letter-spacing:-.03em;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .qz-state p{margin:0;font-size:13.5px;line-height:1.55;color:var(--muted);max-width:280px}
+  @keyframes qzPop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+  .qz-state .qz-cta{max-width:280px;margin-top:6px}
 </style>
 </head>
 <body>
@@ -694,8 +759,10 @@
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="14" height="12" rx="2"></rect><path d="M16 18.5A1.5 1.5 0 0 1 14.5 20H5a1 1 0 0 1-1-1V8"></path></svg></span>
       <span class="tt"><b data-i18n="Flashcard">Flashcard</b><small data-i18n="Kartalar bilan takror">Kartalar bilan takror</small></span>
     </button>
-    <button class="prc-tile soon" onclick="soonToast()">
-      <span class="prc-soon" data-i18n="Tez kunda">Tez kunda</span>
+    <!-- Test: DEFAULT qulflangan ("Tez kunda"). Faqat owner uchun ochiladi (applyQuizGate).
+         Xavfsiz default: server javobi kelmasa yoki guest bo'lsa — hamma uchun yopiq qoladi. -->
+    <button class="prc-tile soon" id="prcQuiz" onclick="quizTileClick()">
+      <span class="prc-soon" id="prcQuizSoon" data-i18n="Tez kunda">Tez kunda</span>
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"></rect><path d="M8.5 9.5l1.8 1.8 3.4-3.4M8.5 16h7"></path></svg></span>
       <span class="tt"><b data-i18n="Test">Test</b><small data-i18n="Variantli savollar">Variantli savollar</small></span>
     </button>
@@ -704,6 +771,44 @@
       <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"></path><path d="M18 16l.8 2.2L21 19l-2.2.8L18 22l-.8-2.2L15 19l2.2-.8z"></path></svg></span>
       <span class="tt"><b data-i18n="AI(MIX)">AI(MIX)</b><small data-i18n="Aralash mashq">Aralash mashq</small></span>
     </button>
+  </div>
+</div>
+
+<!-- ============ SO'Z TESTI (variantli) ============ -->
+<div class="page" id="pg-quiz">
+  <div class="qz-hd">
+    <button class="qz-x" onclick="quizQuit()" aria-label="Yopish"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+    <span class="qz-bar"><i id="qzBar" style="width:0%"></i></span>
+    <span class="qz-cnt"><b id="qzPos">1</b> / <span id="qzTotal">0</span></span>
+  </div>
+
+  <div class="qz-body" id="qzBody">
+    <div class="qz-sent" id="qzSent"></div>
+    <div class="qz-q" id="qzQ" data-i18n="So'z nimani anglatadi?">So'z nimani anglatadi?</div>
+    <div class="qz-opts" id="qzOpts"></div>
+    <div id="qzFb"></div>
+  </div>
+
+  <div class="qz-foot" id="qzFoot">
+    <p class="qz-hint" id="qzHint" data-i18n="Variantni tanlang">Variantni tanlang</p>
+    <button class="qz-cta wait" id="qzCta" disabled onclick="qzNext()" data-i18n="Davom etish">Davom etish</button>
+  </div>
+
+  <!-- yakun -->
+  <div class="qz-state" id="qzDone" style="display:none">
+    <span class="badge"><svg viewBox="0 0 24 24"><path d="M4 13l5 5L20 6"></path></svg></span>
+    <h2 data-i18n="Test tugadi">Test tugadi</h2>
+    <div class="qz-score" id="qzScore">0 / 0</div>
+    <p id="qzDoneNote" data-i18n="to'g'ri javob">to'g'ri javob</p>
+    <button class="qz-cta" onclick="quizQuit()" data-i18n="Practice'ga qaytish">Practice'ga qaytish</button>
+  </div>
+
+  <!-- so'z kam bo'lsa -->
+  <div class="qz-state" id="qzEmpty" style="display:none">
+    <span class="badge muted"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"></rect><path d="M8.5 9.5l1.8 1.8 3.4-3.4M8.5 16h7"></path></svg></span>
+    <h2 data-i18n="Test uchun so'z kam">Test uchun so'z kam</h2>
+    <p data-i18n="Variantli test uchun kamida 4 ta so'z saqlashingiz kerak. Videolardan yangi so'zlar saqlang.">Variantli test uchun kamida 4 ta so'z saqlashingiz kerak. Videolardan yangi so'zlar saqlang.</p>
+    <button class="qz-cta" onclick="quizQuit()" data-i18n="Practice'ga qaytish">Practice'ga qaytish</button>
   </div>
 </div>
 
@@ -1239,22 +1344,26 @@ function buildIndex(){
 }
 
 /* ================== NAVIGATSIYA ================== */
-var pages=['ob','home','cat','search','practice','flash','saved','profile'];
+var pages=['ob','home','cat','search','practice','flash','quiz','saved','profile'];
 function go(p){
   /* Flashcard hozircha faqat owner uchun (test bosqichi) — boshqalar Practice'ga qaytadi. */
   if(p==='flash' && !IS_OWNER){ go('practice'); soonToast(); return; }
+  /* So'z testi ham hozircha faqat owner uchun (test bosqichi). */
+  if(p==='quiz' && !IS_OWNER){ go('practice'); soonToast(); return; }
   pages.forEach(function(x){ document.getElementById('pg-'+x).classList.remove('active'); });
   document.getElementById('pg-'+p).classList.add('active');
   /* qidiruvdan chiqilsa Seyly pleyer pauza (ovoz fon'da qolmasin) */
   if(p!=='search' && window.sp && sp.player && sp.player.pauseVideo){ try{ sp.player.pauseVideo(); }catch(e){} }
-  var act = (p==='saved'||p==='flash') ? 'practice' : p;   // Saqlangan/Flashcard = Practice ichida -> Practice tugmasi yonadi
+  var act = (p==='saved'||p==='flash'||p==='quiz') ? 'practice' : p;   // Saqlangan/Flashcard/Test = Practice ichida -> Practice tugmasi yonadi
   ['home','search','practice','profile'].forEach(function(x){
     var b=document.getElementById('nav-'+x); if(b) b.classList.toggle('on', x===act);
   });
-  document.getElementById('nav').style.display = (p==='ob') ? 'none':'flex';
+  /* Onboarding va Test — nav yashiriladi (test immersiv, o'z close tugmasi bor). */
+  document.getElementById('nav').style.display = (p==='ob'||p==='quiz') ? 'none':'flex';
   if(p==='home') renderHome();
   if(p==='search'){ renderSearchLangs(); renderSearchMeta(); }
   if(p==='practice') renderPractice();
+  if(p==='quiz') quizStart();
   if(p==='flash') fdRenderDeck();
   if(p==='saved') renderSaved();
   if(p==='profile'){ renderProfile(); if(IS_OWNER){ loadCodes(); loadFeedback(); } }
@@ -3107,6 +3216,130 @@ function applyFlashGate(){
   if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
   else { t.classList.add('soon'); if(badge) badge.style.display=''; }
 }
+/* So'z testi ham hozircha FAQAT owner uchun (test bosqichi). */
+function quizTileClick(){ if(IS_OWNER) go('quiz'); else soonToast(); }
+function applyQuizGate(){
+  var t=document.getElementById('prcQuiz'), badge=document.getElementById('prcQuizSoon');
+  if(!t) return;
+  if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
+  else { t.classList.add('soon'); if(badge) badge.style.display=''; }
+}
+
+/* ================== SO'Z TESTI (variantli) ==================
+   Ma'lumot backend'dan (word_quiz) keladi: har savol {word, sentence(__W__), correct, options[], note}.
+   SM-2 ga hozircha ulanmaydi — mustaqil quiz, oxirida ball. */
+var QZ={ list:[], idx:0, score:0, answered:false, loading:false };
+var QZ_LETTERS=['A','B','C','D','E'];
+
+function qzEsc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
+function qzShow(id){ ['qzBody','qzFoot','qzDone','qzEmpty'].forEach(function(x){ var e=document.getElementById(x); if(e) e.style.display=(x===id?'':'none'); }); }
+
+function quizStart(){
+  QZ.list=[]; QZ.idx=0; QZ.score=0; QZ.answered=false;
+  document.getElementById('qzBar').style.width='0%';
+  document.getElementById('qzPos').textContent='1';
+  document.getElementById('qzTotal').textContent='0';
+  // yuklanish holati: savol tanasi ko'rinadi, ichi bo'sh + hint
+  qzShow('qzBody'); document.getElementById('qzFoot').style.display='';
+  document.getElementById('qzSent').innerHTML='';
+  document.getElementById('qzOpts').innerHTML='<p class="qz-hint">'+t('Yuklanmoqda…')+'</p>';
+  document.getElementById('qzFb').innerHTML='';
+  document.getElementById('qzHint').classList.add('hide');
+  var cta=document.getElementById('qzCta'); cta.classList.add('wait'); cta.disabled=true;
+
+  if(QZ.loading) return; QZ.loading=true;
+  var lang=S.curLang||'ru';
+  api('word_quiz',{lang:lang, limit:10}).then(function(res){
+    QZ.loading=false;
+    var qs=(res && res.questions) ? res.questions : [];
+    if(!qs.length){ qzShow('qzEmpty'); return; }
+    QZ.list=qs; QZ.idx=0; QZ.score=0;
+    document.getElementById('qzTotal').textContent=qs.length;
+    document.getElementById('qzHint').classList.remove('hide');
+    qzRenderQuestion();
+  }).catch(function(){
+    QZ.loading=false;
+    document.getElementById('qzOpts').innerHTML='<p class="qz-hint">'+t('Xatolik — keyinroq urinib ko‘ring')+'</p>';
+  });
+}
+
+function qzRenderQuestion(){
+  var q=QZ.list[QZ.idx]; if(!q) return;
+  QZ.answered=false;
+  document.getElementById('qzPos').textContent=(QZ.idx+1);
+  document.getElementById('qzBar').style.width=(QZ.idx/QZ.list.length*100)+'%';
+
+  // gap: __W__ o'rniga maqsad so'z (ajratilgan). __W__ bo'lmasa — so'zni alohida ko'rsatamiz.
+  var sentEl=document.getElementById('qzSent');
+  if(String(q.sentence).indexOf('__W__')>=0){
+    sentEl.innerHTML=qzEsc(q.sentence).replace('__W__','<span class="qz-tw">'+qzEsc(q.word)+'</span>');
+  } else {
+    sentEl.innerHTML=qzEsc(q.sentence)+'<span class="qz-word">'+qzEsc(q.word)+'</span>';
+  }
+
+  var wrap=document.getElementById('qzOpts'); wrap.innerHTML='';
+  (q.options||[]).forEach(function(o,i){
+    var b=document.createElement('button');
+    b.className='qz-opt';
+    b.innerHTML='<span class="k">'+QZ_LETTERS[i]+'</span><span class="v">'+qzEsc(o)+'</span><span class="m"></span>';
+    b.onclick=function(){ qzAnswer(o,b); };
+    wrap.appendChild(b);
+  });
+  document.getElementById('qzFb').innerHTML='';
+  document.getElementById('qzHint').classList.remove('hide');
+  var cta=document.getElementById('qzCta'); cta.classList.add('wait'); cta.disabled=true;
+  cta.textContent=t('Davom etish');
+}
+
+function qzAnswer(picked, btn){
+  if(QZ.answered) return; QZ.answered=true;
+  var q=QZ.list[QZ.idx];
+  var ok=(picked===q.correct);
+  if(ok) QZ.score++;
+
+  var btns=document.querySelectorAll('#qzOpts .qz-opt');
+  btns.forEach(function(b){
+    b.disabled=true;
+    var val=b.querySelector('.v').textContent;
+    if(val===q.correct){
+      b.classList.add('ok');
+      b.querySelector('.m').innerHTML='<svg viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"></path></svg>';
+    } else if(b===btn){
+      b.classList.add('bad');
+      b.querySelector('.m').innerHTML='<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg>';
+    } else { b.classList.add('dim'); }
+  });
+  if(!ok) btn.classList.add('qz-shake');
+
+  var fb=document.getElementById('qzFb');
+  if(ok){
+    fb.innerHTML='<div class="qz-fbcard qz-fb-ok"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"></path></svg></span>'+
+      '<div><b>'+t('To‘g‘ri')+'</b>'+(q.note?('<p>'+qzEsc(q.note)+'</p>'):'')+'</div></div>';
+  } else {
+    fb.innerHTML='<div class="qz-fbcard qz-fb-bad"><span class="ic"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>'+
+      '<div><b>'+t('Xato')+'</b>'+(q.note?('<p>'+qzEsc(q.note)+'</p>'):'')+
+      '<div class="qz-fb-right"><svg viewBox="0 0 24 24"><path d="M4 12.5 9 17.5 20 6.5"></path></svg>'+t('To‘g‘ri javob:')+' '+qzEsc(q.correct)+'</div></div></div>';
+  }
+  document.getElementById('qzHint').classList.add('hide');
+  var cta=document.getElementById('qzCta'); cta.classList.remove('wait'); cta.disabled=false;
+  cta.textContent=(QZ.idx===QZ.list.length-1)?t('Yakunlash'):t('Davom etish');
+}
+
+function qzNext(){
+  if(!QZ.answered) return;
+  QZ.idx++;
+  if(QZ.idx>=QZ.list.length){ qzFinish(); return; }
+  qzRenderQuestion();
+}
+
+function qzFinish(){
+  document.getElementById('qzBar').style.width='100%';
+  qzShow('qzDone');
+  document.getElementById('qzScore').textContent=QZ.score+' / '+QZ.list.length;
+  document.getElementById('qzDoneNote').textContent=(QZ.score===QZ.list.length)?t('barcha javoblar to‘g‘ri'):t('to‘g‘ri javob');
+}
+
+function quizQuit(){ go('practice'); }
 
 /* ================== FLASHCARD (SR dvigateli — ADR-003) ==================
    Butun algoritm SERVERDA (sr.ts): interval, ease, kunlik navbat, limit.
@@ -4296,6 +4529,7 @@ function boot(d){
       S.dailyCap=(res.limits&&typeof res.limits.daily==='number')?res.limits.daily:FREE_DAILY;
       IS_OWNER=!!res.is_owner;
       applyFlashGate();   // Flashcard tile'ni owner holatiga qarab ochish/yopish
+      applyQuizGate();    // So'z testi tile'ni owner holatiga qarab ochish/yopish
       save();
       var ab=document.getElementById('adminBox');
       if(ab) ab.style.display=IS_OWNER?'block':'none';
