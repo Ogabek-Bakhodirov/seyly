@@ -645,9 +645,13 @@
   .yt-steps{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
   .yt-steps .spin{width:17px;height:17px;border-radius:50%;border:2.4px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
   .yt-msg{padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
-  .yt-lines{display:flex;flex-direction:column;gap:4px;text-align:center;min-height:74px}
-  .yt-line{font-size:14px;line-height:1.55;color:var(--muted);opacity:.5;transition:opacity .18s}
-  .yt-line.cur{font-size:16px;font-weight:700;color:var(--text);opacity:1}
+  /* 3 qator: yuqori/past — xira, bir qatorli (kesilgan); markaz — joriy, yorqin, qo'zg'almas.
+     Slot rollari QAT'IY (0=oldingi, 1=joriy, 2=keyingi) — matn almashsa ham blok sakramaydi. */
+  .yt-lines{display:flex;flex-direction:column;justify-content:center;gap:7px;text-align:center;min-height:92px}
+  .yt-line{font-size:14px;line-height:1.5;color:var(--muted);opacity:.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .3s ease,color .3s ease}
+  .yt-line.cur{font-size:16px;font-weight:700;color:var(--text);opacity:1;white-space:normal;overflow:visible}
+  @keyframes ytEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+  .yt-line.cur.ytin{animation:ytEnter .32s ease}
   .yt-lock{position:absolute;inset:0;z-index:5;background:rgba(8,10,15,.86);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center}
   .yt-lock b{font-size:16px;font-weight:800;color:#fff}
   .yt-lock small{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72);max-width:270px}
@@ -3445,7 +3449,7 @@ function ytCreate(){
     });
   }
   if(ytp.timer) clearInterval(ytp.timer);
-  ytp.timer=setInterval(ytTick, 250);
+  ytp.timer=setInterval(ytTick, 100);   // 250→100ms: qator chegarasini tezroq ilg'aydi (sinxron aniqroq)
 }
 
 /* Vaqt bo'yicha: joriy segmentni topamiz + bepul chegara nazorati. */
@@ -3467,16 +3471,26 @@ function ytTick(){
   if(idx>=0 && idx!==ytp.cur){ ytp.cur=idx; ytRender(); }
 }
 
-/* 3 qator: oldingi (xira) / joriy (yorqin) / keyingi (xira). Har so'z bosiladigan. */
+/* 3 qator: oldingi (xira) / joriy (yorqin, markaz) / keyingi (xira). Har so'z bosiladigan.
+   SILLIQLIK: 3 doimiy slot bir marta yaratiladi, keyin faqat ichidagi matn yangilanadi
+   (butun blok qayta chizilmaydi → flicker yo'q). Slot rollari qat'iy — joriy qator doim
+   markazda, o'lchami o'zgarmaydi → blok sakramaydi, ko'z bir joyda qoladi.
+   Joriy qatorga yumshoq "kelish" animatsiyasi (ytin) qo'shiladi. */
 function ytRender(){
   var el=document.getElementById('ytSub'); if(!el) return;
-  if(!ytp.segs.length){ el.innerHTML='<div class="yt-line cur">'+t("Matn topilmadi.")+'</div>'; return; }
-  var c=(ytp.cur<0?0:ytp.cur), h='';
-  [c-1, c, c+1].forEach(function(i){
-    if(i<0 || i>=ytp.segs.length) return;
-    h+='<div class="yt-line'+(i===c?' cur':'')+'">'+renderCueText(ytp.segs[i].t||'', [])+'</div>';
-  });
-  el.innerHTML=h;
+  if(!ytp.segs.length){ el.__slots=null; el.innerHTML='<div class="yt-line cur">'+t("Matn topilmadi.")+'</div>'; return; }
+  if(!el.__slots){
+    el.innerHTML='<div class="yt-line"></div><div class="yt-line cur"></div><div class="yt-line"></div>';
+    el.__slots=[el.children[0], el.children[1], el.children[2]];
+  }
+  var c=(ytp.cur<0?0:ytp.cur), idxs=[c-1, c, c+1];
+  for(var k=0;k<3;k++){
+    var slot=el.__slots[k], i=idxs[k];
+    var html=(i>=0 && i<ytp.segs.length) ? renderCueText(ytp.segs[i].t||'', []) : '';
+    if(slot.__h!==html){ slot.innerHTML=html; slot.__h=html; }
+  }
+  var mid=el.__slots[1];                     // joriy qatorni qayta "keltiramiz" (animatsiya restart)
+  mid.classList.remove('ytin'); void mid.offsetWidth; mid.classList.add('ytin');
 }
 
 function ytSeek(sec){
