@@ -659,24 +659,28 @@
      MUHIM: faol qatorda o'lcham/qalinlik O'ZGARMAYDI — faqat rang. Aks holda
      so'z kengligi o'zgarib butun matn qayta oqadi (sakraydi). */
   #pg-yt.active{display:flex;flex-direction:column;height:calc(100dvh - 78px);padding:16px 0 0;overflow:hidden}
-  #pg-yt .fd-topbar{flex:0 0 auto;margin:0 14px 10px}
+  #pg-yt .fd-topbar{flex:0 0 auto;margin:0 14px 8px;gap:0}
+  #pg-yt .fd-topbar .back{margin-bottom:0;flex:0 0 auto}
   /* A) kirish holati — link kiritish */
   #ytEntry{flex:1;min-height:0;overflow-y:auto;padding:0 14px 8px}
   /* B) yuklangan holat — pleyer + matn + boshqaruv */
   #ytBox{flex:1;min-height:0;display:flex;flex-direction:column}
-  /* link qatori chipga yig'iladi — vertikal joy tejaladi */
-  .vt-src{flex:0 0 auto;margin:0 14px 10px;display:flex;align-items:center;gap:10px;
-    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px 8px 11px}
-  .vt-src .vt-yt{width:24px;height:24px;border-radius:7px;background:rgba(255,0,0,.12);color:#ff4d4d;
+  /* Manba chipi "Orqaga" bilan BIR QATORDA — alohida qator egallamaydi (matnga joy) */
+  .vt-src{flex:1;min-width:0;margin:0 0 0 10px;display:flex;align-items:center;gap:7px;
+    background:var(--card);border:1px solid var(--line);border-radius:11px;padding:5px 7px 5px 8px}
+  .vt-src .vt-yt{width:21px;height:21px;border-radius:6px;background:rgba(255,0,0,.12);color:#ff4d4d;
     display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-  .vt-src .vt-yt svg{width:14px;height:14px;fill:currentColor;stroke:none}
-  .vt-src .vt-nm{flex:1;min-width:0;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .vt-src button{border:none;background:none;cursor:pointer;color:var(--accent);font-size:12.5px;
-    font-weight:800;flex:0 0 auto;padding:6px 4px;min-height:34px;font-family:inherit}
+  .vt-src .vt-yt svg{width:13px;height:13px;fill:currentColor;stroke:none}
+  .vt-src .vt-nm{flex:1;min-width:0;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vt-src button{border:none;background:none;cursor:pointer;color:var(--accent);font-size:12px;
+    font-weight:800;flex:0 0 auto;padding:4px 2px;min-height:30px;font-family:inherit;white-space:nowrap}
   .vt-player{flex:0 0 auto;width:auto;margin:0 14px;border-radius:16px}
   /* transkript sarlavhasi: "MATN" + Aa + tezlik */
-  .vt-head{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:14px 16px 9px}
-  .vt-head .vt-lbl{flex:1;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .vt-head{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:11px 16px 8px}
+  .vt-head .vt-lbl{flex:0 0 auto;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  /* izoh "Matn" bilan chiplar orasida, o'rtada — bo'sh bo'lsa joy egallamaydi */
+  .vt-head .vt-hint{flex:1;min-width:0;text-align:center;font-size:10.5px;color:var(--muted);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .vt-chip{border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);
     font-size:12px;font-weight:800;font-family:inherit;border-radius:99px;padding:6px 11px;flex:0 0 auto;
     min-height:32px;display:flex;align-items:center;gap:5px}
@@ -716,7 +720,8 @@
   .vt-back.show{display:flex;opacity:1;transform:translate(-50%,0)}
   .vt-back svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   /* boshqaruv */
-  .vt-ctrl{flex:0 0 auto;display:flex;gap:9px;padding:10px 14px 8px}
+  /* boshqaruv pastda turadi — izoh yuqoriga ko'chgani uchun pastroq tushdi */
+  .vt-ctrl{flex:0 0 auto;display:flex;gap:9px;padding:12px 14px 14px}
   .vt-ctrl button{border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);
     border-radius:14px;min-height:48px;font-size:13px;font-weight:800;font-family:inherit;display:flex;
     align-items:center;justify-content:center;gap:6px;padding:0 10px}
@@ -724,7 +729,6 @@
   .vt-ctrl .vt-main{flex:1;min-width:0;border-color:transparent;color:#fff;
     background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 20px rgba(79,124,255,.24)}
   .vt-ctrl svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-  .yt-note{flex:0 0 auto;text-align:center;font-size:11.5px;color:var(--muted);padding:0 16px 12px}
   @media (prefers-reduced-motion:reduce){
     .vt-back,.vt-s,.vt-cue,.vt-w{transition:none !important}
     .vt-scroll{scroll-behavior:auto !important}
@@ -997,8 +1001,14 @@
 
 <!-- ============ YOUTUBE (o'z videosi) ============ -->
 <div class="page" id="pg-yt">
+  <!-- Tepa qator: "Orqaga" + manba chipi BIR QATORDA — matnga joy ko'proq qolsin -->
   <div class="fd-topbar">
     <button class="back" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
+    <div class="vt-src" id="ytSrc" style="display:none">
+      <span class="vt-yt"><svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5z"></path><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8z" opacity=".28"></path></svg></span>
+      <span class="vt-nm" id="ytSrcNm"></span>
+      <button onclick="ytChangeUrl()" data-i18n="Almashtirish">Almashtirish</button>
+    </div>
   </div>
   <!-- A) KIRISH: video hali yuklanmagan -->
   <div id="ytEntry">
@@ -1018,12 +1028,6 @@
 
   <!-- B) YUKLANGAN: pleyer tepada, matn o'rtada suriladi, boshqaruv pastda -->
   <div id="ytBox" style="display:none">
-    <div class="vt-src">
-      <span class="vt-yt"><svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5z"></path><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8z" opacity=".28"></path></svg></span>
-      <span class="vt-nm" id="ytSrcNm"></span>
-      <button onclick="ytChangeUrl()" data-i18n="Almashtirish">Almashtirish</button>
-    </div>
-
     <div class="spvid vt-player">
       <div id="ytYT"></div>
       <!-- Bepul: 2 daqiqadan keyin shu qatlam chiqadi (matnning qolgani serverdan umuman kelmaydi) -->
@@ -1036,6 +1040,8 @@
 
     <div class="vt-head">
       <span class="vt-lbl" data-i18n="Matn">Matn</span>
+      <!-- Izoh shu yerda: "Matn" bilan shrift chipi orasida, o'rtada — pastdan joy bo'shadi -->
+      <span class="vt-hint" id="ytNote"></span>
       <button class="vt-chip" id="ytSizeChip" onclick="ytCycleSize()" aria-label="Shrift o'lchami">Aa</button>
       <button class="vt-chip" id="ytSpeedChip" onclick="ytCycleRate()"><span class="ytrate">1×</span></button>
     </div>
@@ -1060,8 +1066,6 @@
         5<svg viewBox="0 0 24 24"><path d="m13 17 6-5-6-5"></path><path d="M5 17l6-5-6-5"></path></svg>
       </button>
     </div>
-
-    <div class="yt-note" id="ytNote"></div>
   </div>
 </div>
 
@@ -3669,6 +3673,7 @@ function ytPlay(res){
   ytp.lang=(L==='ru'||L==='en'||L==='de') ? L : (S.curLang||'ru');
   ytShow('ytEntry', false);            // link kiritish holati yopiladi
   ytShow('ytBox', true);
+  ytShow('ytSrc', true);               // manba chipi tepa qatorda ochiladi
   ytShow('ytLock', false);
   var nm=document.getElementById('ytSrcNm');
   if(nm) nm.textContent = ytp.vid ? ('youtu.be/'+ytp.vid) : '';
@@ -3889,6 +3894,7 @@ function ytReplay(){
 function ytChangeUrl(){
   try{ if(ytp.player && ytp.player.pauseVideo) ytp.player.pauseVideo(); }catch(e){}
   ytShow('ytBox', false);
+  ytShow('ytSrc', false);   // manba chipi ham yopiladi — tepada faqat "Orqaga" qoladi
   ytShow('ytEntry', true);
   ytErr('');
   var i=document.getElementById('ytUrl');
