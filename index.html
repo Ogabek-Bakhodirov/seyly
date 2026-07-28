@@ -645,16 +645,17 @@
   .yt-steps{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
   .yt-steps .spin{width:17px;height:17px;border-radius:50%;border:2.4px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
   .yt-msg{padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
-  /* Teleprompter: barcha qatorlar bir marta chiziladi, joriy qator markazga SILLIQ suziladi
-     (brauzerning native scroll-behavior:smooth). Chetlarда yumshoq so'nish (mask). Scrollbar yashirin.
-     Joriy qator — yorqin/qalin; qolganlar xira. O'lcham o'zgarmaydi → jitter yo'q. */
-  .yt-lines{height:104px;overflow-y:auto;scroll-behavior:smooth;text-align:center;padding:41px 0;
-    -ms-overflow-style:none;scrollbar-width:none;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 30%,#000 70%,transparent 100%);
-            mask-image:linear-gradient(to bottom,transparent 0,#000 30%,#000 70%,transparent 100%)}
-  .yt-lines::-webkit-scrollbar{display:none}
-  .yt-line{font-size:14.5px;line-height:1.5;color:var(--muted);opacity:.38;padding:3px 4px;transition:opacity .35s ease,color .35s ease}
-  .yt-line.cur{font-weight:700;color:var(--text);opacity:1}
+  /* Teleprompter. Matn transform bilan suriladi (GPU) — brauzer scroll'i ISHLATILMAYDI:
+     user barmog'i bilan urishmaydi, inertsiya yo'q, telefonda ham silliq.
+     Faqat ~41 qator chiziladi (uzun videoda ham yengil). Joriy qator markazda.
+     MUHIM: joriy qatorda qalinlik/o'lcham o'zgarmaydi — aks holda qator kengayib
+     boshqa qatorlarni surib yuboradi (jitter). Faqat rang + shaffoflik o'zgaradi. */
+  .yt-lines{height:108px;overflow:hidden;position:relative;text-align:center;padding:0 8px;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 32%,#000 68%,transparent 100%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 32%,#000 68%,transparent 100%)}
+  .yt-track{will-change:transform;transition:transform .55s cubic-bezier(.22,.61,.36,1)}
+  .yt-line{font-size:14.5px;line-height:1.5;color:var(--muted);opacity:.3;padding:4px 0;transition:opacity .45s ease,color .45s ease}
+  .yt-line.cur{color:var(--text);opacity:1}
   .yt-lock{position:absolute;inset:0;z-index:5;background:rgba(8,10,15,.86);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center}
   .yt-lock b{font-size:16px;font-weight:800;color:#fff}
   .yt-lock small{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72);max-width:270px}
@@ -3474,30 +3475,72 @@ function ytTick(){
   if(idx>=0 && idx!==ytp.cur){ ytp.cur=idx; ytScroll(); }
 }
 
-/* TELEPROMPTER. Barcha qatorlar BIR MARTA chiziladi (ytRender), keyin joriy qator
-   har almashuvda markazga SILLIQ suziladi (ytScroll — native smooth scroll). Har so'z bosiladigan. */
+/* TELEPROMPTER.
+   Matn ichki "trek"da turadi va translateY bilan suriladi — brauzer scroll'i emas.
+   Sabab: scroll silliq emas edi (barmoq bilan urishar, inertsiya, uzun videoda sekin).
+   Tezlik uchun bir vaqtda faqat YT_WIN qator chiziladi; joriy qator oyna chetiga
+   yaqinlashsa oyna jimgina qayta chiziladi (sakrashsiz). Har so'z bosiladigan. */
+var YT_WIN=41, YT_EDGE=8;
+
 function ytRender(){
   var el=document.getElementById('ytSub'); if(!el) return;
-  el.__lines=null; el.__cur=-1; el.innerHTML='';
-  if(!ytp.segs.length){ el.innerHTML='<div class="yt-line cur">'+t("Matn topilmadi.")+'</div>'; return; }
+  el.innerHTML=''; el.__track=null; el.__lines=null; el.__from=0; el.__cur=-1;
+  if(!ytp.segs.length){ el.innerHTML='<div class="yt-track"><div class="yt-line cur">'+t("Matn topilmadi.")+'</div></div>'; return; }
+  var tr=document.createElement('div'); tr.className='yt-track';
+  el.appendChild(tr); el.__track=tr;
+  var c=ytp.cur<0?0:Math.min(ytp.cur, ytp.segs.length-1);
+  ytWindow(el, c);
+  var k=c-el.__from; if(el.__lines[k]) el.__lines[k].classList.add('cur');
+  el.__cur=c;
+  ytMove(el, c, false);
+}
+
+/* Markazi c bo'lgan qatorlar oynasini chizadi. */
+function ytWindow(el, c){
+  var n=ytp.segs.length;
+  var from=Math.min(Math.max(0, c-((YT_WIN-1)>>1)), Math.max(0, n-YT_WIN));
+  var to=Math.min(n, from+YT_WIN);
   var frag=document.createDocumentFragment(), lines=[];
-  for(var i=0;i<ytp.segs.length;i++){
+  for(var i=from;i<to;i++){
     var d=document.createElement('div'); d.className='yt-line';
     d.innerHTML=renderCueText(ytp.segs[i].t||'', []);
     frag.appendChild(d); lines.push(d);
   }
-  el.appendChild(frag); el.__lines=lines;
-  ytScroll();   // boshlang'ich joriy qatorni belgilaymiz + markazga
+  el.__track.innerHTML=''; el.__track.appendChild(frag);
+  el.__from=from; el.__lines=lines;
 }
-/* Joriy qatorni markazga silliq suradi (scroll-behavior:smooth CSS'da). */
+
+/* idx qatorini markazga qo'yadi. anim=false — animatsiyasiz (oyna almashganda). */
+function ytMove(el, idx, anim){
+  var li=el.__lines, tr=el.__track; if(!li || !li.length || !tr) return;
+  var k=Math.max(0, Math.min(idx-el.__from, li.length-1));
+  var y=li[k].offsetTop + li[k].offsetHeight/2 - el.clientHeight/2;
+  if(anim){ tr.style.transform='translateY('+(-y)+'px)'; return; }
+  tr.style.transition='none';
+  tr.style.transform='translateY('+(-y)+'px)';
+  void tr.offsetHeight;              // reflow — keyingi harakat silliq bo'lsin
+  tr.style.transition='';
+}
+
+/* Joriy qator o'zgarganda chaqiriladi. */
 function ytScroll(){
   var el=document.getElementById('ytSub'); if(!el || !el.__lines || !el.__lines.length) return;
-  var c=Math.max(0, Math.min(ytp.cur<0?0:ytp.cur, el.__lines.length-1));
+  var n=ytp.segs.length; if(!n) return;
+  var c=Math.max(0, Math.min(ytp.cur<0?0:ytp.cur, n-1));
   if(el.__cur===c) return;
-  if(el.__cur>=0 && el.__lines[el.__cur]) el.__lines[el.__cur].classList.remove('cur');
-  var cur=el.__lines[c]; cur.classList.add('cur'); el.__cur=c;
-  var top=cur.offsetTop - (el.clientHeight/2) + (cur.offsetHeight/2);
-  try{ el.scrollTop=top; }catch(e){}   // CSS scroll-behavior:smooth → silliq animatsiya
+  var prev=el.__cur, end=el.__from+el.__lines.length;
+  /* Oyna cheti — qayta chizamiz. Sakrash bo'lmasligi uchun avval eski qator
+     joyida turadigan qilib qo'yamiz, keyin yangisiga silliq suramiz. */
+  if((c-el.__from<YT_EDGE && el.__from>0) || (end-c<=YT_EDGE && end<n)){
+    ytWindow(el, c);
+    ytMove(el, (prev>=el.__from && prev<el.__from+el.__lines.length) ? prev : c, false);
+  }
+  var pk=prev-el.__from;
+  if(pk>=0 && pk<el.__lines.length && el.__lines[pk]) el.__lines[pk].classList.remove('cur');
+  var k=c-el.__from;
+  if(el.__lines[k]) el.__lines[k].classList.add('cur');
+  el.__cur=c;
+  ytMove(el, c, true);
 }
 
 function ytSeek(sec){
