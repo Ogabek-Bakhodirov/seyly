@@ -134,6 +134,8 @@
   .spd{flex:1;border:1px solid var(--line);background:var(--card-2);color:var(--muted);border-radius:9px;padding:6px 4px;font-size:12px;font-weight:700;cursor:pointer}
   .spd.on{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
   .spd:active{transform:scale(.95)}
+  .cbtn.skspeed{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
+  .cbtn .skrate{font-variant-numeric:tabular-nums}
 
   /* ---- Seyly pleyer (o'z video bazamiz) ---- */
   .spbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;margin-top:10px;box-shadow:0 6px 18px var(--shadow)}
@@ -647,12 +649,10 @@
       <button class="cbtn" onclick="spCtl('prev')" data-i18n="⏮ Oldingi">⏮ Oldingi</button>
       <button class="cbtn" onclick="spCtl('next')" data-i18n="Keyingi ⏭">Keyingi ⏭</button>
     </div>
-    <div class="ygspeed">
-      <span class="splab" data-i18n="Tezlik">Tezlik</span>
-      <button class="spd" data-c="sp" data-r="0.5" onclick="spSetRate(0.5)">0.5×</button>
-      <button class="spd on" data-c="sp" data-r="1" onclick="spSetRate(1)">1×</button>
-      <button class="spd" data-c="sp" data-r="1.5" onclick="spSetRate(1.5)">1.5×</button>
-      <button class="spd" data-c="sp" data-r="2" onclick="spSetRate(2)">2×</button>
+    <div class="ygctrl" style="margin-top:6px">
+      <button class="cbtn" onclick="spSeek(-5)">◀ 5 <span data-i18n="sek">sek</span></button>
+      <button class="cbtn skspeed" onclick="spCycleRate()"><span data-i18n="Tezlik">Tezlik</span> <span class="skrate">1×</span></button>
+      <button class="cbtn" onclick="spSeek(5)">5 <span data-i18n="sek">sek</span> ▶</button>
     </div>
   </div>
 
@@ -2675,16 +2675,32 @@ function spCtl(act){
 }
 /* ---- Video tezligi (Seyly pleyer) — bir bosishda 0.5×/1×/1.5×/2× ---- */
 var SP_SPEEDS=[0.5,1,1.5,2];
+/* Video pastki qatori: [◀ 5 sek] [Tezlik N×] [5 sek ▶] — 5 soniyalik surish + tezlik (bosilganda aylanadi). */
 function spSpeedRowHtml(){
-  var h='<div class="ygspeed"><span class="splab">'+t("Tezlik")+'</span>';
-  SP_SPEEDS.forEach(function(r){
-    h+='<button class="spd'+(r===(sp.rate||1)?' on':'')+'" data-c="sp" data-r="'+r+'" onclick="spSetRate('+r+')">'+r+'×</button>';
-  });
-  return h+'</div>';
+  return '<div class="ygctrl" style="margin-top:6px">'+
+    '<button class="cbtn" onclick="spSeek(-5)">◀ 5 '+t("sek")+'</button>'+
+    '<button class="cbtn skspeed" onclick="spCycleRate()">'+t("Tezlik")+' <span class="skrate">'+(sp.rate||1)+'×</span></button>'+
+    '<button class="cbtn" onclick="spSeek(5)">5 '+t("sek")+' ▶</button>'+
+  '</div>';
 }
 function spApplyRateUI(){
-  var ch=document.querySelectorAll('.spd[data-c="sp"]');
-  for(var i=0;i<ch.length;i++) ch[i].classList.toggle('on', Number(ch[i].dataset.r)===(sp.rate||1));
+  var lb=document.querySelectorAll('.skrate');
+  for(var i=0;i<lb.length;i++) lb[i].textContent=(sp.rate||1)+'×';
+}
+/* Videoni 5 soniya oldinga/orqaga surish (faol Seyly pleyer). */
+function spSeek(sec){
+  try{
+    if(sp.player && sp.player.getCurrentTime && sp.player.seekTo){
+      var t0=sp.player.getCurrentTime()||0;
+      sp.player.seekTo(Math.max(0,t0+sec), true);
+    }
+  }catch(e){}
+  if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
+}
+/* Tezlik tugmasi bosilganda: 0.5 → 1 → 1.5 → 2 → 0.5 ... */
+function spCycleRate(){
+  var i=SP_SPEEDS.indexOf(sp.rate||1); if(i<0)i=SP_SPEEDS.indexOf(1);
+  spSetRate(SP_SPEEDS[(i+1)%SP_SPEEDS.length]);
 }
 function spSetRate(r){
   sp.rate=r;
