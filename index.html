@@ -2438,8 +2438,10 @@ function curPlayer(){ return (window.ytp && ytp.active && ytp.player) ? ytp.play
 function curTapLang(){ return (window.ytp && ytp.active) ? (ytp.lang||'ru') : ((window.sp && sp.lang) || 'ru'); }
 function closeCwPop(){
   var p=document.getElementById('cwPop'); if(p) p.style.display='none';
-  /* videoni davom ettiramiz (o'rgandi, yopdi) — bepul chegarada esa tegmaymiz */
-  if(window.ytp && ytp.active && ytp.locked && ytp.hit) return;
+  /* videoni davom ettiramiz (o'rgandi, yopdi) — bepul chegara qatlami OCHIQ bo'lsa tegmaymiz.
+     (hit flag emas — u orqaga surilgandan keyin ham true qolib, resume'ni buzardi) */
+  var lk=document.getElementById('ytLock');
+  if(window.ytp && ytp.active && lk && lk.style.display!=='none') return;
   var pl=curPlayer();
   try{ if(pl && pl.playVideo) pl.playVideo(); }catch(e){}
 }
@@ -3355,9 +3357,12 @@ function ytStart(){
   var inp=document.getElementById('ytUrl');
   var url=(inp&&inp.value||'').trim();
   if(!url){ ytErr(t("YouTube linkini kiriting.")); return; }
-  if(!/(?:v=|\/shorts\/|\/embed\/|\/live\/|youtu\.be\/)([A-Za-z0-9_-]{11})/.test(url) && !/^[A-Za-z0-9_-]{11}$/.test(url)){
+  /* Backend ytVideoId() bilan BIR XIL naqsh (DRY: o'zgartirsang — ikkalasini birga) */
+  if(!/(?:v=|\/shorts\/|\/embed\/|\/live\/|youtu\.be\/|\/v\/)([A-Za-z0-9_-]{11})/.test(url) && !/^[A-Za-z0-9_-]{11}$/.test(url)){
     ytErr(t("Bu YouTube link emas. Masalan: https://youtube.com/watch?v=…")); return;
   }
+  /* Oldingi video (bo'lsa) pauza — box yashiringanda ovoz fon'da qolmasin */
+  try{ if(ytp.player && ytp.player.pauseVideo) ytp.player.pauseVideo(); }catch(e){}
   ytp.busy=true; ytErr(''); ytShow('ytBox', false); ytStepsStart();
   var gb=document.getElementById('ytGo'); if(gb) gb.disabled=true;
   api('yt_transcript',{url:url}).then(function(res){
@@ -3439,6 +3444,7 @@ function ytCreate(){
 
 /* Vaqt bo'yicha: joriy segmentni topamiz + bepul chegara nazorati. */
 function ytTick(){
+  if(!ytp.active) return;   // sahifadan chiqilgan — behuda ishlamaymiz
   if(!ytp.player || !ytp.player.getCurrentTime) return;
   var tt; try{ tt=ytp.player.getCurrentTime(); }catch(e){ return; }
   if(typeof tt!=='number') return;
