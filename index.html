@@ -645,22 +645,82 @@
   .yt-steps{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
   .yt-steps .spin{width:17px;height:17px;border-radius:50%;border:2.4px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
   .yt-msg{padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
-  /* Teleprompter. Matn transform bilan suriladi (GPU) — brauzer scroll'i ISHLATILMAYDI:
-     user barmog'i bilan urishmaydi, inertsiya yo'q, telefonda ham silliq.
-     Faqat ~41 qator chiziladi (uzun videoda ham yengil). Joriy qator markazda.
-     MUHIM: joriy qatorda qalinlik/o'lcham o'zgarmaydi — aks holda qator kengayib
-     boshqa qatorlarni surib yuboradi (jitter). Faqat rang + shaffoflik o'zgaradi. */
-  .yt-lines{height:108px;overflow:hidden;position:relative;text-align:center;padding:0 8px;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 32%,#000 68%,transparent 100%);
-            mask-image:linear-gradient(to bottom,transparent 0,#000 32%,#000 68%,transparent 100%)}
-  .yt-track{will-change:transform;transition:transform .55s cubic-bezier(.22,.61,.36,1)}
-  .yt-line{font-size:14.5px;line-height:1.5;color:var(--muted);opacity:.3;padding:4px 0;transition:opacity .45s ease,color .45s ease}
-  .yt-line.cur{color:var(--text);opacity:1}
   .yt-lock{position:absolute;inset:0;z-index:5;background:rgba(8,10,15,.86);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center}
   .yt-lock b{font-size:16px;font-weight:800;color:#fff}
   .yt-lock small{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72);max-width:270px}
   .yt-lock .btn{max-width:260px}
-  .yt-note{margin-top:8px;font-size:12px;color:var(--muted);text-align:center}
+
+  /* ===== YouTube transkript (o'qiladigan matn, .vt-*) =====
+     Eski 108px teleprompter olib tashlandi: matn juda kichkina edi, faqat 3 qator
+     ko'rinardi va orqaga qaytib o'qib bo'lmasdi. Endi to'liq matn — barmoq bilan
+     suriladi, video ketayotganda esa faol GAP o'zi ko'rinishga kelib turadi.
+     MUHIM: faol qatorda o'lcham/qalinlik O'ZGARMAYDI — faqat rang. Aks holda
+     so'z kengligi o'zgarib butun matn qayta oqadi (sakraydi). */
+  #pg-yt.active{display:flex;flex-direction:column;height:calc(100dvh - 78px);padding:16px 0 0;overflow:hidden}
+  #pg-yt .fd-topbar{flex:0 0 auto;margin:0 14px 10px}
+  /* A) kirish holati — link kiritish */
+  #ytEntry{flex:1;min-height:0;overflow-y:auto;padding:0 14px 8px}
+  /* B) yuklangan holat — pleyer + matn + boshqaruv */
+  #ytBox{flex:1;min-height:0;display:flex;flex-direction:column}
+  /* link qatori chipga yig'iladi — vertikal joy tejaladi */
+  .vt-src{flex:0 0 auto;margin:0 14px 10px;display:flex;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px 8px 11px}
+  .vt-src .vt-yt{width:24px;height:24px;border-radius:7px;background:rgba(255,0,0,.12);color:#ff4d4d;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .vt-src .vt-yt svg{width:14px;height:14px;fill:currentColor;stroke:none}
+  .vt-src .vt-nm{flex:1;min-width:0;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vt-src button{border:none;background:none;cursor:pointer;color:var(--accent);font-size:12.5px;
+    font-weight:800;flex:0 0 auto;padding:6px 4px;min-height:34px;font-family:inherit}
+  .vt-player{flex:0 0 auto;width:auto;margin:0 14px;border-radius:16px}
+  /* transkript sarlavhasi: "MATN" + Aa + tezlik */
+  .vt-head{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:14px 16px 9px}
+  .vt-head .vt-lbl{flex:1;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .vt-chip{border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);
+    font-size:12px;font-weight:800;font-family:inherit;border-radius:99px;padding:6px 11px;flex:0 0 auto;
+    min-height:32px;display:flex;align-items:center;gap:5px}
+  .vt-chip.act{color:var(--accent);border-color:var(--accent);background:rgba(79,124,255,.1)}
+  /* matn maydoni */
+  .vt-view{flex:1;min-height:0;position:relative}
+  .vt-scroll{position:absolute;inset:0;overflow-y:auto;padding:4px 16px 30px;font-size:19px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .vt-scroll::-webkit-scrollbar{display:none}
+  .vt-view::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;pointer-events:none;
+    background:linear-gradient(to top,var(--bg),transparent)}
+  .vt-s{font-size:inherit;line-height:2.15;font-weight:500;color:var(--muted);opacity:.5;
+    margin:0 0 14px;transition:opacity .25s ease,color .25s ease}
+  .vt-s.on{color:var(--text);opacity:1}
+  .vt-s.done{opacity:.38}
+  /* qo'lda o'qish rejimi — hamma qator teng, dim yo'q */
+  .vt-scroll.free .vt-s{opacity:.85;color:var(--text)}
+  .vt-scroll.free .vt-s.on{opacity:1}
+  /* BO'LAK (cue) — YouTube beradigan haqiqiy birlik (3-7 sek). Belgi shu darajada. */
+  .vt-cue{border-radius:7px;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background .2s ease}
+  .vt-cue.now{background:rgba(79,124,255,.15)}
+  /* so'z: tap nishoni 44px+ bo'lsin deb vertikal padding, qator balandligi o'smaydi */
+  .vt-scroll .w{display:inline-block;padding:5px 3px;margin:0 -1px;border-radius:6px;cursor:pointer;
+    color:var(--text);transition:background .15s,color .15s}
+  .vt-scroll .w:active{background:var(--accent);color:#fff}
+  /* "joyiga qaytish" pilyulasi — qo'lda surilgandan keyin chiqadi */
+  .vt-back{position:absolute;left:50%;bottom:14px;transform:translate(-50%,14px);z-index:3;
+    border:none;cursor:pointer;color:#fff;font-size:12.5px;font-weight:800;font-family:inherit;border-radius:99px;
+    padding:10px 16px;display:none;align-items:center;gap:7px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 22px rgba(79,124,255,.35);
+    opacity:0;transition:opacity .2s ease,transform .2s ease}
+  .vt-back.show{display:flex;opacity:1;transform:translate(-50%,0)}
+  .vt-back svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  /* boshqaruv */
+  .vt-ctrl{flex:0 0 auto;display:flex;gap:9px;padding:10px 14px 8px}
+  .vt-ctrl button{border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);
+    border-radius:14px;min-height:48px;font-size:13px;font-weight:800;font-family:inherit;display:flex;
+    align-items:center;justify-content:center;gap:6px;padding:0 10px}
+  .vt-ctrl .vt-side{flex:0 0 auto;width:76px;min-width:76px;max-width:76px}
+  .vt-ctrl .vt-main{flex:1;min-width:0;border-color:transparent;color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 20px rgba(79,124,255,.24)}
+  .vt-ctrl svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .yt-note{flex:0 0 auto;text-align:center;font-size:11.5px;color:var(--muted);padding:0 16px 12px}
+  @media (prefers-reduced-motion:reduce){
+    .vt-back,.vt-s,.vt-cue,.vt-scroll .w{transition:none !important}
+  }
 
   /* ============ LEADERBOARD (liga) ============
      Barcha sinflar .lb- prefiksi bilan — mavjud uslublarga tegmaydi. */
@@ -932,19 +992,30 @@
   <div class="fd-topbar">
     <button class="back" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
   </div>
-  <div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"></rect><path d="M10.5 9.2l4.6 2.8-4.6 2.8z"></path></svg></div><h2 data-i18n="YouTube">YouTube</h2></div>
-  <p class="muted" style="font-size:12.5px;margin:0" data-i18n="YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.">YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.</p>
+  <!-- A) KIRISH: video hali yuklanmagan -->
+  <div id="ytEntry">
+    <div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"></rect><path d="M10.5 9.2l4.6 2.8-4.6 2.8z"></path></svg></div><h2 data-i18n="YouTube">YouTube</h2></div>
+    <p class="muted" style="font-size:12.5px;margin:0" data-i18n="YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.">YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.</p>
 
-  <div class="yt-in">
-    <input id="ytUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://youtube.com/watch?v=…">
-    <button class="yt-go" id="ytGo" onclick="ytStart()" data-i18n="Boshlash">Boshlash</button>
+    <div class="yt-in">
+      <input id="ytUrl" type="url" inputmode="url" enterkeyhint="go" autocomplete="off" spellcheck="false"
+             placeholder="https://youtube.com/watch?v=…" onkeydown="if(event.key==='Enter')ytStart()">
+      <button class="yt-go" id="ytGo" onclick="ytStart()" data-i18n="Boshlash">Boshlash</button>
+    </div>
+
+    <div class="yt-steps" id="ytSteps" style="display:none"><span class="spin"></span><span id="ytStepTxt"></span></div>
+    <div class="yt-msg" id="ytErr" style="display:none"></div>
   </div>
 
-  <div class="yt-steps" id="ytSteps" style="display:none"><span class="spin"></span><span id="ytStepTxt"></span></div>
-  <div class="yt-msg" id="ytErr" style="display:none"></div>
+  <!-- B) YUKLANGAN: pleyer tepada, matn o'rtada suriladi, boshqaruv pastda -->
+  <div id="ytBox" style="display:none">
+    <div class="vt-src">
+      <span class="vt-yt"><svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5z"></path><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8z" opacity=".28"></path></svg></span>
+      <span class="vt-nm" id="ytSrcNm"></span>
+      <button onclick="ytChangeUrl()" data-i18n="Almashtirish">Almashtirish</button>
+    </div>
 
-  <div class="spbox" id="ytBox" style="display:none">
-    <div class="spvid">
+    <div class="spvid vt-player">
       <div id="ytYT"></div>
       <!-- Bepul: 2 daqiqadan keyin shu qatlam chiqadi (matnning qolgani serverdan umuman kelmaydi) -->
       <div class="yt-lock" id="ytLock" style="display:none">
@@ -953,12 +1024,34 @@
         <button class="btn gold" onclick="proUpsell('yt_limit');go('profile')" data-i18n="⭐ Pro — to'liq video">⭐ Pro — to'liq video</button>
       </div>
     </div>
-    <div class="spsub yt-lines" id="ytSub"></div>
-    <div class="ygctrl" style="margin-top:6px">
-      <button class="cbtn" onclick="ytSeek(-5)">◀ 5 <span data-i18n="sek">sek</span></button>
-      <button class="cbtn skspeed" onclick="ytCycleRate()"><span data-i18n="Tezlik">Tezlik</span> <span class="ytrate">1×</span></button>
-      <button class="cbtn" onclick="ytSeek(5)">5 <span data-i18n="sek">sek</span> ▶</button>
+
+    <div class="vt-head">
+      <span class="vt-lbl" data-i18n="Matn">Matn</span>
+      <button class="vt-chip" id="ytSizeChip" onclick="ytCycleSize()" aria-label="Shrift o'lchami">Aa</button>
+      <button class="vt-chip" id="ytSpeedChip" onclick="ytCycleRate()"><span class="ytrate">1×</span></button>
     </div>
+
+    <div class="vt-view">
+      <div class="vt-scroll" id="ytScroll"></div>
+      <button class="vt-back" id="ytBack" onclick="ytFollowOn()">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="m6 13 6 6 6-6"></path></svg>
+        <span data-i18n="Joyiga qaytish">Joyiga qaytish</span>
+      </button>
+    </div>
+
+    <div class="vt-ctrl">
+      <button class="vt-side" onclick="ytSeek(-5)" aria-label="5 sek orqaga">
+        <svg viewBox="0 0 24 24"><path d="M11 17 5 12l6-5"></path><path d="M19 17l-6-5 6-5"></path></svg>5
+      </button>
+      <button class="vt-main" onclick="ytReplay()">
+        <svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 2 5.3"></path><path d="M4 5v5h5"></path></svg>
+        <span data-i18n="Takrorlash">Takrorlash</span>
+      </button>
+      <button class="vt-side" onclick="ytSeek(5)" aria-label="5 sek oldinga">
+        5<svg viewBox="0 0 24 24"><path d="m13 17 6-5-6-5"></path><path d="M5 17l6-5-6-5"></path></svg>
+      </button>
+    </div>
+
     <div class="yt-note" id="ytNote"></div>
   </div>
 </div>
@@ -3467,8 +3560,11 @@ function applyYtGate(){
    Bu yerda: video + ostida 3 qatorli sinxron matn (oldingi / joriy / keyingi), so'zga bosilsa
    mavjud tap-to-define (cueTap) ishlaydi. 3:00 da video pauza + Pro taklifi.
    Alohida pleyer obyekti (ytp) — qidiruv pleyeri (sp) bilan aralashmaydi. */
-var ytp={ player:null, timer:null, segs:[], cur:-1, rate:1, lang:'ru', vid:'',
+var ytp={ player:null, timer:null, segs:[], cur:-1, rate:1, lang:'ru', vid:'', tnow:0,
           locked:false, limit:0, dur:0, active:false, busy:false, ready:false, hit:false, stepT:null };
+/* Transkript ko'rinishi: bo'laklar (cue) + gaplar, kuzatish holati, shrift o'lchami. */
+var YT_SIZES=[17,19,22];
+var ytv={ cues:[], sents:[], follow:true, prog:false, size:1, bound:false };
 
 function ytEsc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
 function ytShow(id, on){ var e=document.getElementById(id); if(e) e.style.display=on?'':'none'; }
@@ -3531,12 +3627,15 @@ function ytPlay(res){
   ytp.locked=!!res.locked;
   ytp.limit=res.limit_sec||0;
   ytp.dur=res.dur||0;
-  ytp.cur=-1; ytp.hit=false;
+  ytp.cur=-1; ytp.hit=false; ytp.tnow=0;
   /* Tap-to-define tili: transcript tili qo'llab-quvvatlansa o'sha, aks holda joriy til. */
   var L=String(res.lang||'').slice(0,2).toLowerCase();
   ytp.lang=(L==='ru'||L==='en'||L==='de') ? L : (S.curLang||'ru');
+  ytShow('ytEntry', false);            // link kiritish holati yopiladi
   ytShow('ytBox', true);
   ytShow('ytLock', false);
+  var nm=document.getElementById('ytSrcNm');
+  if(nm) nm.textContent = ytp.vid ? ('youtu.be/'+ytp.vid) : '';
   var note=document.getElementById('ytNote');
   if(note) note.textContent = ytp.locked
     ? t("Bepul: birinchi 2 daqiqa")
@@ -3594,77 +3693,140 @@ function ytTick(){
     return;
   }
   if(!ytp.segs.length) return;
-  var idx=-1;
-  for(var i=0;i<ytp.segs.length;i++){ if(Number(ytp.segs[i].s)<=tt) idx=i; else break; }
-  if(idx>=0 && idx!==ytp.cur){ ytp.cur=idx; ytScroll(); }
+  ytp.tnow=tt;
+  ytPaint(false);
 }
 
-/* TELEPROMPTER.
-   Matn ichki "trek"da turadi va translateY bilan suriladi — brauzer scroll'i emas.
-   Sabab: scroll silliq emas edi (barmoq bilan urishar, inertsiya, uzun videoda sekin).
-   Tezlik uchun bir vaqtda faqat YT_WIN qator chiziladi; joriy qator oyna chetiga
-   yaqinlashsa oyna jimgina qayta chiziladi (sakrashsiz). Har so'z bosiladigan. */
-var YT_WIN=41, YT_EDGE=8;
-
+/* ===== TRANSKRIPT =====
+   Matn to'liq chiziladi va oddiy brauzer scroll'i bilan suriladi — orqaga qaytib
+   o'qish mumkin. Video ketayotganda faol GAP o'zi ko'rinishga keladi (SAHIFALAB:
+   gap ekranda bo'lsa hech narsa qimirlamaydi — matn tinmay siljib ko'zni charchatmaydi).
+   Belgi BO'LAK (cue) darajasida: YouTube faqat shu darajada vaqt beradi (3-7 sek),
+   so'z-vaqti yo'q. Har so'z bosiladigan — cueTap (tap-to-define) o'zgarmagan. */
 function ytRender(){
-  var el=document.getElementById('ytSub'); if(!el) return;
-  el.innerHTML=''; el.__track=null; el.__lines=null; el.__from=0; el.__cur=-1;
-  if(!ytp.segs.length){ el.innerHTML='<div class="yt-track"><div class="yt-line cur">'+t("Matn topilmadi.")+'</div></div>'; return; }
-  var tr=document.createElement('div'); tr.className='yt-track';
-  el.appendChild(tr); el.__track=tr;
-  var c=ytp.cur<0?0:Math.min(ytp.cur, ytp.segs.length-1);
-  ytWindow(el, c);
-  var k=c-el.__from; if(el.__lines[k]) el.__lines[k].classList.add('cur');
-  el.__cur=c;
-  ytMove(el, c, false);
-}
+  var box=document.getElementById('ytScroll'); if(!box) return;
+  ytBindScroll();
+  box.innerHTML=''; box.scrollTop=0;
+  ytv.cues=[]; ytv.sents=[]; ytp.cur=-1;
+  if(!ytp.segs.length){ box.innerHTML='<p class="vt-s on">'+t("Matn topilmadi.")+'</p>'; return; }
 
-/* Markazi c bo'lgan qatorlar oynasini chizadi. */
-function ytWindow(el, c){
-  var n=ytp.segs.length;
-  var from=Math.min(Math.max(0, c-((YT_WIN-1)>>1)), Math.max(0, n-YT_WIN));
-  var to=Math.min(n, from+YT_WIN);
-  var frag=document.createDocumentFragment(), lines=[];
-  for(var i=from;i<to;i++){
-    var d=document.createElement('div'); d.className='yt-line';
-    d.innerHTML=renderCueText(ytp.segs[i].t||'', []);
-    frag.appendChild(d); lines.push(d);
+  var si=0, p=null;
+  function openSent(){ p=document.createElement('p'); p.className='vt-s'; box.appendChild(p); }
+  function closeSent(){ ytv.sents.push(p); si++; p=null; }
+
+  openSent();
+  for(var i=0;i<ytp.segs.length;i++){
+    var seg=ytp.segs[i], txt=String(seg.t||'').trim();
+    if(!txt) continue;
+    var span=document.createElement('span');
+    span.className='vt-cue';
+    span.innerHTML=renderCueText(txt, []);   // har so'z -> onclick=cueTap(this)
+    p.appendChild(span);
+    p.appendChild(document.createTextNode(' '));
+    var s0=Number(seg.s)||0, dd=Number(seg.d)||0;
+    ytv.cues.push({ el:span, t0:s0, t1:s0+dd, s:si });
+    /* Gap oxiri — o'qish uchun guruhlash. Vaqt hisobi bunga bog'liq emas. */
+    if(/[.!?…]["»)”]?$/.test(txt)) { closeSent(); openSent(); }
   }
-  el.__track.innerHTML=''; el.__track.appendChild(frag);
-  el.__from=from; el.__lines=lines;
+  if(p){ if(p.childNodes.length) closeSent(); else p.remove(); }
+
+  ytApplySize();
+  ytFollowOn();
+  ytPaint(true);
 }
 
-/* idx qatorini markazga qo'yadi. anim=false — animatsiyasiz (oyna almashganda). */
-function ytMove(el, idx, anim){
-  var li=el.__lines, tr=el.__track; if(!li || !li.length || !tr) return;
-  var k=Math.max(0, Math.min(idx-el.__from, li.length-1));
-  var y=li[k].offsetTop + li[k].offsetHeight/2 - el.clientHeight/2;
-  if(anim){ tr.style.transform='translateY('+(-y)+'px)'; return; }
-  tr.style.transition='none';
-  tr.style.transform='translateY('+(-y)+'px)';
-  void tr.offsetHeight;              // reflow — keyingi harakat silliq bo'lsin
-  tr.style.transition='';
-}
-
-/* Joriy qator o'zgarganda chaqiriladi. */
-function ytScroll(){
-  var el=document.getElementById('ytSub'); if(!el || !el.__lines || !el.__lines.length) return;
-  var n=ytp.segs.length; if(!n) return;
-  var c=Math.max(0, Math.min(ytp.cur<0?0:ytp.cur, n-1));
-  if(el.__cur===c) return;
-  var prev=el.__cur, end=el.__from+el.__lines.length;
-  /* Oyna cheti — qayta chizamiz. Sakrash bo'lmasligi uchun avval eski qator
-     joyida turadigan qilib qo'yamiz, keyin yangisiga silliq suramiz. */
-  if((c-el.__from<YT_EDGE && el.__from>0) || (end-c<=YT_EDGE && end<n)){
-    ytWindow(el, c);
-    ytMove(el, (prev>=el.__from && prev<el.__from+el.__lines.length) ? prev : c, false);
+/* Faol bo'lakni belgilaydi. force=true — holat o'zgarmagan bo'lsa ham qayta chizadi. */
+function ytPaint(force){
+  var idx=-1;
+  for(var i=0;i<ytv.cues.length;i++){ if(ytv.cues[i].t0<=ytp.tnow) idx=i; else break; }
+  if(idx===ytp.cur && !force) return;
+  if(ytp.cur>=0 && ytv.cues[ytp.cur]) ytv.cues[ytp.cur].el.classList.remove('now');
+  ytp.cur=idx;
+  if(idx>=0 && ytv.cues[idx]) ytv.cues[idx].el.classList.add('now');
+  var cs = idx>=0 ? ytv.cues[idx].s : -1;
+  for(var k=0;k<ytv.sents.length;k++){
+    ytv.sents[k].classList.toggle('on', k===cs);
+    ytv.sents[k].classList.toggle('done', k<cs);
   }
-  var pk=prev-el.__from;
-  if(pk>=0 && pk<el.__lines.length && el.__lines[pk]) el.__lines[pk].classList.remove('cur');
-  var k=c-el.__from;
-  if(el.__lines[k]) el.__lines[k].classList.add('cur');
-  el.__cur=c;
-  ytMove(el, c, true);
+  if(ytv.follow) ytPage(cs);
+}
+
+/* SAHIFALAB surish (uzluksiz scroll EMAS): gap ko'rinishda bo'lsa — tegmaymiz. */
+function ytPage(si){
+  if(si<0) return;
+  var sc=document.getElementById('ytScroll'); if(!sc) return;
+  var el=ytv.sents[si]; if(!el) return;
+  var top=el.offsetTop, bot=top+el.offsetHeight;
+  var vT=sc.scrollTop, vB=vT+sc.clientHeight;
+  if(top>=vT-4 && bot<=vB-26) return;      // 80% hollarda shu yerda to'xtaydi
+  ytv.prog=true;
+  try{ sc.scrollTo({ top:Math.max(0, top-8), behavior:'smooth' }); }
+  catch(e){ sc.scrollTop=Math.max(0, top-8); }
+  setTimeout(function(){ ytv.prog=false; }, 420);
+}
+
+/* Barmoq bilan surdi -> kuzatish o'chadi (matn tagidan qochib ketmasin),
+   "Joyiga qaytish" tugmasi chiqadi. */
+function ytFollowOff(){
+  if(!ytv.follow) return;
+  ytv.follow=false;
+  var sc=document.getElementById('ytScroll'), b=document.getElementById('ytBack');
+  if(sc) sc.classList.add('free');
+  if(b) b.classList.add('show');
+}
+function ytFollowOn(){
+  ytv.follow=true;
+  var sc=document.getElementById('ytScroll'), b=document.getElementById('ytBack');
+  if(sc) sc.classList.remove('free');
+  if(b) b.classList.remove('show');
+  ytPage(ytp.cur>=0 && ytv.cues[ytp.cur] ? ytv.cues[ytp.cur].s : 0);
+}
+function ytBindScroll(){
+  if(ytv.bound) return;
+  var sc=document.getElementById('ytScroll'); if(!sc) return;
+  ytv.bound=true;
+  sc.addEventListener('touchstart', ytFollowOff, {passive:true});
+  sc.addEventListener('wheel',      ytFollowOff, {passive:true});
+  /* dastur o'zi surganda (ytPage) o'chirmaymiz — ytv.prog bayrog'i */
+  sc.addEventListener('scroll', function(){ if(!ytv.prog) ytFollowOff(); }, {passive:true});
+}
+
+/* Shrift o'lchami: 17 / 19 / 22 px. Ko'zi past userlar uchun — 2 bosishda. */
+function ytApplySize(){
+  var sc=document.getElementById('ytScroll'); if(sc) sc.style.fontSize=YT_SIZES[ytv.size]+'px';
+  var ch=document.getElementById('ytSizeChip'); if(ch) ch.classList.toggle('act', ytv.size!==1);
+}
+function ytCycleSize(){
+  ytv.size=(ytv.size+1)%YT_SIZES.length;
+  ytApplySize();
+  if(ytv.follow) ytPage(ytp.cur>=0 && ytv.cues[ytp.cur] ? ytv.cues[ytp.cur].s : 0);
+  if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.selectionChanged(); }catch(e){}}
+}
+
+/* Belgilangan BO'LAKNI qaytadan eshitish — belgi va tugma bir xil birlikni bildiradi. */
+function ytReplay(){
+  var c=ytv.cues[ytp.cur>=0?ytp.cur:0];
+  if(!c || !ytp.player || !ytp.player.seekTo) return;
+  var to=Math.max(0, c.t0);
+  try{
+    ytp.player.seekTo(to, true);
+    if(!(ytp.locked && ytp.limit && to>=ytp.limit)){
+      ytShow('ytLock', false);
+      if(ytp.player.playVideo) ytp.player.playVideo();
+    }
+  }catch(e){}
+  ytFollowOn();
+  if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){}}
+}
+
+/* "Almashtirish" — boshqa video kiritish holatiga qaytish. */
+function ytChangeUrl(){
+  try{ if(ytp.player && ytp.player.pauseVideo) ytp.player.pauseVideo(); }catch(e){}
+  ytShow('ytBox', false);
+  ytShow('ytEntry', true);
+  ytErr('');
+  var i=document.getElementById('ytUrl');
+  if(i){ i.value=''; try{ i.focus(); }catch(e){} }
 }
 
 function ytSeek(sec){
@@ -3684,6 +3846,7 @@ function ytCycleRate(){
   try{ if(ytp.player && ytp.player.setPlaybackRate) ytp.player.setPlaybackRate(ytp.rate); }catch(e){}
   var lb=document.querySelectorAll('.ytrate');
   for(var k=0;k<lb.length;k++) lb[k].textContent=ytp.rate+'×';
+  var ch=document.getElementById('ytSpeedChip'); if(ch) ch.classList.toggle('act', ytp.rate!==1);
   if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.selectionChanged(); }catch(e){}}
 }
 
@@ -5086,6 +5249,11 @@ try{
     I18N.ru["Video iboraga mos emas deb hisoblaysizmi?"]="Считаете, что видео не подходит к фразе?";
     I18N.ru["Ha"]="Да";
     I18N.ru["Yo'q"]="Нет";
+    /* YouTube transkript (vt-*) */
+    I18N.ru["Matn"]="Текст";
+    I18N.ru["Almashtirish"]="Заменить";
+    I18N.ru["Joyiga qaytish"]="Вернуться к месту";
+    I18N.ru["Takrorlash"]="Повторить";
   }
   if(I18N && I18N.kz){
     I18N.kz["Haftalik ball"]="Апталық ұпай";
@@ -5104,6 +5272,16 @@ try{
     I18N.kz["Saqlash"]="Сақтау";
     I18N.kz["Saqlandi"]="Сақталды";
     I18N.kz["Saqlashda xatolik"]="Сақтау кезінде қате";
+    I18N.kz["Matn"]="Мәтін";
+    I18N.kz["Almashtirish"]="Ауыстыру";
+    I18N.kz["Joyiga qaytish"]="Орнына оралу";
+    I18N.kz["Takrorlash"]="Қайталау";
+  }
+  if(I18N && I18N.zh){
+    I18N.zh["Matn"]="文本";
+    I18N.zh["Almashtirish"]="更换";
+    I18N.zh["Joyiga qaytish"]="回到当前位置";
+    I18N.zh["Takrorlash"]="重复";
   }
 }catch(e){}
 function ttsVoiceFor(lang2){
