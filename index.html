@@ -630,6 +630,24 @@
   .qz-state p{margin:0;font-size:13.5px;line-height:1.55;color:var(--muted);max-width:280px}
   @keyframes qzPop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
   .qz-state .qz-cta{max-width:280px;margin-top:6px}
+
+  /* ===== Practice → YouTube (ADR-031) ===== */
+  .yt-in{display:flex;gap:8px;margin:12px 0 10px}
+  .yt-in input{flex:1;min-width:0;padding:12px 13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px;font-family:inherit}
+  .yt-in input:focus{outline:none;border-color:var(--accent)}
+  .yt-go{flex:0 0 auto;padding:12px 16px;border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:800;font-family:inherit;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .yt-go:disabled{opacity:.55}
+  .yt-steps{display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+  .yt-steps .spin{width:17px;height:17px;border-radius:50%;border:2.4px solid var(--line);border-top-color:var(--accent);animation:spspin .8s linear infinite;flex:none}
+  .yt-msg{padding:12px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px;line-height:1.55;color:var(--muted)}
+  .yt-lines{display:flex;flex-direction:column;gap:4px;text-align:center;min-height:74px}
+  .yt-line{font-size:14px;line-height:1.55;color:var(--muted);opacity:.5;transition:opacity .18s}
+  .yt-line.cur{font-size:16px;font-weight:700;color:var(--text);opacity:1}
+  .yt-lock{position:absolute;inset:0;z-index:5;background:rgba(8,10,15,.86);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center}
+  .yt-lock b{font-size:16px;font-weight:800;color:#fff}
+  .yt-lock small{font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72);max-width:270px}
+  .yt-lock .btn{max-width:260px}
+  .yt-note{margin-top:8px;font-size:12px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
@@ -766,6 +784,12 @@
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"></rect><path d="M8.5 9.5l1.8 1.8 3.4-3.4M8.5 16h7"></path></svg></span>
       <span class="tt"><b data-i18n="Test">Test</b><small data-i18n="Variantli savollar">Variantli savollar</small></span>
     </button>
+    <!-- YouTube: DEFAULT qulflangan ("Tez kunda"). Owner uchun ochiladi (applyYtGate). -->
+    <button class="prc-tile soon" id="prcYt" onclick="ytTileClick()">
+      <span class="prc-soon" id="prcYtSoon" data-i18n="Tez kunda">Tez kunda</span>
+      <span class="ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"></rect><path d="M10.5 9.2l4.6 2.8-4.6 2.8z"></path></svg></span>
+      <span class="tt"><b data-i18n="YouTube">YouTube</b><small data-i18n="O'z videongiz bilan">O'z videongiz bilan</small></span>
+    </button>
     <button class="prc-tile soon" onclick="soonToast()">
       <span class="prc-soon" data-i18n="Tez kunda">Tez kunda</span>
       <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"></path><path d="M18 16l.8 2.2L21 19l-2.2.8L18 22l-.8-2.2L15 19l2.2-.8z"></path></svg></span>
@@ -809,6 +833,42 @@
     <h2 data-i18n="Test uchun so'z kam">Test uchun so'z kam</h2>
     <p data-i18n="Variantli test uchun kamida 4 ta so'z saqlashingiz kerak. Videolardan yangi so'zlar saqlang.">Variantli test uchun kamida 4 ta so'z saqlashingiz kerak. Videolardan yangi so'zlar saqlang.</p>
     <button class="qz-cta" onclick="quizQuit()" data-i18n="Practice'ga qaytish">Practice'ga qaytish</button>
+  </div>
+</div>
+
+<!-- ============ YOUTUBE (o'z videosi) ============ -->
+<div class="page" id="pg-yt">
+  <div class="fd-topbar">
+    <button class="back" onclick="go('practice')" data-i18n="← Orqaga">← Orqaga</button>
+  </div>
+  <div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"></rect><path d="M10.5 9.2l4.6 2.8-4.6 2.8z"></path></svg></div><h2 data-i18n="YouTube">YouTube</h2></div>
+  <p class="muted" style="font-size:12.5px;margin:0" data-i18n="YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.">YouTube linkini yuboring — video ostida matn chiqadi. Istalgan so'zga bosib ma'nosini ko'ring.</p>
+
+  <div class="yt-in">
+    <input id="ytUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://youtube.com/watch?v=…">
+    <button class="yt-go" id="ytGo" onclick="ytStart()" data-i18n="Boshlash">Boshlash</button>
+  </div>
+
+  <div class="yt-steps" id="ytSteps" style="display:none"><span class="spin"></span><span id="ytStepTxt"></span></div>
+  <div class="yt-msg" id="ytErr" style="display:none"></div>
+
+  <div class="spbox" id="ytBox" style="display:none">
+    <div class="spvid">
+      <div id="ytYT"></div>
+      <!-- Bepul: 3 daqiqadan keyin shu qatlam chiqadi (matnning qolgani serverdan umuman kelmaydi) -->
+      <div class="yt-lock" id="ytLock" style="display:none">
+        <b data-i18n="Bepul qism tugadi">Bepul qism tugadi</b>
+        <small data-i18n="Bepul rejada har videoning birinchi 3 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.">Bepul rejada har videoning birinchi 3 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.</small>
+        <button class="btn gold" onclick="proUpsell('yt_limit');go('profile')" data-i18n="⭐ Pro — to'liq video">⭐ Pro — to'liq video</button>
+      </div>
+    </div>
+    <div class="spsub yt-lines" id="ytSub"></div>
+    <div class="ygctrl" style="margin-top:6px">
+      <button class="cbtn" onclick="ytSeek(-5)">◀ 5 <span data-i18n="sek">sek</span></button>
+      <button class="cbtn skspeed" onclick="ytCycleRate()"><span data-i18n="Tezlik">Tezlik</span> <span class="ytrate">1×</span></button>
+      <button class="cbtn" onclick="ytSeek(5)">5 <span data-i18n="sek">sek</span> ▶</button>
+    </div>
+    <div class="yt-note" id="ytNote"></div>
   </div>
 </div>
 
@@ -1344,17 +1404,22 @@ function buildIndex(){
 }
 
 /* ================== NAVIGATSIYA ================== */
-var pages=['ob','home','cat','search','practice','flash','quiz','saved','profile'];
+var pages=['ob','home','cat','search','practice','flash','quiz','yt','saved','profile'];
 function go(p){
   /* Flashcard hozircha faqat owner uchun (test bosqichi) — boshqalar Practice'ga qaytadi. */
   if(p==='flash' && !IS_OWNER){ go('practice'); soonToast(); return; }
   /* So'z testi ham hozircha faqat owner uchun (test bosqichi). */
   if(p==='quiz' && !IS_OWNER){ go('practice'); soonToast(); return; }
+  /* YouTube bo'limi ham hozircha faqat owner uchun (test bosqichi). */
+  if(p==='yt' && !IS_OWNER){ go('practice'); soonToast(); return; }
   pages.forEach(function(x){ document.getElementById('pg-'+x).classList.remove('active'); });
   document.getElementById('pg-'+p).classList.add('active');
   /* qidiruvdan chiqilsa Seyly pleyer pauza (ovoz fon'da qolmasin) */
   if(p!=='search' && window.sp && sp.player && sp.player.pauseVideo){ try{ sp.player.pauseVideo(); }catch(e){} }
-  var act = (p==='saved'||p==='flash'||p==='quiz') ? 'practice' : p;   // Saqlangan/Flashcard/Test = Practice ichida -> Practice tugmasi yonadi
+  /* YouTube bo'limidan chiqilsa — u yerdagi pleyer ham pauza */
+  if(p!=='yt' && window.ytp && ytp.player && ytp.player.pauseVideo){ try{ ytp.player.pauseVideo(); }catch(e){} }
+  if(window.ytp) ytp.active = (p==='yt');
+  var act = (p==='saved'||p==='flash'||p==='quiz'||p==='yt') ? 'practice' : p;   // Saqlangan/Flashcard/Test/YouTube = Practice ichida -> Practice tugmasi yonadi
   ['home','search','practice','profile'].forEach(function(x){
     var b=document.getElementById('nav-'+x); if(b) b.classList.toggle('on', x===act);
   });
@@ -2367,10 +2432,16 @@ function ensureCwPop(){
   d.addEventListener('click', closeCwPop);   // tashqariga bosish -> yopiladi
   document.body.appendChild(d);
 }
+/* Faol pleyer: YouTube bo'limi ochiq bo'lsa — o'sha, aks holda Seyly qidiruv pleyeri.
+   (Tap-to-define ikkalasida bir xil ishlashi uchun — DRY.) */
+function curPlayer(){ return (window.ytp && ytp.active && ytp.player) ? ytp.player : (window.sp ? sp.player : null); }
+function curTapLang(){ return (window.ytp && ytp.active) ? (ytp.lang||'ru') : ((window.sp && sp.lang) || 'ru'); }
 function closeCwPop(){
   var p=document.getElementById('cwPop'); if(p) p.style.display='none';
-  /* videoni davom ettiramiz (o'rgandi, yopdi) */
-  try{ if(sp.player && sp.player.playVideo) sp.player.playVideo(); }catch(e){}
+  /* videoni davom ettiramiz (o'rgandi, yopdi) — bepul chegarada esa tegmaymiz */
+  if(window.ytp && ytp.active && ytp.locked && ytp.hit) return;
+  var pl=curPlayer();
+  try{ if(pl && pl.playVideo) pl.playVideo(); }catch(e){}
 }
 function cwProLockHtml(){
   logEv('pro_popup_show','define_lock');   // faqat lock render bo'lganda chaqiriladi
@@ -2381,7 +2452,8 @@ function cueTap(el){
   if(!SERVER) return;                       // ma'no faqat server rejimida
   var disp=(el.textContent||'').trim();
   var w=normTok(disp); if(!w) return;
-  try{ if(sp.player && sp.player.pauseVideo) sp.player.pauseVideo(); }catch(e){}  // o'rganish uchun pauza
+  var _pl=curPlayer();
+  try{ if(_pl && _pl.pauseVideo) _pl.pauseVideo(); }catch(e){}  // o'rganish uchun pauza
   if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.impactOccurred('light')}catch(e){}}
   ensureCwPop();
   cwCur=null;
@@ -2392,7 +2464,7 @@ function cueTap(el){
   /* METERED: bepul user ham chaqiradi (kunlik define limiti ichida). Limit tugasa -> upsell.
      Pro/trial cheksiz. Bir nechta tekin "ta'm" odat quradi, keyin tabiiy konversiya. */
   body.innerHTML='<div class="cw-load">'+t("📖 Ma'nolar tayyorlanmoqda…")+'</div>';
-  var lang=sp.lang||'ru';
+  var lang=curTapLang();
   if(cwBusy) return; cwBusy=true;
   api('define',{q:w, lang:lang, tap:true}).then(function(res){
     cwBusy=false;
@@ -3239,6 +3311,180 @@ function applyQuizGate(){
   if(!t) return;
   if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
   else { t.classList.add('soon'); if(badge) badge.style.display=''; }
+}
+
+/* YouTube bo'limi ham hozircha FAQAT owner uchun (test bosqichi). */
+function ytTileClick(){ if(IS_OWNER) go('yt'); else soonToast(); }
+function applyYtGate(){
+  var t=document.getElementById('prcYt'), badge=document.getElementById('prcYtSoon');
+  if(!t) return;
+  if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
+  else { t.classList.add('soon'); if(badge) badge.style.display=''; }
+}
+
+/* ================== PRACTICE → YOUTUBE (ADR-031) ==================
+   User YouTube linkini yuboradi -> backend (yt_transcript) transcriptapi.com'dan matnni oladi,
+   keshlaydi va BEPUL user uchun faqat birinchi 3 daqiqasini qaytaradi (server tomonda kesiladi).
+   Bu yerda: video + ostida 3 qatorli sinxron matn (oldingi / joriy / keyingi), so'zga bosilsa
+   mavjud tap-to-define (cueTap) ishlaydi. 3:00 da video pauza + Pro taklifi.
+   Alohida pleyer obyekti (ytp) — qidiruv pleyeri (sp) bilan aralashmaydi. */
+var ytp={ player:null, timer:null, segs:[], cur:-1, rate:1, lang:'ru', vid:'',
+          locked:false, limit:0, dur:0, active:false, busy:false, ready:false, hit:false, stepT:null };
+
+function ytEsc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
+function ytShow(id, on){ var e=document.getElementById(id); if(e) e.style.display=on?'':'none'; }
+function ytErr(msg){
+  var e=document.getElementById('ytErr'); if(!e) return;
+  e.innerHTML=msg; e.style.display=msg?'':'none';
+}
+/* Bosqichli status — SOXTA foiz yo'q, faqat rost bosqichlar. */
+var YT_STEPS=["Video tekshirilyapti…","Matn olinyapti…","Tayyorlanyapti…"];
+function ytStepsStart(){
+  var i=0;
+  ytShow('ytSteps', true);
+  var set=function(){ var e=document.getElementById('ytStepTxt'); if(e) e.textContent=t(YT_STEPS[Math.min(i,YT_STEPS.length-1)]); };
+  set();
+  if(ytp.stepT) clearInterval(ytp.stepT);
+  ytp.stepT=setInterval(function(){ i++; set(); if(i>=YT_STEPS.length-1){ clearInterval(ytp.stepT); ytp.stepT=null; } }, 1400);
+}
+function ytStepsStop(){ if(ytp.stepT){ clearInterval(ytp.stepT); ytp.stepT=null; } ytShow('ytSteps', false); }
+
+function ytStart(){
+  if(!SERVER){ ytErr(t("Bu funksiya faqat Telegram ichida ishlaydi.")); return; }
+  if(ytp.busy) return;
+  var inp=document.getElementById('ytUrl');
+  var url=(inp&&inp.value||'').trim();
+  if(!url){ ytErr(t("YouTube linkini kiriting.")); return; }
+  if(!/(?:v=|\/shorts\/|\/embed\/|\/live\/|youtu\.be\/)([A-Za-z0-9_-]{11})/.test(url) && !/^[A-Za-z0-9_-]{11}$/.test(url)){
+    ytErr(t("Bu YouTube link emas. Masalan: https://youtube.com/watch?v=…")); return;
+  }
+  ytp.busy=true; ytErr(''); ytShow('ytBox', false); ytStepsStart();
+  var gb=document.getElementById('ytGo'); if(gb) gb.disabled=true;
+  api('yt_transcript',{url:url}).then(function(res){
+    ytp.busy=false; ytStepsStop();
+    var g=document.getElementById('ytGo'); if(g) g.disabled=false;
+    if(!res || !res.ok){
+      var e=(res&&res.err)||'fetch';
+      if(e==='no_transcript') ytErr(t("Bu videoda matn (subtitr) yo'q. Boshqa videoni sinab ko'ring."));
+      else if(e==='bad_url') ytErr(t("Bu YouTube link emas. Masalan: https://youtube.com/watch?v=…"));
+      else if(e==='daily'){
+        logEv('pro_popup_show','yt_daily');
+        ytErr(t("Bugungi bepul videolar tugadi.")+' <button class="btn gold" style="margin-top:10px" onclick="proUpsell(\'yt_daily\');go(\'profile\')">'+t("⭐ Pro — cheksiz video")+'</button>');
+      }
+      else ytErr(t("Matnni olishda xatolik. Birozdan keyin qayta urinib ko'ring."));
+      return;
+    }
+    ytPlay(res);
+  }).catch(function(){
+    ytp.busy=false; ytStepsStop();
+    var g=document.getElementById('ytGo'); if(g) g.disabled=false;
+    ytErr(t("Internet xatosi"));
+  });
+}
+
+function ytPlay(res){
+  ytp.segs=res.segments||[];
+  ytp.vid=res.video_id||'';
+  ytp.locked=!!res.locked;
+  ytp.limit=res.limit_sec||0;
+  ytp.dur=res.dur||0;
+  ytp.cur=-1; ytp.hit=false;
+  /* Tap-to-define tili: transcript tili qo'llab-quvvatlansa o'sha, aks holda joriy til. */
+  var L=String(res.lang||'').slice(0,2).toLowerCase();
+  ytp.lang=(L==='ru'||L==='en'||L==='de') ? L : (S.curLang||'ru');
+  ytShow('ytBox', true);
+  ytShow('ytLock', false);
+  var note=document.getElementById('ytNote');
+  if(note) note.textContent = ytp.locked
+    ? t("Bepul: birinchi 3 daqiqa")
+    : (ytp.segs.length ? t("So'zga bosing — ma'nosi chiqadi") : '');
+  ytRender();
+  ensureYT(function(err){
+    if(err){ ytErr(t("Video yuklashda xatolik.")); return; }
+    ytCreate();
+  });
+}
+
+function ytCreate(){
+  var host=document.getElementById('ytYT');
+  if(!host) return;
+  if(host.parentNode && host.parentNode.classList.contains('spvid')){
+    host.parentNode.style.background='#000 url(https://i.ytimg.com/vi/'+ytp.vid+'/hqdefault.jpg) center/cover no-repeat';
+  }
+  if(ytp.player && ytp.ready && ytp.player.loadVideoById){
+    try{ ytp.player.loadVideoById({videoId:ytp.vid, startSeconds:0}); }catch(e){}
+    try{ ytp.player.setPlaybackRate(ytp.rate||1); }catch(e){}
+  } else {
+    try{ if(ytp.player && ytp.player.destroy) ytp.player.destroy(); }catch(e){}
+    // destroy() host'ni o'chiradi — qayta yaratamiz
+    if(!document.getElementById('ytYT')){
+      var box=document.getElementById('ytBox');
+      var vid=box?box.querySelector('.spvid'):null;
+      if(!vid) return;
+      host=document.createElement('div'); host.id='ytYT'; vid.appendChild(host);
+    }
+    ytp.ready=false;
+    ytp.player=new YT.Player('ytYT', {
+      videoId:ytp.vid,
+      playerVars:{ autoplay:1, rel:0, playsinline:1, origin:(location&&location.origin)||'' },
+      events:{
+        onReady:function(ev){ if(ytp.player!==ev.target) return; ytp.ready=true; try{ ev.target.setPlaybackRate(ytp.rate||1); }catch(e){} },
+        onError:function(ev){ if(ytp.player!==ev.target) return; ytErr(t("Video yuklashda xatolik.")); }
+      }
+    });
+  }
+  if(ytp.timer) clearInterval(ytp.timer);
+  ytp.timer=setInterval(ytTick, 250);
+}
+
+/* Vaqt bo'yicha: joriy segmentni topamiz + bepul chegara nazorati. */
+function ytTick(){
+  if(!ytp.player || !ytp.player.getCurrentTime) return;
+  var tt; try{ tt=ytp.player.getCurrentTime(); }catch(e){ return; }
+  if(typeof tt!=='number') return;
+  /* BEPUL chegara: 3 daqiqada pauza + Pro taklifi (matn allaqachon serverda kesilgan) */
+  if(ytp.locked && ytp.limit && tt>=ytp.limit){
+    try{ if(ytp.player.pauseVideo) ytp.player.pauseVideo(); }catch(e){}
+    if(!ytp.hit){ ytp.hit=true; logEv('pro_popup_show','yt_limit'); }
+    ytShow('ytLock', true);
+    return;
+  }
+  if(!ytp.segs.length) return;
+  var idx=-1;
+  for(var i=0;i<ytp.segs.length;i++){ if(Number(ytp.segs[i].s)<=tt) idx=i; else break; }
+  if(idx>=0 && idx!==ytp.cur){ ytp.cur=idx; ytRender(); }
+}
+
+/* 3 qator: oldingi (xira) / joriy (yorqin) / keyingi (xira). Har so'z bosiladigan. */
+function ytRender(){
+  var el=document.getElementById('ytSub'); if(!el) return;
+  if(!ytp.segs.length){ el.innerHTML='<div class="yt-line cur">'+t("Matn topilmadi.")+'</div>'; return; }
+  var c=(ytp.cur<0?0:ytp.cur), h='';
+  [c-1, c, c+1].forEach(function(i){
+    if(i<0 || i>=ytp.segs.length) return;
+    h+='<div class="yt-line'+(i===c?' cur':'')+'">'+renderCueText(ytp.segs[i].t||'', [])+'</div>';
+  });
+  el.innerHTML=h;
+}
+
+function ytSeek(sec){
+  if(!ytp.player || !ytp.player.getCurrentTime || !ytp.player.seekTo) return;
+  try{
+    var t0=ytp.player.getCurrentTime()||0;
+    var to=Math.max(0, t0+sec);
+    if(ytp.locked && ytp.limit && to>=ytp.limit) to=Math.max(0, ytp.limit-1);   // bepul chegaradan nariga surib bo'lmaydi
+    ytp.player.seekTo(to, true);
+    if(to<ytp.limit){ ytShow('ytLock', false); try{ ytp.player.playVideo(); }catch(e){} }
+  }catch(e){}
+  if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){}}
+}
+function ytCycleRate(){
+  var i=SP_SPEEDS.indexOf(ytp.rate||1); if(i<0) i=SP_SPEEDS.indexOf(1);
+  ytp.rate=SP_SPEEDS[(i+1)%SP_SPEEDS.length];
+  try{ if(ytp.player && ytp.player.setPlaybackRate) ytp.player.setPlaybackRate(ytp.rate); }catch(e){}
+  var lb=document.querySelectorAll('.ytrate');
+  for(var k=0;k<lb.length;k++) lb[k].textContent=ytp.rate+'×';
+  if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.selectionChanged(); }catch(e){}}
 }
 
 /* ================== SO'Z TESTI (variantli) ==================
@@ -4546,6 +4792,7 @@ function boot(d){
       IS_OWNER=!!res.is_owner;
       applyFlashGate();   // Flashcard tile'ni owner holatiga qarab ochish/yopish
       applyQuizGate();    // So'z testi tile'ni owner holatiga qarab ochish/yopish
+      applyYtGate();      // YouTube tile'ni owner holatiga qarab ochish/yopish
       save();
       var ab=document.getElementById('adminBox');
       if(ab) ab.style.display=IS_OWNER?'block':'none';
