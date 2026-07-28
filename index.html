@@ -422,6 +422,11 @@
   .fd-row .ru{font-size:15.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .fd-row .uz{font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .fd-row .more{border:none;background:none;cursor:pointer;color:var(--muted);opacity:.7;display:flex;padding:4px;flex:0 0 auto}
+  /* Chapga surib o'chirish: qizil qatlam orqada, .fd-row uning ustida suriladi */
+  .fd-rowwrap{position:relative;border-radius:16px;overflow:hidden}
+  .fd-del{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;gap:7px;padding-right:20px;background:#e5484d;color:#fff;font-size:13.5px;font-weight:700;border-radius:16px}
+  .fd-del svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .fd-rowwrap .fd-row{position:relative;z-index:1;touch-action:pan-y;will-change:transform;box-shadow:none}
   .fd-ov{position:fixed;inset:0;z-index:60;background:rgba(23,26,33,.5);display:none;align-items:flex-end;justify-content:center;padding:16px;animation:fdFade .18s ease}
   .fd-ov.open{display:flex}
   .fd-sheet{width:100%;max-width:528px;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px 22px 26px;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:fdUp .26s cubic-bezier(.3,.8,.3,1)}
@@ -3846,15 +3851,64 @@ function fdApplyDeck(items, todayCount, gate){
   var el=fdEl('fdDeckList');
   if(!total){ el.innerHTML='<div class="card" style="padding:18px;text-align:center;color:var(--muted);font-size:13px">'+t("Hali so'z saqlanmagan")+'</div>'; return; }
   var show=fdDeck.slice(0,300);
+  var delSvg='<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path></svg>';
   el.innerHTML=show.map(function(){
-    return '<div class="fd-row"><i class="dot"></i><div class="txt"><div class="ru"></div><div class="uz"></div></div></div>';
+    return '<div class="fd-rowwrap"><div class="fd-del">'+delSvg+'<span>'+t("O'chirish")+'</span></div>'+
+      '<div class="fd-row"><i class="dot"></i><div class="txt"><div class="ru"></div><div class="uz"></div></div></div></div>';
   }).join('');
   var rows=el.querySelectorAll('.fd-row');
   for(var i=0;i<rows.length;i++){
     rows[i].querySelector('.dot').style.background=fdDotColor(show[i]._st);
     rows[i].querySelector('.ru').textContent=fdFrontText(show[i]);
     rows[i].querySelector('.uz').textContent=fdMeaning(show[i]) || fdTranslitOf(show[i]);
+    fdAttachSwipe(rows[i], show[i]);   // chapga surib o'chirish
   }
+}
+/* Ro'yxat qatorini chapga surib o'chirish. Orqada qizil "O'chirish" qatlami turadi;
+   chegaradan (35%) o't ib qo'yib yuborilsa — karta o'chadi. Faqat chapga; vertikal skroll buzilmasin. */
+function fdAttachSwipe(row, card){
+  if(!row || !card) return;
+  var x0=0,y0=0,dx=0,dragging=false,decided=false,horiz=false;
+  row.addEventListener('touchstart', function(e){
+    if(e.touches.length!==1) return;
+    x0=e.touches[0].clientX; y0=e.touches[0].clientY; dx=0; dragging=true; decided=false; horiz=false;
+    row.style.transition='none';
+  }, {passive:true});
+  row.addEventListener('touchmove', function(e){
+    if(!dragging) return;
+    var cx=e.touches[0].clientX, cy=e.touches[0].clientY;
+    if(!decided){ decided=true; horiz=Math.abs(cx-x0) > Math.abs(cy-y0); }
+    if(!horiz) return;                       // vertikal — skrollga qo'yamiz
+    dx=Math.min(0, cx-x0);                    // faqat chapga
+    row.style.transform='translateX('+dx+'px)';
+  }, {passive:true});
+  var end=function(){
+    if(!dragging) return; dragging=false;
+    row.style.transition='transform .18s ease';
+    var TH=Math.min(120, row.offsetWidth*0.35);
+    if(dx < -TH){ row.style.transform='translateX(-100%)'; setTimeout(function(){ fdRemoveCard(card, row.parentNode); }, 160); }
+    else { row.style.transform='translateX(0)'; }
+  };
+  row.addEventListener('touchend', end);
+  row.addEventListener('touchcancel', end);
+}
+/* Kartani o'rganish ro'yxatidan olib tashlash (server: sr_remove). Optimistik: DOM'dan darrov
+   yashiramiz, so'ng serverdan tasdiq bilan butun deck'ni qayta yuklaymiz (raqamlar to'g'ri bo'lsin).
+   Qidirilgan/saqlangan so'z qayta qo'shilmasin (server dismissed belgilaydi). */
+function fdRemoveCard(card, wrap){
+  if(!card || card._removing) return; card._removing=true;
+  if(wrap){ wrap.style.transition='height .16s ease,opacity .16s ease,margin .16s ease'; wrap.style.height=wrap.offsetHeight+'px'; wrap.style.overflow='hidden';
+    requestAnimationFrame(function(){ wrap.style.height='0'; wrap.style.opacity='0'; wrap.style.marginTop='-10px'; }); }
+  var match=function(x){ return x.item_type===card.item_type && x.item_id===card.item_id && x.lang===card.lang; };
+  fdDeck=fdDeck.filter(function(x){ return !match(x); });
+  fdCards=fdCards.filter(function(x){ return !match(x); });
+  if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.impactOccurred('medium'); }catch(e){}}
+  toast(t("Ro'yxatdan olib tashlandi"));
+  if(!SERVER){ fdApplyDeck(fdDeck, null, fdGate); return; }
+  api('sr_remove',{ item_type:card.item_type, lang:card.lang, item_id:card.item_id })
+    .then(function(r){ if(!r||!r.ok) toast(t("O'chirib bo'lmadi")); })
+    .catch(function(){ toast(t('Internet xatosi')); })
+    .then(function(){ if(document.getElementById('pg-flash').classList.contains('active')) fdRenderDeck(); });
 }
 function fdOpenInfo(){ fdEl('fdOvInfo').classList.add('open'); }
 function fdCloseInfo(e){ if(e && e.target!==e.currentTarget) return; fdEl('fdOvInfo').classList.remove('open'); }
