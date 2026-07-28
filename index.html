@@ -3913,7 +3913,9 @@ function fdRemoveCard(card, wrap){
   if(tg&&tg.HapticFeedback){try{ tg.HapticFeedback.impactOccurred('medium'); }catch(e){}}
   toast(t("Ro'yxatdan olib tashlandi"));
   if(!SERVER){ fdApplyDeck(fdDeck, null, fdGate); return; }
-  api('sr_remove',{ item_type:card.item_type, lang:card.lang, item_id:card.item_id })
+  /* MUHIM: sr_profile javobida lang yo'q bo'lishi mumkin (eski backend) — joriy deck tili bilan
+     to'ldiramiz. Aks holda server "ru" deb qabul qilib, en/de kartani o'chira olmasdi (real bug edi). */
+  api('sr_remove',{ item_type:card.item_type, lang:card.lang||fdCurLang(), item_id:card.item_id })
     .then(function(r){ if(!r||!r.ok) toast(t("O'chirib bo'lmadi")); })
     .catch(function(){ toast(t('Internet xatosi')); })
     .then(function(){ if(document.getElementById('pg-flash').classList.contains('active')) fdRenderDeck(); });
