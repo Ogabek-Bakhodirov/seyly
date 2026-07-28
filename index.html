@@ -855,10 +855,10 @@
   <div class="spbox" id="ytBox" style="display:none">
     <div class="spvid">
       <div id="ytYT"></div>
-      <!-- Bepul: 3 daqiqadan keyin shu qatlam chiqadi (matnning qolgani serverdan umuman kelmaydi) -->
+      <!-- Bepul: 2 daqiqadan keyin shu qatlam chiqadi (matnning qolgani serverdan umuman kelmaydi) -->
       <div class="yt-lock" id="ytLock" style="display:none">
         <b data-i18n="Bepul qism tugadi">Bepul qism tugadi</b>
-        <small data-i18n="Bepul rejada har videoning birinchi 3 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.">Bepul rejada har videoning birinchi 3 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.</small>
+        <small data-i18n="Bepul rejada har videoning birinchi 2 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.">Bepul rejada har videoning birinchi 2 daqiqasi ochiq. Pro bilan videoni oxirigacha ko'ring.</small>
         <button class="btn gold" onclick="proUpsell('yt_limit');go('profile')" data-i18n="⭐ Pro — to'liq video">⭐ Pro — to'liq video</button>
       </div>
     </div>
@@ -3326,7 +3326,7 @@ function applyYtGate(){
 
 /* ================== PRACTICE → YOUTUBE (ADR-031) ==================
    User YouTube linkini yuboradi -> backend (yt_transcript) transcriptapi.com'dan matnni oladi,
-   keshlaydi va BEPUL user uchun faqat birinchi 3 daqiqasini qaytaradi (server tomonda kesiladi).
+   keshlaydi va BEPUL user uchun faqat birinchi 2 daqiqasini qaytaradi (server tomonda kesiladi).
    Bu yerda: video + ostida 3 qatorli sinxron matn (oldingi / joriy / keyingi), so'zga bosilsa
    mavjud tap-to-define (cueTap) ishlaydi. 3:00 da video pauza + Pro taklifi.
    Alohida pleyer obyekti (ytp) — qidiruv pleyeri (sp) bilan aralashmaydi. */
@@ -3401,7 +3401,7 @@ function ytPlay(res){
   ytShow('ytLock', false);
   var note=document.getElementById('ytNote');
   if(note) note.textContent = ytp.locked
-    ? t("Bepul: birinchi 3 daqiqa")
+    ? t("Bepul: birinchi 2 daqiqa")
     : (ytp.segs.length ? t("So'zga bosing — ma'nosi chiqadi") : '');
   ytRender();
   ensureYT(function(err){
@@ -3448,7 +3448,7 @@ function ytTick(){
   if(!ytp.player || !ytp.player.getCurrentTime) return;
   var tt; try{ tt=ytp.player.getCurrentTime(); }catch(e){ return; }
   if(typeof tt!=='number') return;
-  /* BEPUL chegara: 3 daqiqada pauza + Pro taklifi (matn allaqachon serverda kesilgan) */
+  /* BEPUL chegara: 2 daqiqada pauza + Pro taklifi (matn allaqachon serverda kesilgan) */
   if(ytp.locked && ytp.limit && tt>=ytp.limit){
     try{ if(ytp.player.pauseVideo) ytp.player.pauseVideo(); }catch(e){}
     if(!ytp.hit){ ytp.hit=true; logEv('pro_popup_show','yt_limit'); }
