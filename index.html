@@ -426,7 +426,7 @@
   .fd-rowwrap{position:relative;border-radius:16px;overflow:hidden}
   .fd-del{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;gap:7px;padding-right:20px;background:#e5484d;color:#fff;font-size:13.5px;font-weight:700;border-radius:16px}
   .fd-del svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .fd-rowwrap .fd-row{position:relative;z-index:1;touch-action:pan-y;will-change:transform;box-shadow:none}
+  .fd-rowwrap .fd-row{position:relative;z-index:1;touch-action:pan-y;will-change:transform;box-shadow:none;cursor:grab;user-select:none}
   .fd-ov{position:fixed;inset:0;z-index:60;background:rgba(23,26,33,.5);display:none;align-items:flex-end;justify-content:center;padding:16px;animation:fdFade .18s ease}
   .fd-ov.open{display:flex}
   .fd-sheet{width:100%;max-width:528px;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px 22px 26px;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:fdUp .26s cubic-bezier(.3,.8,.3,1)}
@@ -3865,32 +3865,40 @@ function fdApplyDeck(items, todayCount, gate){
   }
 }
 /* Ro'yxat qatorini chapga surib o'chirish. Orqada qizil "O'chirish" qatlami turadi;
-   chegaradan (35%) o't ib qo'yib yuborilsa — karta o'chadi. Faqat chapga; vertikal skroll buzilmasin. */
+   chegaradan (35%) o'tib qo'yib yuborilsa — karta o'chadi. Faqat chapga; vertikal skroll buzilmasin.
+   POINTER hodisalari — sichqoncha (laptop) ham, barmoq (telefon) ham bir xil ishlaydi. */
 function fdAttachSwipe(row, card){
   if(!row || !card) return;
-  var x0=0,y0=0,dx=0,dragging=false,decided=false,horiz=false;
-  row.addEventListener('touchstart', function(e){
-    if(e.touches.length!==1) return;
-    x0=e.touches[0].clientX; y0=e.touches[0].clientY; dx=0; dragging=true; decided=false; horiz=false;
+  var x0=0,y0=0,dx=0,dragging=false,decided=false,horiz=false,pid=null;
+  row.addEventListener('pointerdown', function(e){
+    if(e.button!=null && e.button!==0) return;         // faqat asosiy tugma
+    x0=e.clientX; y0=e.clientY; dx=0; dragging=true; decided=false; horiz=false; pid=e.pointerId;
     row.style.transition='none';
-  }, {passive:true});
-  row.addEventListener('touchmove', function(e){
-    if(!dragging) return;
-    var cx=e.touches[0].clientX, cy=e.touches[0].clientY;
-    if(!decided){ decided=true; horiz=Math.abs(cx-x0) > Math.abs(cy-y0); }
-    if(!horiz) return;                       // vertikal — skrollga qo'yamiz
-    dx=Math.min(0, cx-x0);                    // faqat chapga
+    try{ row.setPointerCapture(e.pointerId); }catch(_e){}
+  });
+  row.addEventListener('pointermove', function(e){
+    if(!dragging || (pid!=null && e.pointerId!==pid)) return;
+    var mx=e.clientX-x0, my=e.clientY-y0;
+    if(!decided){
+      if(Math.abs(mx)<6 && Math.abs(my)<6) return;      // hali yo'nalish aniq emas
+      decided=true; horiz=Math.abs(mx) > Math.abs(my);
+      if(horiz) row.style.userSelect='none';
+    }
+    if(!horiz) return;                                   // vertikal — skrollga qo'yamiz
+    dx=Math.min(0, mx);                                  // faqat chapga
     row.style.transform='translateX('+dx+'px)';
-  }, {passive:true});
-  var end=function(){
-    if(!dragging) return; dragging=false;
-    row.style.transition='transform .18s ease';
+  });
+  var end=function(e){
+    if(!dragging || (pid!=null && e && e.pointerId!=null && e.pointerId!==pid)) return;
+    dragging=false; pid=null;
+    row.style.transition='transform .18s ease'; row.style.userSelect='';
     var TH=Math.min(120, row.offsetWidth*0.35);
     if(dx < -TH){ row.style.transform='translateX(-100%)'; setTimeout(function(){ fdRemoveCard(card, row.parentNode); }, 160); }
     else { row.style.transform='translateX(0)'; }
+    dx=0;
   };
-  row.addEventListener('touchend', end);
-  row.addEventListener('touchcancel', end);
+  row.addEventListener('pointerup', end);
+  row.addEventListener('pointercancel', end);
 }
 /* Kartani o'rganish ro'yxatidan olib tashlash (server: sr_remove). Optimistik: DOM'dan darrov
    yashiramiz, so'ng serverdan tasdiq bilan butun deck'ni qayta yuklaymiz (raqamlar to'g'ri bo'lsin).
