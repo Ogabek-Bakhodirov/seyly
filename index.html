@@ -3661,6 +3661,18 @@ function ytStart(){
   });
 }
 
+/* Transcript tili har xil ko'rinishda keladi: "en", "en-US", "asr-en" (avto-subtitr),
+   "English", "Deutsch"... Hammasini bitta kodga keltiramiz.
+   BUG edi: eski kod birinchi 2 harfni olardi — "asr-en" -> "as" -> qo'llab-quvvatlanmadi ->
+   joriy tilga (ru) tushib qolardi, natijada inglizcha so'zlar RUS tiliga saqlanardi. */
+var YT_LANGS={ en:'en', eng:'en', english:'en',
+               ru:'ru', rus:'ru', russian:'ru',
+               de:'de', deu:'de', ger:'de', german:'de', deutsch:'de' };
+function ytNormLang(raw){
+  var parts=String(raw||'').toLowerCase().split(/[^a-z]+/);   // "asr-en" -> ["asr","en"]
+  for(var i=0;i<parts.length;i++){ var v=YT_LANGS[parts[i]]; if(v) return v; }
+  return '';
+}
 function ytPlay(res){
   ytp.segs=res.segments||[];
   ytp.vid=res.video_id||'';
@@ -3669,8 +3681,7 @@ function ytPlay(res){
   ytp.dur=res.dur||0;
   ytp.cur=-1; ytp.hit=false; ytp.tnow=0;
   /* Tap-to-define tili: transcript tili qo'llab-quvvatlansa o'sha, aks holda joriy til. */
-  var L=String(res.lang||'').slice(0,2).toLowerCase();
-  ytp.lang=(L==='ru'||L==='en'||L==='de') ? L : (S.curLang||'ru');
+  ytp.lang = ytNormLang(res.lang) || (S.curLang||'ru');
   ytShow('ytEntry', false);            // link kiritish holati yopiladi
   ytShow('ytBox', true);
   ytShow('ytSrc', true);               // manba chipi tepa qatorda ochiladi
