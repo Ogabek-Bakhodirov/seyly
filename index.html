@@ -829,14 +829,14 @@
     background:var(--card);border:1px solid var(--line);border-radius:16px;
     padding:11px 14px 11px 11px;box-shadow:var(--lgp-shadow);
     transform:translateY(-130%);opacity:0}
-  .lgp-bar.lgp-in{animation:lgp-drop 2.2s cubic-bezier(.25,.9,.3,1) both}
+  .lgp-bar.lgp-in{animation:lgp-drop 3.6s cubic-bezier(.25,.9,.3,1) both}
   .lgp-bar-tx{flex:1;min-width:0}
   .lgp-bar-tx b{display:block;font-size:14px;font-weight:800;line-height:1.3;letter-spacing:-.01em}
   .lgp-bar-tx small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
   @keyframes lgp-drop{
     0%   {transform:translateY(-130%);opacity:0}
-    9%   {transform:translateY(0);opacity:1}
-    86%  {transform:translateY(0);opacity:1}
+    8%   {transform:translateY(0);opacity:1}
+    88%  {transform:translateY(0);opacity:1}
     100% {transform:translateY(-130%);opacity:0}
   }
 
@@ -5142,7 +5142,7 @@ function lbTimeLeft(hours){
    Qoida: bittasi chiqsa ikkinchisi chiqmaydi; yangi narsa bo'lmasa — umuman jim. */
 var LG_MILESTONES=[3,5,10];   /* sessiyada nechanchi so'zda banner chiqadi */
 var LG_MAX_BARS=3;            /* bannerlar soni chegarasi (charchatmaslik uchun) */
-var LG_BAR_MS=2300;           /* CSS animatsiyasi 2.2s; shundan keyin sinf olinadi */
+var LG_BAR_MS=3700;           /* CSS animatsiyasi 3.6s; shundan keyin sinf olinadi */
 var LG={ mastered:0, bars:0, timer:0, last:null };
 
 /* Har sessiya boshida noldan. Sessiya = fdOpenStudy'dan fdCloseStudy'gacha. */
