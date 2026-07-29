@@ -3591,7 +3591,7 @@ var ytp={ player:null, timer:null, segs:[], cur:-1, rate:1, lang:'ru', vid:'', t
           locked:false, limit:0, dur:0, active:false, busy:false, ready:false, hit:false, stepT:null };
 /* Transkript ko'rinishi: bo'laklar (cue) + gaplar, kuzatish holati, shrift o'lchami. */
 var YT_SIZES=[17,19,22];
-var ytv={ cues:[], sents:[], follow:true, size:1, bound:false, pinTo:0 };
+var ytv={ cues:[], sents:[], follow:true, size:1, bound:false, pinTo:0, anim:0, animTo:-1 };
 
 function ytEsc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
 function ytShow(id, on){ var e=document.getElementById(id); if(e) e.style.display=on?'':'none'; }
@@ -3815,9 +3815,38 @@ function ytPaint(force){
    chunki eng ko'p uchraydigan holat — endigina o'tgan so'zga qaytib bosish.
    0 qilinsa, har safar qo'lda orqaga surish kerak bo'ladi. */
 var YT_PEEK=34;
+/* Surish davomiyligi (ms). Brauzerning o'z `behavior:'smooth'` i juda tez —
+   qisqa masofada ~70ms bo'lib, "sakrash" bo'lib ko'rinadi. Shuning uchun
+   surishni o'zimiz kadrma-kadr chizamiz. Bitta sozlanadigan raqam shu. */
+var YT_GLIDE=450;
+/* Bundan uzoqqa sakralsa (masalan "Joyiga qaytish") — animatsiyasiz, darhol. */
+var YT_JUMP=520;
 function ytReduceMotion(){
   try{ return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
   catch(e){ return false; }
+}
+function ytStopGlide(){
+  if(!ytv.anim) return;
+  try{ cancelAnimationFrame(ytv.anim); }catch(e){}
+  ytv.anim=0; ytv.animTo=-1;
+}
+/* Kadrma-kadr surish: oxiriga borib sekinlashadi (ease-out) — ko'z quvib yetadi. */
+function ytGlide(sc, to){
+  ytStopGlide();
+  var from=sc.scrollTop, dist=to-from;
+  var raf = (typeof requestAnimationFrame==='function') ? requestAnimationFrame : null;
+  /* Uzoq masofa, harakat kamaytirilgan yoki rAF yo'q -> darhol */
+  if(!raf || Math.abs(dist)>YT_JUMP || ytReduceMotion()){ sc.scrollTop=to; return; }
+  var t0=0; ytv.animTo=to;
+  function step(ts){
+    if(!t0) t0=ts;
+    var k=Math.min(1,(ts-t0)/YT_GLIDE);
+    var e=1-Math.pow(1-k,3);          // ease-out cubic
+    sc.scrollTop=from+dist*e;
+    if(k<1){ ytv.anim=raf(step); }
+    else { ytv.anim=0; ytv.animTo=-1; sc.scrollTop=to; }
+  }
+  ytv.anim=raf(step);
 }
 function ytPin(idx){
   if(idx<0) return;
@@ -3825,17 +3854,16 @@ function ytPin(idx){
   var c=ytv.cues[idx]; if(!c || !c.el) return;
   var to=Math.max(0, c.el.offsetTop - YT_PEEK);
   ytv.pinTo=to;                       // oxirgi mixlash nuqtasi (debug + sinov uchun)
+  /* Shu nuqtaga allaqachon surilyapmiz — 100ms lik ytTick animatsiyani qayta boshlamasin */
+  if(ytv.anim && ytv.animTo===to) return;
   if(Math.abs(sc.scrollTop-to)<2) return;
-  /* Harakatni kamaytirish yoqilgan bo'lsa — silliq surish yo'q (bosh aylanishiga qarshi) */
-  if(ytReduceMotion()){ sc.scrollTop=to; return; }
-  /* Yumshoq surish — lekin 'scroll' hodisasiga TAYANMAYMIZ (pastga qarang). */
-  try{ sc.scrollTo({ top:to, behavior:'smooth' }); }
-  catch(e){ sc.scrollTop=to; }
+  ytGlide(sc, to);
 }
 
 /* Barmoq bilan surdi -> kuzatish o'chadi (matn tagidan qochib ketmasin),
    "Joyiga qaytish" tugmasi chiqadi. */
 function ytFollowOff(){
+  ytStopGlide();            // barmoq bilan ushladi -> dastur surishni to'xtatadi (qarshi tortmasin)
   if(!ytv.follow) return;
   ytv.follow=false;
   var sc=document.getElementById('ytScroll'), b=document.getElementById('ytBack');
@@ -3850,9 +3878,8 @@ function ytFollowOn(){
   ytPin(ytp.cur>=0 ? ytp.cur : 0);
 }
 /* Kuzatishni faqat HAQIQIY ishora o'chiradi.
-   'scroll' hodisasiga TAYANMAYMIZ: scrollTo({behavior:'smooth'}) ham 'scroll' chiqaradi
-   va davomiyligi aniqlanmaydi — bayroq/taymer bilan himoya ishlamaydi (silliq surish
-   taymerdan uzoq davom etsa, dasturning o'z surishi kuzatishni o'ldiradi). */
+   'scroll' hodisasiga TAYANMAYMIZ: bizning o'z surishimiz ham 'scroll' chiqaradi —
+   bayroq/taymer bilan ajratish ishonchsiz. Barmoq/g'ildirak esa aniq foydalanuvchi ishorasi. */
 function ytBindScroll(){
   if(ytv.bound) return;
   var sc=document.getElementById('ytScroll'); if(!sc) return;
