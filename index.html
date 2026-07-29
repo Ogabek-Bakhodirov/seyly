@@ -974,7 +974,8 @@
     <input id="sInput" type="text" placeholder="Masalan: спасибо" autocomplete="off">
     <button onclick="doSearch()"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4-4"></path></svg></button>
   </div>
-  <div style="margin-bottom:12px"><span class="pill"><span data-i18n="Bugun:">Bugun:</span> <b id="sCount">0/3</b> <span data-i18n="qidiruv">qidiruv</span></span></div>
+  <!-- Qidiruv cheksiz bo'lgani uchun hisoblagich yashirin (2026-07-29). Element qoladi — JS unga yozadi. -->
+  <div id="sCountWrap" style="margin-bottom:12px;display:none"><span class="pill"><span data-i18n="Bugun:">Bugun:</span> <b id="sCount">0/∞</b> <span data-i18n="qidiruv">qidiruv</span></span></div>
 
   <!-- Qidiruv loading holati -->
   <div class="sload" id="sLoad" style="display:none">
@@ -1509,8 +1510,11 @@
 
 <script>
 /* ================== SOZLAMALAR ================== */
-var FREE_DAILY = 5;           // bepul: kuniga yangi iboralar
-var FREE_SEARCH = 3;          // bepul: kuniga qidiruvlar
+/* Bepul reja (qaror 2026-07-29) — backend index.ts bilan BIR XIL bo'lishi shart:
+   qidiruv = cheksiz, define = 10/kun, kategoriya so'zlari = 10/kun. */
+var FREE_DAILY = 10;          // bepul: kuniga yangi iboralar (kategoriya)
+var FREE_DEFINE = 10;         // bepul: kuniga so'zga bosib ma'no ko'rish
+var FREE_SEARCH = Infinity;   // qidiruv bepulda ham CHEKSIZ — to'smaymiz
 /* Backend manzili. STAGING himoyasi: agar URL'da ?stg=1 bo'lsa (test bot Mini App
    linki shunday) yoki dev-branch Vercel preview domeni bo'lsa -> api-stg (test EF).
    Prod domenda bu shart hech qachon rost bo'lmaydi, shuning uchun kod prodда ham
@@ -3429,8 +3433,8 @@ function logVideo(phraseId, d){
 /* ================== QIDIRUV ================== */
 var _sLockWas=false;
 function renderSearchMeta(){
-  document.getElementById('sCount').textContent = S.pro ? (S.sCount+"/∞") : (S.sCount+"/"+FREE_SEARCH);
-  var sLockNow = (!S.pro && S.sCount>=FREE_SEARCH);
+  document.getElementById('sCount').textContent = S.sCount+"/∞";   // qidiruv hamma uchun cheksiz
+  var sLockNow = false;   // 2026-07-29: qidiruv to'silmaydi — lock hech qachon chiqmaydi
   document.getElementById('sLock').style.display = sLockNow ? 'block':'none';
   if(sLockNow && !_sLockWas) logEv('pro_popup_show','search_lock');   // faqat yashirin->ko'rinish o'tishida
   _sLockWas = sLockNow;
@@ -3524,7 +3528,7 @@ function doSearch(){
     return;
   }
 
-  if(!S.pro && S.sCount>=FREE_SEARCH){ renderSearchMeta(); toast(t("Bugungi bepul qidiruvlar tugadi")); return; }
+  /* Qidiruv cheksiz (2026-07-29) — faqat sanaymiz, to'smaymiz. */
   S.sCount++; save(); renderSearchMeta();
   runSearchWidget(q);
 }
