@@ -1126,10 +1126,8 @@
       <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14a1 1 0 0 1 1 1v17l-8-4-8 4V4a1 1 0 0 1 1-1z"></path></svg></span>
       <span class="tt"><b data-i18n="Saqlangan">Saqlangan</b><small id="prcSavedMeta">—</small></span>
     </button>
-    <!-- Flashcard: DEFAULT qulflangan ("Tez kunda"). Faqat owner uchun ochiladi (applyFlashGate).
-         Xavfsiz default: server javobi kelmasa yoki guest bo'lsa — hamma uchun yopiq qoladi. -->
-    <button class="prc-tile soon" id="prcFlash" onclick="fdTileClick()">
-      <span class="prc-soon" id="prcFlashSoon" data-i18n="Tez kunda">Tez kunda</span>
+    <!-- Flashcard: 2026-07-29 dan HAMMAGA ochiq (owner gate olib tashlandi). -->
+    <button class="prc-tile" id="prcFlash" onclick="fdTileClick()">
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="14" height="12" rx="2"></rect><path d="M16 18.5A1.5 1.5 0 0 1 14.5 20H5a1 1 0 0 1-1-1V8"></path></svg></span>
       <span class="tt"><b data-i18n="Flashcard">Flashcard</b><small data-i18n="Kartalar bilan takror">Kartalar bilan takror</small></span>
     </button>
@@ -1140,9 +1138,8 @@
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"></rect><path d="M8.5 9.5l1.8 1.8 3.4-3.4M8.5 16h7"></path></svg></span>
       <span class="tt"><b data-i18n="Test">Test</b><small data-i18n="Variantli savollar">Variantli savollar</small></span>
     </button>
-    <!-- YouTube: DEFAULT qulflangan ("Tez kunda"). Owner uchun ochiladi (applyYtGate). -->
-    <button class="prc-tile soon" id="prcYt" onclick="ytTileClick()">
-      <span class="prc-soon" id="prcYtSoon" data-i18n="Tez kunda">Tez kunda</span>
+    <!-- YouTube: 2026-07-29 dan HAMMAGA ochiq (owner gate olib tashlandi). -->
+    <button class="prc-tile" id="prcYt" onclick="ytTileClick()">
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"></rect><path d="M10.5 9.2l4.6 2.8-4.6 2.8z"></path></svg></span>
       <span class="tt"><b data-i18n="YouTube">YouTube</b><small data-i18n="O'z videongiz bilan">O'z videongiz bilan</small></span>
     </button>
@@ -1967,12 +1964,9 @@ var pages=['ob','home','cat','search','practice','flash','quiz','yt','saved','le
 function go(p){
   /* Pro sahifasiga kirishdan oldin qayerdan kelganini eslab qolamiz (orqaga qaytish uchun). */
   if(p==='pro'){ var _cur=pages.filter(function(x){ var e=document.getElementById('pg-'+x); return e&&e.classList.contains('active'); })[0]; if(_cur&&_cur!=='pro') _proFrom=_cur; }
-  /* Flashcard hozircha faqat owner uchun (test bosqichi) — boshqalar Practice'ga qaytadi. */
-  if(p==='flash' && !IS_OWNER){ go('practice'); soonToast(); return; }
-  /* So'z testi ham hozircha faqat owner uchun (test bosqichi). */
+  /* Flashcard va YouTube 2026-07-29 dan hammaga ochiq — gate olib tashlandi.
+     So'z testi hali yopiq: format tanlanmagan (variantli savol rad etilgan). */
   if(p==='quiz' && !IS_OWNER){ go('practice'); soonToast(); return; }
-  /* YouTube bo'limi ham hozircha faqat owner uchun (test bosqichi). */
-  if(p==='yt' && !IS_OWNER){ go('practice'); soonToast(); return; }
   pages.forEach(function(x){ document.getElementById('pg-'+x).classList.remove('active'); });
   document.getElementById('pg-'+p).classList.add('active');
   /* qidiruvdan chiqilsa Seyly pleyer pauza (ovoz fon'da qolmasin) */
@@ -3876,14 +3870,8 @@ function renderPractice(){
     : t("Hali so'z saqlanmagan");
 }
 function soonToast(){ toast(t('Tez kunda')); }
-/* Flashcard hozircha FAQAT owner uchun (test bosqichi). Boshqalar "Tez kunda" ko'radi. */
-function fdTileClick(){ if(IS_OWNER) go('flash'); else soonToast(); }
-function applyFlashGate(){
-  var t=document.getElementById('prcFlash'), badge=document.getElementById('prcFlashSoon');
-  if(!t) return;
-  if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
-  else { t.classList.add('soon'); if(badge) badge.style.display=''; }
-}
+/* Flashcard — hammaga ochiq (2026-07-29). */
+function fdTileClick(){ go('flash'); }
 /* So'z testi ham hozircha FAQAT owner uchun (test bosqichi). */
 function quizTileClick(){ if(IS_OWNER) go('quiz'); else soonToast(); }
 function applyQuizGate(){
@@ -3893,14 +3881,8 @@ function applyQuizGate(){
   else { t.classList.add('soon'); if(badge) badge.style.display=''; }
 }
 
-/* YouTube bo'limi ham hozircha FAQAT owner uchun (test bosqichi). */
-function ytTileClick(){ if(!IS_OWNER){ soonToast(); return; } go('yt'); ytCheckUrl(); }
-function applyYtGate(){
-  var t=document.getElementById('prcYt'), badge=document.getElementById('prcYtSoon');
-  if(!t) return;
-  if(IS_OWNER){ t.classList.remove('soon'); if(badge) badge.style.display='none'; }
-  else { t.classList.add('soon'); if(badge) badge.style.display=''; }
-}
+/* YouTube — hammaga ochiq (2026-07-29). */
+function ytTileClick(){ go('yt'); ytCheckUrl(); }
 
 /* ================== PRACTICE → YOUTUBE (ADR-031) ==================
    User YouTube linkini yuboradi -> backend (yt_transcript) transcriptapi.com'dan matnni oladi,
@@ -5988,9 +5970,8 @@ function boot(d){
       // Serverdan kelgan REAL kunlik limit (activation davrida 20, keyin 5) — xabarlar aniq son ko'rsatsin
       S.dailyCap=(res.limits&&typeof res.limits.daily==='number')?res.limits.daily:FREE_DAILY;
       IS_OWNER=!!res.is_owner;
-      applyFlashGate();   // Flashcard tile'ni owner holatiga qarab ochish/yopish
       applyQuizGate();    // So'z testi tile'ni owner holatiga qarab ochish/yopish
-      applyYtGate();      // YouTube tile'ni owner holatiga qarab ochish/yopish
+                          // (Flashcard/YouTube 2026-07-29 dan hammaga ochiq — gate yo'q)
       save();
       var ab=document.getElementById('adminBox');
       if(ab) ab.style.display=IS_OWNER?'block':'none';
