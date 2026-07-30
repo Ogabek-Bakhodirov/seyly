@@ -4652,7 +4652,7 @@ function fdApplyDeck(items, todayCount, gate){
     var tt=fdEl('fdLimitTtl'), sb=fdEl('fdLimitSub');
     if(tt) tt.textContent = t('Bugungi limit tugadi');
     if(sb) sb.textContent = t("Bepul rejada kuniga {n} ta so'z. Ertaga yana ochiladi.", {n:SR_FREE_DAILY});
-    logEv('pro_popup_view', 'sr_daily_limit');
+    logEv('pro_popup_show', 'sr_daily_limit');
   }
   fdEl('fdStNew').textContent=nNew;
   fdEl('fdStLearning').textContent=nLearn;
@@ -4761,7 +4761,7 @@ function fdOpenStudy(){
     /* Limit sababli bo'sh bo'lsa — "takrorlash yo'q 🎉" DEYILMAYDI (yolg'on bo'lardi).
        Ekranda limit kartochkasi turadi; bu yerda faqat qisqa eslatma. */
     if(fdGate && fdGate.unlimited===false && !fdGate.remainingTotal){
-      toast(t('Bugungi limit tugadi')); logEv('pro_popup_view','sr_daily_limit'); return;
+      toast(t('Bugungi limit tugadi')); logEv('pro_popup_show','sr_daily_limit'); return;
     }
     toast(fdDeck.length ? t('Bugun takrorlash yo’q 🎉') : t("Hali so'z saqlanmagan"));
     return;
@@ -4974,7 +4974,7 @@ function fdOnLimit(){
   if(!fdEl('fdStudy').classList.contains('open')) return;
   /* Sessiyani yopamiz — deck qayta chizilganda limit kartochkasi (Pro tugmasi bilan) chiqadi. */
   toast(t('Bugungi limit tugadi'));
-  logEv('pro_popup_view', 'sr_daily_limit');
+  logEv('pro_popup_show', 'sr_daily_limit');
   fdCloseStudy();
   if(SERVER && !fdDone) fdRenderDeck();   // fdDone bo'lsa fdCloseStudy o'zi yangilaydi
 }
