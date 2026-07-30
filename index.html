@@ -6051,6 +6051,9 @@ var _started=false;
 function start(){
   if(_started) return; _started=true;   // ikki marta chaqirilmasin
   if(PUSH_C){ logEv('push_click', PUSH_C); PUSH_C=null; }   // push CTR: bir marta yoziladi
+  /* Ilova ochildi (voronka: /start -> OCHISH -> onboarding -> done). Shu event bilan
+     "/start bosib ochmaganlar" ni "ochib tashlaganlar" dan ajratamiz. ref: yangi/qaytgan. */
+  logEv('app_open', S.onboarded ? 'ret' : 'new');
   applyI18n();   // statik interfeys matnlarini joriy tilga moslash
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
