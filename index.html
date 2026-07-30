@@ -4406,6 +4406,20 @@ var fdDeck=[], fdCards=[], fdIdx=0, fdDone=0, fdRevealed=false, fdLoading=false,
 /* Bepul kunlik limit yuqorida bitta joyda: SR_FREE_DAILY (yangi + eski BIRGA).
    Haqiqiy tekshiruv serverda — backend `policy.ts` SR_FREE_PER_DAY. */
 var fdNextDue=null, fdNextTimer=null;   /* sessiya oxiridagi "keyingi navbat" taymeri (Noji uslubi) */
+/* QIDIRILGAN so'zlarning ma'nosi — SERVERDAN keladi (2026-07-30).
+   Kategoriya iborasining tarjimasi phrases.json'da, saqlangan so'zniki S.saved'da bor.
+   Qidirilgan so'z esa saqlanmagani uchun lokal nusxasi YO'Q edi — ro'yxatda ostki qator
+   bo'sh chiqardi. Endi `sr_profile`/`sr_due` javobida `defs` xaritasi keladi.
+   Kalit: "<til>|<item_id>". Bo'lmasa hech narsa buzilmaydi (eski xatti-harakat). */
+var fdDefs={};
+function fdMergeDefs(lg, m){
+  if(!m || typeof m!=='object') return;
+  for(var k in m){ if(Object.prototype.hasOwnProperty.call(m,k) && m[k]) fdDefs[lg+'|'+k]=m[k]; }
+}
+function fdSrvDef(it){
+  if(!it || !it.item_id) return null;
+  return fdDefs[(it.lang||'')+'|'+it.item_id] || null;
+}
 var fdConfettiRaf=null;                  /* tabrik ekrani konfetti animatsiyasi */
 var FD_GRADE={ again:2, hard:3, good:4, easy:5 };   // ADR-003: q = 2/3/4/5
 
@@ -4480,15 +4494,19 @@ function fdSavedOf(it){
 function fdMeaning(it){
   if(it.item_type==='phrase'){ var p=byId[it.item_id]; return p ? (p.uz||'') : ''; }
   var s=fdSavedOf(it);
-  if(!s) return '';
-  var d=s.def||{};
-  if(d.senses && d.senses[0]) return senseTxt(d.senses[0])||'';
-  return '';
+  if(s){
+    var d=s.def||{};
+    if(d.senses && d.senses[0]){ var m=senseTxt(d.senses[0])||''; if(m) return m; }
+  }
+  var sd=fdSrvDef(it);            // qidirilgan so'z: lokal nusxa yo'q, ma'no serverdan
+  return sd ? (sd.uz||'') : '';
 }
 function fdTranslitOf(it){
   if(it.item_type==='phrase'){ var p=byId[it.item_id]; return p ? (p.tr||'') : ''; }
   var s=fdSavedOf(it);
-  return s ? (s.translit||'') : '';
+  if(s && s.translit) return s.translit;
+  var sd=fdSrvDef(it);
+  return sd ? (sd.tr||'') : '';
 }
 /* Ma'no lokal xotirada yo'q bo'lsa — serverdan SAQLANGAN def'ni olib kelamiz (bepul, AI'siz).
    Kelgach S.saved'ga TO'G'RI kalit bilan yozamiz, keyingi safar darhol ko'rinadi. */
@@ -4557,6 +4575,10 @@ function fdRenderDeck(){
     fdCards = due ? (due.items||[]).slice() : [];
     fdGate  = due ? (due.gate||null) : null;
     fdNextDue = due ? (due.next_due||null) : null;
+    /* Qidirilgan so'zlarning ma'nosi serverdan `defs` xaritasida keladi —
+       ro'yxatni chizishdan OLDIN keshga yig'amiz, aks holda ostki qator bo'sh chiqadi. */
+    fdMergeDefs(lg, r[0] && r[0].defs);
+    fdMergeDefs(lg, r[1] && r[1].defs);
     fdApplyDeck(prof, due ? fdCards.length : null, fdGate);
   });
 }
