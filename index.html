@@ -2689,6 +2689,28 @@ function showProTrial(){
   box.addEventListener('click', function(e){ if(e.target===box) box._close(); });
 }
 function closeProTrial(el){ var box=el.closest('.cele'); if(box&&box._close) box._close(); }
+/* ADR-38: 3-so'z sovg'a popup — birinchi 3 kategoriya so'zi o'rgangач (mukofot + ovoz CTA).
+   Faqat X/tugma/fon yopadi. Bir martalik (server pro_gift'ni qaytadan bermaydi). */
+function showProGift(){
+  ensureCeleStyle();
+  var box=document.createElement('div'); box.className='cele';
+  box.innerHTML=
+    '<div class="cele-card">'+
+      '<button class="cele-x" aria-label="Yopish">×</button>'+
+      '<div style="font-size:58px;line-height:1">🎁</div>'+
+      '<div class="cele-t" style="font-size:18.5px;margin-top:8px">'+t("Tabriklayman, 3 kunlik Pro versiaga ega bo'ldingiz")+'</div>'+
+      '<div class="cele-goal" style="margin-top:12px">'+t("Pro versia orqali ilovadan cheksiz foydalanishingiz mumkin.")+'</div>'+
+      '<div class="cele-goal" style="margin-top:12px">'+t("Shu kabi maxsus xabarlarni o'tkazib yubormaslik uchun Botni ovozli rejimga o'tkazib qo'ying!")+
+        '<div style="font-size:12.5px;color:var(--muted);margin-top:6px">'+t("Tepadagi bot nomiga bosing → 🔔 Ovozni yoqish")+'</div>'+
+      '</div>'+
+      '<button class="btn gold" style="margin-top:16px;width:100%" onclick="closeProTrial(this)">'+t("Zo'r! 🎉")+'</button>'+
+    '</div>';
+  document.body.appendChild(box);
+  if(tg&&tg.HapticFeedback){try{tg.HapticFeedback.notificationOccurred('success')}catch(e){}}
+  box._close=function(){ box.style.transition='opacity .3s'; box.style.opacity='0'; setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); },320); };
+  box.querySelector('.cele-x').addEventListener('click', box._close);
+  box.addEventListener('click', function(e){ if(e.target===box) box._close(); });
+}
 function markDone(id){
   var st=document.getElementById('st-'+id);
   if(st){ st.classList.add('done'); st.textContent='✅'; }
@@ -2754,6 +2776,14 @@ function togglePh(id){
         if(res.used_freeze) toast(t("❄️ Muzlatish ishlatildi — seriyangiz saqlanib qoldi!"));
         celebrateStreak(prevStreak); celebrateGoal(prev);
         renderStreakBox();
+        /* ADR-38: 3-so'z sovg'a — server birinchi 3 kategoriya so'zida `pro_gift` qaytaradi.
+           Pro darrov yoqiladi (server allaqachon yozdi) + tabrik/ovoz CTA popup. */
+        if(res.pro_gift){
+          S.pro=true; S.proUntil=res.pro_gift.pro_until; S.proTrial=false; save();
+          updateProStatus();
+          logEv('pro_popup_show','gift_3words');
+          setTimeout(showProGift, 400);   // streak/goal animatsiyasi tugagach
+        }
       } else { undoDone(id); toast(t("Xatolik — qayta urinib ko'ring")); }
     }).catch(function(){ learnBusy=false; undoDone(id); toast(t("Internet xatosi — qayta urinib ko'ring")); });
     return;
