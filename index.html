@@ -1988,6 +1988,8 @@ function go(p){
   if(p!=='search' && window.sp && sp.player && sp.player.pauseVideo){ try{ sp.player.pauseVideo(); }catch(e){} }
   /* YouTube bo'limidan chiqilsa — u yerdagi pleyer ham pauza */
   if(p!=='yt' && window.ytp && ytp.player && ytp.player.pauseVideo){ try{ ytp.player.pauseVideo(); }catch(e){} }
+  /* YouGlish zaxira vidjetlari ham pauza — ovoz fon'da qolmasin (qidiruv/saqlangan/kategoriya) */
+  if(window.pauseAllYG) pauseAllYG();
   if(window.ytp) ytp.active = (p==='yt');
   var act = (p==='saved'||p==='flash'||p==='quiz'||p==='yt') ? 'practice'
           : (p==='leaderboard'||p==='pro') ? 'profile' : p;   // Saqlangan/Flashcard/Test/YouTube = Practice, Reyting/Pro = Profil ichida
@@ -3532,8 +3534,27 @@ function hideSeylyPlayer(){
   sp.consecFails=0; sp.reported=false; sp.navTarget=null;
   adFlush();   // pleyer yopildi — yig'ilgan banner o'lchovini yuboramiz
 }
+/* ===== YouGlish vidjetni haqiqatda to'xtatish =====
+   display:none ovozni TO'XTATMAYDI — iframe DOMda qolsa ijro davom etaveradi.
+   Shu sabab qidiruvda YouGlish ochilib, keyin bazadan topilgan so'z uchun
+   Seyly pleyer ochilsa, ikkala ovoz birga chiqardi.
+   killYG  — DOM'ni tozalaydi (ovoz kafolatli o'chadi) va keshni bo'shatadi;
+             openYG kesh yo'qligini ko'rib vidjetni qaytadan quradi.
+   pauseAllYG — sahifa almashganda: vidjet o'z joyida qoladi, faqat pauza. */
+function killYG(slotId, key){
+  var w=key?ygWidgets[key]:null;
+  try{ if(w && w.pause) w.pause(); }catch(e){}
+  var slot=document.getElementById(slotId);
+  if(slot){ slot.innerHTML=''; slot.style.display='none'; }
+  if(key) delete ygWidgets[key];
+}
+function pauseAllYG(){
+  Object.keys(ygWidgets).forEach(function(k){
+    try{ var w=ygWidgets[k]; if(w && w.pause) w.pause(); }catch(e){}
+  });
+}
 function hideYGSearch(){
-  document.getElementById('sSlot').style.display='none';
+  killYG('sSlot','search');
   document.getElementById('sCtrl').style.display='none';
 }
 /* Qidiruv loading: eski natija (pleyer/YouGlish) yashirinadi, spinner chiqadi.
