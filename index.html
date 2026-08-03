@@ -117,6 +117,8 @@
   .ccat-lock{display:inline-block;font-size:10px;font-weight:800;color:var(--gold);
     border:1px solid var(--gold);border-radius:99px;padding:2px 8px;margin-top:6px}
   .ccat-add{border-style:dashed;opacity:.9}
+  /* Prod'da hali ochilmagan holat — boshqa "Tez orada" plitkalari bilan bir xil */
+  .ccat-soon{opacity:.55}
   .ccat-form{display:flex;gap:8px;align-items:center;margin-bottom:14px}
   .ccat-inp{flex:1;background:var(--card);border:1px solid var(--line);border-radius:13px;
     color:var(--text);padding:13px 14px;font-size:16px;font-weight:800;letter-spacing:3px;
@@ -1783,6 +1785,12 @@ var API_STG  = "https://ubctutftqgbgcevfziil.supabase.co/functions/v1/api-stg";
 var IS_STG = /[?&]stg=1/.test(location.search) || /-git-[^.]*\.vercel\.app$/.test(location.hostname);
 var API_URL = IS_STG ? API_STG : API_PROD; // backend
 
+/* ADR-032: maxsus kategoriya (o'qituvchi kodi) prod'da HALI YOPIQ.
+   Jonli userlar home'da plitkani "Tez orada 🚧" holatida ko'radi, staging'da esa
+   hammasi to'liq ishlaydi. Ochish vaqti kelganda shu qatorni `true` qilamiz —
+   boshqa hech narsaga tegmaymiz. */
+var CCAT_LIVE = IS_STG;
+
 /* "Bilasizmi?" karta tugmasi ochganida: ?w=<so'z>&lang=<til> — ilova qidiruv sahifasida
    shu so'zni avtomatik qidiradi. Ochilishда bir marta o'qiladi. */
 var CARD_Q = (function(){
@@ -2463,18 +2471,24 @@ function renderHome(){
     h+='<div class="cat" onclick="openCat(\''+c.key+'\')"><div class="cico">'+catIcon(c.key)+'</div><h3>'+t(c.title)+'</h3>'+
        '<div class="cbar"><i style="width:'+pct+'%"></i></div><small>'+done+' / '+n+'</small></div>';
   });
-  /* ADR-032: o'qituvchi kategoriyalari — faqat joriy til bo'yicha. */
-  ccats.filter(function(c){ return c.lang===S.curLang; }).forEach(function(c){
+  /* ADR-032: o'qituvchi kategoriyalari — faqat joriy til bo'yicha.
+     Prod'da (CCAT_LIVE=false) umuman ko'rsatilmaydi. */
+  (CCAT_LIVE?ccats:[]).filter(function(c){ return c.lang===S.curLang; }).forEach(function(c){
     h+='<div class="cat ccat-tile" onclick="openCcat(\''+c.code+'\')">'+
        '<div class="cico">'+escHtml(c.emoji||'📚')+'</div>'+
        '<h3>'+escHtml(c.title)+'</h3>'+
        '<small>'+escHtml(c.owner_name)+'</small>'+
        (c.locked?'<span class="ccat-lock">🔒 Pro</span>':'')+'</div>';
   });
-  /* Kod kiritish plitkasi — har doim oxirida turadi. */
-  h+='<div class="cat ccat-add" onclick="go(\'explore\')">'+
+  /* Kod kiritish plitkasi — har doim oxirida turadi.
+     Prod'da hali ochilmagan: boshqa yopiq kategoriyalar bilan bir xil
+     "Tez orada 🚧" belgisi turadi va sahifa ochilmaydi. */
+  h+='<div class="cat ccat-add'+(CCAT_LIVE?'':' ccat-soon')+'" onclick="'+
+       (CCAT_LIVE?'go(\'explore\')':'ccatSoon()')+'">'+
      '<div class="cico">🔍</div><h3>'+t("Kategoriya kodi")+'</h3>'+
-     '<small>'+t("O'qituvchi kodini kiriting")+'</small></div>';
+     (CCAT_LIVE
+       ? '<small>'+t("O'qituvchi kodini kiriting")+'</small>'
+       : '<span class="soon">'+t('Tez orada')+' 🚧</span>')+'</div>';
   document.getElementById('catGrid').innerHTML=h;
 }
 
@@ -2576,6 +2590,9 @@ var ccats=[];        // user qo'shgan kategoriyalar (cat_mine)
 var ccatWords={};    // code -> so'zlar (byId keshi, buildIndex uni qayta ulaydi)
 var ccatMeta={};     // code -> qisqa ma'lumot (sarlavha darrov ko'rinsin)
 var curCcat=null;    // hozir ochiq maxsus kategoriya
+
+/* Prod'da (CCAT_LIVE=false) plitka bosilsa — sahifa ochilmaydi, qisqa xabar chiqadi. */
+function ccatSoon(){ toast(t("Bu bo'lim tez orada ochiladi 🚀")); }
 
 /* --- Kutish holatlari. Bosilgani darrov sezilsin, ekran bo'sh turmasin. --- */
 
@@ -6151,6 +6168,7 @@ try{
     I18N.ru["Qo'shilmoqda…"]="Добавляем…";
     I18N.ru["Ochilmoqda…"]="Открываем…";
     I18N.ru["Olib tashlanmoqda…"]="Убираем…";
+    I18N.ru["Bu bo'lim tez orada ochiladi 🚀"]="Этот раздел откроется совсем скоро 🚀";
     I18N.ru["Bu ID orqali hech qanday so'z kategoriyasi topilmadi"]="По этому ID категория слов не найдена";
     I18N.ru["{n} ta so'z"]="{n} слов";
     I18N.ru["Qo'shish"]="Добавить";
@@ -6366,7 +6384,7 @@ function start(){
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
   if(S.onboarded){ if(!runCardSearch()) go('home'); } else { renderOb(); go('ob'); }
-  if(SERVER) loadCcats();   // ADR-032: o'qituvchi kategoriyalari home grid'ga qo'shiladi
+  if(SERVER && CCAT_LIVE) loadCcats();   // ADR-032: prod'da yopiq — ortiqcha so'rov ham yubormaymiz
   /* YT IFrame API'ni oldindan isitamiz (ilova tinchigach) — birinchi video ochilishida
      skript yuklashning ~0.5-1.5s kutishi yo'qoladi. */
   setTimeout(function(){ ensureYT(function(){}); }, 2500);
