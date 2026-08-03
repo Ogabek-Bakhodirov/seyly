@@ -112,6 +112,35 @@
   .cat .cbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--ok))}
   .cat small{font-size:11px;color:var(--muted)}
 
+  /* ---- ADR-032: maxsus kategoriya (o'qituvchi kodi) ---- */
+  .ccat-tile{border-color:rgba(91,140,255,.45)}
+  .ccat-lock{display:inline-block;font-size:10px;font-weight:800;color:var(--gold);
+    border:1px solid var(--gold);border-radius:99px;padding:2px 8px;margin-top:6px}
+  .ccat-add{border-style:dashed;opacity:.9}
+  /* Prod'da hali ochilmagan holat — boshqa "Tez orada" plitkalari bilan bir xil */
+  .ccat-soon{opacity:.55}
+  .ccat-form{display:flex;gap:8px;align-items:center;margin-bottom:14px}
+  .ccat-inp{flex:1;background:var(--card);border:1px solid var(--line);border-radius:13px;
+    color:var(--text);padding:13px 14px;font-size:16px;font-weight:800;letter-spacing:3px;
+    text-transform:uppercase;text-align:center;outline:none;min-width:0}
+  .ccat-inp:focus{border-color:var(--accent)}
+  .ccat-form .btn{width:auto;flex:0 0 auto;padding:13px 18px;min-width:104px}
+  .ccat-msg{color:var(--muted);font-size:13px;text-align:center;padding:18px 6px;line-height:1.5}
+  .ccat-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+  .ccat-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .ccat-info h3{margin:0 0 4px;font-size:15px;font-weight:800}
+  .ccat-info p{margin:0;font-size:12px;color:var(--muted)}
+  .ccat-own{margin-top:2px !important;font-weight:700}
+  .ccat-rm{margin-top:16px}
+  /* Tugma ichidagi kutish aylanasi (bosilgani darrov sezilsin) */
+  .ccat-sp{width:15px;height:15px;border-radius:50%;border:2.2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;animation:spspin .8s linear infinite;flex:none;display:inline-block}
+  .btn.ghost .ccat-sp{border-color:var(--line);border-top-color:var(--accent)}
+  /* So'zlar kelguncha turadigan skelet — sahifa bo'sh ko'rinmasin */
+  .ccat-skel{height:58px;background:var(--card);border:1px solid var(--line);
+    border-radius:15px;margin-bottom:9px;animation:ccatpulse 1.1s ease-in-out infinite}
+  @keyframes ccatpulse{0%,100%{opacity:.4}50%{opacity:.75}}
+
   /* ---- kategoriya sahifasi ---- */
   .back{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:700;font-size:13.5px;cursor:pointer;margin-bottom:10px;background:none;border:none;padding:4px 0}
   .cat-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
@@ -1067,6 +1096,18 @@
   <div id="phList"></div>
 </div>
 
+<!-- ============ MAXSUS KATEGORIYA (ADR-032) ============ -->
+<div class="page" id="pg-explore">
+  <button class="back" onclick="go('home')" data-i18n="← Orqaga">← Orqaga</button>
+  <div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4-4"></path></svg></div><h2 data-i18n="Kategoriya kodi">Kategoriya kodi</h2></div>
+  <p class="muted" style="font-size:12.5px;margin:0 0 14px" data-i18n="O'qituvchingiz bergan 6 xonali kodni kiriting — uning so'zlar to'plami sizga qo'shiladi.">O'qituvchingiz bergan 6 xonali kodni kiriting — uning so'zlar to'plami sizga qo'shiladi.</p>
+  <div class="ccat-form">
+    <input id="ccatCode" class="ccat-inp" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABC123">
+    <button class="btn primary" onclick="ccatFind(this)" data-i18n="Qidirish">Qidirish</button>
+  </div>
+  <div id="ccatRes"></div>
+</div>
+
 <!-- ============ QIDIRUV ============ -->
 <div class="page" id="pg-search">
   <div class="shead"><div class="hico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4-4"></path></svg></div><h2 data-i18n="So'z qidirish">So'z qidirish</h2></div>
@@ -1744,6 +1785,12 @@ var API_STG  = "https://ubctutftqgbgcevfziil.supabase.co/functions/v1/api-stg";
 var IS_STG = /[?&]stg=1/.test(location.search) || /-git-[^.]*\.vercel\.app$/.test(location.hostname);
 var API_URL = IS_STG ? API_STG : API_PROD; // backend
 
+/* ADR-032: maxsus kategoriya (o'qituvchi kodi) prod'da HALI YOPIQ.
+   Jonli userlar home'da plitkani "Tez orada 🚧" holatida ko'radi, staging'da esa
+   hammasi to'liq ishlaydi. Ochish vaqti kelganda shu qatorni `true` qilamiz —
+   boshqa hech narsaga tegmaymiz. */
+var CCAT_LIVE = IS_STG;
+
 /* "Bilasizmi?" karta tugmasi ochganida: ?w=<so'z>&lang=<til> — ilova qidiruv sahifasida
    shu so'zni avtomatik qidiradi. Ochilishда bir marta o'qiladi. */
 var CARD_Q = (function(){
@@ -1972,10 +2019,15 @@ function buildIndex(){
       c.phrases.forEach(function(p){ p._lang=L.code; byId[p.id]=p; });
     });
   });
+  /* ADR-032: maxsus kategoriya so'zlari LDATA da yo'q — indeks qayta qurilganda
+     ular yo'qolmasligi uchun keshdan qaytadan ulaymiz. */
+  for(var k in ccatWords){
+    (ccatWords[k]||[]).forEach(function(p){ byId[p.id]=p; });
+  }
 }
 
 /* ================== NAVIGATSIYA ================== */
-var pages=['ob','home','cat','search','practice','flash','quiz','yt','saved','leaderboard','profile','pro'];
+var pages=['ob','home','cat','explore','search','practice','flash','quiz','yt','saved','leaderboard','profile','pro'];
 function go(p){
   /* Pro sahifasiga kirishdan oldin qayerdan kelganini eslab qolamiz (orqaga qaytish uchun). */
   if(p==='pro'){ var _cur=pages.filter(function(x){ var e=document.getElementById('pg-'+x); return e&&e.classList.contains('active'); })[0]; if(_cur&&_cur!=='pro') _proFrom=_cur; }
@@ -1999,6 +2051,7 @@ function go(p){
   /* Onboarding, Test va Pro — nav yashiriladi (Pro'da pastda yopishgan tugma turadi). */
   document.getElementById('nav').style.display = (p==='ob'||p==='quiz'||p==='pro') ? 'none':'flex';
   if(p==='home') renderHome();
+  if(p==='explore') renderExplore();
   if(p==='search'){ renderSearchLangs(); renderSearchMeta(); }
   if(p==='practice') renderPractice();
   if(p==='quiz') quizStart();
@@ -2418,6 +2471,24 @@ function renderHome(){
     h+='<div class="cat" onclick="openCat(\''+c.key+'\')"><div class="cico">'+catIcon(c.key)+'</div><h3>'+t(c.title)+'</h3>'+
        '<div class="cbar"><i style="width:'+pct+'%"></i></div><small>'+done+' / '+n+'</small></div>';
   });
+  /* ADR-032: o'qituvchi kategoriyalari — faqat joriy til bo'yicha.
+     Prod'da (CCAT_LIVE=false) umuman ko'rsatilmaydi. */
+  (CCAT_LIVE?ccats:[]).filter(function(c){ return c.lang===S.curLang; }).forEach(function(c){
+    h+='<div class="cat ccat-tile" onclick="openCcat(\''+c.code+'\')">'+
+       '<div class="cico">'+escHtml(c.emoji||'📚')+'</div>'+
+       '<h3>'+escHtml(c.title)+'</h3>'+
+       '<small>'+escHtml(c.owner_name)+'</small>'+
+       (c.locked?'<span class="ccat-lock">🔒 Pro</span>':'')+'</div>';
+  });
+  /* Kod kiritish plitkasi — har doim oxirida turadi.
+     Prod'da hali ochilmagan: boshqa yopiq kategoriyalar bilan bir xil
+     "Tez orada 🚧" belgisi turadi va sahifa ochilmaydi. */
+  h+='<div class="cat ccat-add'+(CCAT_LIVE?'':' ccat-soon')+'" onclick="'+
+       (CCAT_LIVE?'go(\'explore\')':'ccatSoon()')+'">'+
+     '<div class="cico">🔍</div><h3>'+t("Kategoriya kodi")+'</h3>'+
+     (CCAT_LIVE
+       ? '<small>'+t("O'qituvchi kodini kiriting")+'</small>'
+       : '<span class="soon">'+t('Tez orada')+' 🚧</span>')+'</div>';
   document.getElementById('catGrid').innerHTML=h;
 }
 
@@ -2512,6 +2583,190 @@ function openCat(key){
   document.getElementById('phList').innerHTML=h;
   go('cat');
 }
+/* ============ ADR-032: MAXSUS KATEGORIYA (o'qituvchi kodi) ============
+   Kod bo'yicha qidirish hammaga ochiq, qo'shish/ochish faqat Pro.
+   Tekshiruv serverda — bu yerda faqat ko'rsatish. */
+var ccats=[];        // user qo'shgan kategoriyalar (cat_mine)
+var ccatWords={};    // code -> so'zlar (byId keshi, buildIndex uni qayta ulaydi)
+var ccatMeta={};     // code -> qisqa ma'lumot (sarlavha darrov ko'rinsin)
+var curCcat=null;    // hozir ochiq maxsus kategoriya
+
+/* Prod'da (CCAT_LIVE=false) plitka bosilsa — sahifa ochilmaydi, qisqa xabar chiqadi. */
+function ccatSoon(){ toast(t("Bu bo'lim tez orada ochiladi 🚀")); }
+
+/* --- Kutish holatlari. Bosilgani darrov sezilsin, ekran bo'sh turmasin. --- */
+
+// Kategoriya nomi/egasini eslab qolamiz — sahifa so'zlar kelishidan oldin ochiladi.
+function ccatRemember(c){
+  if(!c || !c.code) return;
+  ccatMeta[c.code]={ code:c.code, lang:c.lang, title:c.title,
+                     emoji:c.emoji, owner_name:c.owner_name, words:c.words };
+}
+
+// Tugmani "band" qiladi: o'chadi, ichida aylana chiqadi, yozuvi o'zgaradi.
+// Qaytargan funksiya tugmani eski holiga qaytaradi.
+function ccatBusy(btn,txt){
+  if(!btn || !btn.tagName) return function(){};
+  var old=btn.innerHTML;
+  btn.disabled=true;
+  btn.innerHTML='<span class="ccat-sp"></span>'+escHtml(txt||'');
+  return function(){ btn.disabled=false; btn.innerHTML=old; };
+}
+
+// Hozir ochiq sahifa (xatolik bo'lsa shu yerga qaytamiz).
+function ccatPage(){
+  for(var i=0;i<pages.length;i++){
+    var el=document.getElementById('pg-'+pages[i]);
+    if(el && el.classList.contains('active')) return pages[i];
+  }
+  return 'home';
+}
+
+// Kategoriya sarlavhasi. n null bo'lsa so'z soni hali noma'lum.
+function ccatHead(c,n){
+  var el=document.getElementById('catHead'); if(!el) return;
+  el.innerHTML='<span class="cico chd">'+escHtml(c.emoji||'📚')+'</span><div><h2>'+escHtml(c.title||'')+'</h2>'+
+    '<p>'+(n==null?'':t("{n} ta so'z",{n:n})+' · ')+escHtml(c.owner_name||'')+'</p></div>';
+}
+
+// So'zlar kelguncha turadigan bo'sh qatorlar.
+function ccatSkeleton(n){
+  var h='',k=n||3; if(k>6) k=6;
+  for(var i=0;i<k;i++) h+='<div class="ccat-skel"></div>';
+  return h;
+}
+
+// Home grid uchun ro'yxatni serverdan olamiz.
+function loadCcats(){
+  return api('cat_mine').then(function(r){
+    if(r && r.ok){
+      ccats=r.cats||[];
+      ccats.forEach(ccatRemember);
+      renderHome();
+    }
+  }).catch(function(){});
+}
+
+function renderExplore(){
+  var inp=document.getElementById('ccatCode'); if(inp) inp.value='';
+  var box=document.getElementById('ccatRes'); if(box) box.innerHTML='';
+}
+
+// Kodni topish. Kod serverda ham tozalanadi, bu yerda faqat qulaylik uchun.
+function ccatFind(btn){
+  var inp=document.getElementById('ccatCode');
+  var code=(inp?inp.value:'').toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g,'').slice(0,6);
+  var box=document.getElementById('ccatRes'); if(!box) return;
+  if(code.length<6){ box.innerHTML='<div class="ccat-msg">'+t("Kod 6 ta belgidan iborat")+'</div>'; return; }
+  if(inp && inp.blur) inp.blur();                    // klaviatura yopilsin, natija ko'rinsin
+  var restore=ccatBusy(btn,t("Qidirilmoqda…"));
+  box.innerHTML='<div class="sload"><span class="spin"></span>'+t("Qidirilmoqda…")+'</div>';
+  api('cat_find',{code:code}).then(function(r){
+    restore();
+    if(!r || !r.ok){
+      box.innerHTML='<div class="ccat-msg">'+t("Bu ID orqali hech qanday so'z kategoriyasi topilmadi")+'</div>';
+      return;
+    }
+    var c=r.cat, li=langInfo(c.lang);
+    ccatRemember(c);
+    box.innerHTML='<div class="ccat-card">'+
+      '<div class="ccat-top"><span class="cico chd">'+escHtml(c.emoji||'📚')+'</span>'+
+        '<div class="ccat-info"><h3>'+escHtml(c.title)+'</h3>'+
+        '<p>'+li.flag+' '+t(li.name)+' · '+t("{n} ta so'z",{n:c.words})+'</p>'+
+        '<p class="ccat-own">'+escHtml(c.owner_name)+'</p></div></div>'+
+      (r.added
+        ? '<button class="btn ghost" onclick="openCcat(\''+c.code+'\',this)">'+t("Ochish")+'</button>'
+        : '<button class="btn primary" onclick="ccatAdd(\''+c.code+'\',this)">'+t("Qo'shish")+'</button>')+
+      '</div>';
+  }).catch(function(){
+    restore();
+    box.innerHTML='<div class="ccat-msg">'+t("Internet bilan muammo")+'</div>';
+  });
+}
+
+// Qo'shish — faqat Pro. Pro bo'lmasa Pro sahifasiga olib boramiz.
+function ccatAdd(code,btn){
+  var restore=ccatBusy(btn,t("Qo'shilmoqda…"));
+  api('cat_add',{code:code}).then(function(r){
+    if(r && r.ok){
+      // Tugma ataylab band qoladi — kategoriya sahifasi darrov ochiladi.
+      toast(t("Kategoriya qo'shildi ✅"));
+      loadCcats();
+      openCcat(code);
+      return;
+    }
+    restore();
+    if(r && r.err==='pro'){ logEv('pro_popup_show','ccat'); proUpsell('ccat'); go('pro'); return; }
+    toast(t("Bu ID orqali hech qanday so'z kategoriyasi topilmadi"));
+  }).catch(function(){ restore(); toast(t("Internet bilan muammo")); });
+}
+
+// Kategoriya ichi. So'zlarni byId ga qo'shamiz — shundan keyin video, ovoz,
+// "o'rgandim" va SM-2 mexanizmlari hech qanday o'zgarishsiz ishlaydi.
+function openCcat(code,btn){
+  var restore=ccatBusy(btn,t("Ochilmoqda…"));
+  var from=ccatPage(), m=ccatMeta[code], opened=false;
+  // Nomini bilsak — sahifani darrov ochamiz, so'zlar o'rniga skelet turadi.
+  if(m){
+    ccatHead(m,null);
+    var pl=document.getElementById('phList');
+    if(pl) pl.innerHTML=ccatSkeleton(m.words);
+    go('cat'); opened=true;
+  }
+  api('cat_words',{code:code}).then(function(r){
+    restore();
+    if(!r || !r.ok){
+      if(opened) go(from);                          // ochilgan bo'lsa orqaga qaytamiz
+      if(r && r.err==='pro'){ logEv('pro_popup_show','ccat'); proUpsell('ccat'); go('pro'); return; }
+      toast(t("Bu ID orqali hech qanday so'z kategoriyasi topilmadi"));
+      return;
+    }
+    var c=r.cat;
+    ccatRemember(c);
+    curCcat=c; curCat=null;
+    var list=(r.words||[]).map(function(w){
+      return { id:w.id, ru:w.word, tr:w.translit||'', uz:w.uz||'', _lang:c.lang, _ccat:c.code };
+    });
+    ccatWords[c.code]=list;
+    list.forEach(function(p){ byId[p.id]=p; });
+    ccatHead(c,list.length);
+    var h='';
+    list.forEach(function(p){
+      var done=!!S.learned[p.id];
+      h+='<div class="ph-item" id="phi-'+p.id+'">'+
+         '<div class="ph-row" onclick="togglePh('+p.id+')">'+
+           '<div class="st'+(done?' done':'')+'" id="st-'+p.id+'">'+(done?'✅':'▶')+'</div>'+
+           '<div class="tx"><div class="ru">'+escHtml(p.ru)+'</div><div class="uz">'+escHtml(p.uz)+'</div></div>'+
+         '</div><div class="ph-body" id="phb-'+p.id+'"></div></div>';
+    });
+    h+='<button class="btn ghost ccat-rm" onclick="ccatRemove(\''+c.code+'\',this)">'+
+       t("Ro'yxatimdan olib tashlash")+'</button>';
+    document.getElementById('phList').innerHTML=h;
+    if(!opened) go('cat');                          // ochiq bo'lsa animatsiya takrorlanmasin
+  }).catch(function(){
+    restore();
+    if(opened) go(from);
+    toast(t("Internet bilan muammo"));
+  });
+}
+
+// Olib tashlash. Progress va SM-2 kartalar serverda ataylab qoladi.
+function ccatRemove(code,btn){
+  askYesNo(t("Bu kategoriyani ro'yxatingizdan olib tashlaymizmi? O'rgangan so'zlaringiz saqlanib qoladi."), function(){
+    var restore=ccatBusy(btn,t("Olib tashlanmoqda…"));
+    api('cat_remove',{code:code}).then(function(r){
+      restore();
+      if(!r || !r.ok){ toast(t("Internet bilan muammo")); return; }
+      delete ccatWords[code];
+      delete ccatMeta[code];
+      curCcat=null;
+      toast(t("Olib tashlandi"));
+      loadCcats();
+      go('home');
+    }).catch(function(){ restore(); toast(t("Internet bilan muammo")); });
+  });
+}
+
 function showLock(id){
   var body=document.getElementById('phb-'+id);
   var g=goal(), msg;
@@ -5903,6 +6158,26 @@ function loadFeedback(){
    tekshiramiz va yo'q bo'lsa foydalanuvchiga ochiq xabar beramiz. */
 try{
   if(I18N && I18N.ru){
+    /* ADR-032: maxsus kategoriya */
+    I18N.ru["Kategoriya kodi"]="Код категории";
+    I18N.ru["O'qituvchi kodini kiriting"]="Введите код преподавателя";
+    I18N.ru["O'qituvchingiz bergan 6 xonali kodni kiriting — uning so'zlar to'plami sizga qo'shiladi."]="Введите 6-значный код от преподавателя — его набор слов добавится к вам.";
+    I18N.ru["Qidirish"]="Найти";
+    I18N.ru["Kod 6 ta belgidan iborat"]="Код состоит из 6 символов";
+    I18N.ru["Qidirilmoqda…"]="Ищем…";
+    I18N.ru["Qo'shilmoqda…"]="Добавляем…";
+    I18N.ru["Ochilmoqda…"]="Открываем…";
+    I18N.ru["Olib tashlanmoqda…"]="Убираем…";
+    I18N.ru["Bu bo'lim tez orada ochiladi 🚀"]="Этот раздел откроется совсем скоро 🚀";
+    I18N.ru["Bu ID orqali hech qanday so'z kategoriyasi topilmadi"]="По этому ID категория слов не найдена";
+    I18N.ru["{n} ta so'z"]="{n} слов";
+    I18N.ru["Qo'shish"]="Добавить";
+    I18N.ru["Ochish"]="Открыть";
+    I18N.ru["Kategoriya qo'shildi ✅"]="Категория добавлена ✅";
+    I18N.ru["Ro'yxatimdan olib tashlash"]="Убрать из моего списка";
+    I18N.ru["Bu kategoriyani ro'yxatingizdan olib tashlaymizmi? O'rgangan so'zlaringiz saqlanib qoladi."]="Убрать эту категорию из вашего списка? Выученные слова сохранятся.";
+    I18N.ru["Olib tashlandi"]="Убрано";
+    I18N.ru["Internet bilan muammo"]="Проблема с интернетом";
     I18N.ru["Qurilmangizda ruscha ovoz o'rnatilmagan"]="На вашем устройстве не установлен русский голос";
     I18N.ru["Qurilmangizda inglizcha ovoz o'rnatilmagan"]="На вашем устройстве не установлен английский голос";
     I18N.ru["Qurilmangizda nemischa ovoz o'rnatilmagan"]="На вашем устройстве не установлен немецкий голос";
@@ -6109,6 +6384,7 @@ function start(){
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
   if(S.onboarded){ if(!runCardSearch()) go('home'); } else { renderOb(); go('ob'); }
+  if(SERVER && CCAT_LIVE) loadCcats();   // ADR-032: prod'da yopiq — ortiqcha so'rov ham yubormaymiz
   /* YT IFrame API'ni oldindan isitamiz (ilova tinchigach) — birinchi video ochilishida
      skript yuklashning ~0.5-1.5s kutishi yo'qoladi. */
   setTimeout(function(){ ensureYT(function(){}); }, 2500);
