@@ -893,6 +893,10 @@
   .lb-sk{background:var(--card);border:1px solid var(--line);border-radius:14px;height:58px;
     animation:lbPulse 1.15s ease-in-out infinite}
   .lb-sk.hero{height:200px;border-radius:20px;margin-bottom:12px}
+  /* Profile'dagi liga qatori uchun skelet — balandligi .lb-entry bilan AYNAN bir xil
+     (14px padding + 38px nishon + 14px padding + 2px chegara = 68px), shuning uchun
+     ma'lumot kelganda sahifa sakramaydi. */
+  .lb-sk.entry{height:68px;margin-bottom:14px}
   @keyframes lbPulse{0%,100%{opacity:1}50%{opacity:.45}}
   @media (prefers-reduced-motion:reduce){ .lb-sk{animation:none} }
 
@@ -5699,36 +5703,59 @@ function lbAny(){
   return null;
 }
 
-/* ---------- Profile'dagi kirish qatori + ikkita raqam ---------- */
+/* ---------- Profile'dagi kirish qatori + ikkita raqam ----------
+   MUAMMO (2026-08-04): qator server javobi kelgach yaratilardi, ya'ni Profil
+   ochilganda 2-3 soniya BUTUNLAY yo'q edi va keyin paydo bo'lib, ostidagi Pro
+   kartani pastga surib yuborardi (layout shift).
+   YECHIM uch qavat:
+     1) `S.lbSnap` — oxirgi ma'lum holat localStorage'da; takroriy ochishda qator
+        darhol, haqiqiy matn bilan chiqadi va jimgina yangilanadi;
+     2) skelet — birinchi ochishda AYNAN o'sha balandlikda joy band qilinadi;
+     3) start() da oldindan isitish — odatda tap paytida ma'lumot allaqachon tayyor.
+   Markup bitta joyda (lbEntryHtml) — kesh va yangi javob bir xil ko'rinadi. */
+function lbEntryHtml(me){
+  var sub = (me.week_score>0)
+    ? t("Haftalik {n}-o'rin",{n:me.rank}) + " · " + t("{n} so'z",{n:me.week_score})
+    : t("Bu hafta hali boshlamadingiz");
+  return '<button class="lb-entry" onclick="go(\'leaderboard\')">' +
+      lbBadge(me.league||'starter') +
+      '<span class="tx"><b>'+ escHtml(t("{l} ligasi",{l:lbLeagueName(me.league)})) +'</b>' +
+      '<small>'+ escHtml(sub) +'</small></span>' +
+      '<span class="ch"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></span>' +
+    '</button>';
+}
+/* Profile'dagi "tez kunda" raqamlari shu yerdan to'ladi (bitta manba). */
+function lbFillStats(me){
+  var mEl=document.getElementById('pfMastered');
+  if(mEl){ mEl.textContent=String(me.mastered_total||0); mEl.classList.remove('pf-soon'); }
+  var wEl=document.getElementById('pfWeek');
+  if(wEl){ wEl.textContent=String(me.week_score||0); wEl.classList.remove('pf-soon'); }
+}
 function renderLbEntry(){
   var mount=document.getElementById('lbEntryMount');
   if(!mount) return;
   if(!SERVER){ mount.innerHTML=''; return; }     // mehmon rejimi — umuman ko'rinmaydi
 
   var d=LB.data.week;
-  if(!d){
-    lbFetch('week').then(function(){ renderLbEntry(); }).catch(function(){ mount.innerHTML=''; });
+  if(d){
+    var me=d.me||{};
+    S.lbSnap=me; save();                         // keyingi ochishda darhol chiqishi uchun
+    lbFillStats(me);
+    mount.innerHTML=lbEntryHtml(me);
     return;
   }
-  var me=d.me||{};
 
-  /* Profile'dagi "tez kunda" raqamlari shu yerdan to'ladi (bitta manba). */
-  var mEl=document.getElementById('pfMastered');
-  if(mEl){ mEl.textContent=String(me.mastered_total||0); mEl.classList.remove('pf-soon'); }
-  var wEl=document.getElementById('pfWeek');
-  if(wEl){ wEl.textContent=String(me.week_score||0); wEl.classList.remove('pf-soon'); }
+  // Ma'lumot hali yo'q: eskisi bo'lsa — o'shani, bo'lmasa — skelet (joy band bo'ladi).
+  if(S.lbSnap){ lbFillStats(S.lbSnap); mount.innerHTML=lbEntryHtml(S.lbSnap); }
+  else { mount.innerHTML='<div class="lb-sk entry"></div>'; }
 
-  var sub = (me.week_score>0)
-    ? t("Haftalik {n}-o'rin",{n:me.rank}) + " · " + t("{n} so'z",{n:me.week_score})
-    : t("Bu hafta hali boshlamadingiz");
-
-  mount.innerHTML =
-    '<button class="lb-entry" onclick="go(\'leaderboard\')">' +
-      lbBadge(me.league||'starter') +
-      '<span class="tx"><b>'+ escHtml(t("{l} ligasi",{l:lbLeagueName(me.league)})) +'</b>' +
-      '<small>'+ escHtml(sub) +'</small></span>' +
-      '<span class="ch"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></span>' +
-    '</button>';
+  /* DIQQAT: qayta chizish FAQAT `res.ok` bo'lganda. Aks holda renderLbEntry ->
+     lbFetch -> renderLbEntry cheksiz halqaga tushardi (server ok:false qaytarsa
+     LB.data.week hech qachon to'lmaydi) — eski koddagi yashirin nuqson. */
+  lbFetch('week').then(function(res){
+    if(res && res.ok) renderLbEntry();
+    else if(!S.lbSnap) mount.innerHTML='';
+  }).catch(function(){ if(!S.lbSnap) mount.innerHTML=''; });
 }
 
 /* ---------- Leaderboard sahifasi ---------- */
@@ -6567,6 +6594,9 @@ function start(){
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
   if(S.onboarded){ if(!runCardSearch()) go('home'); } else { renderOb(); go('ob'); }
+  /* Liga ma'lumotini oldindan isitamiz: Profil bosilganda qator darhol chiqsin.
+     Kesh 60 soniya, shuning uchun Profil ochilishi ortiqcha so'rov qilmaydi. */
+  if(SERVER && S.onboarded) lbFetch('week').catch(function(){});
   if(SERVER && CCAT_LIVE) loadCcats();   // ADR-032: prod'da yopiq — ortiqcha so'rov ham yubormaymiz
   /* YT IFrame API'ni oldindan isitamiz (ilova tinchigach) — birinchi video ochilishida
      skript yuklashning ~0.5-1.5s kutishi yo'qoladi. */
