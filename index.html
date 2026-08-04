@@ -805,15 +805,23 @@
   .lb-badge.lg-masters{background:rgba(246,196,69,.17);color:var(--lg-masters)}
   .lb-badge.big{width:60px;height:60px;border-radius:19px}
   .lb-badge.big svg{width:32px;height:32px}
-  /* liga hero */
-  .lb-hero{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:18px}
+  /* liga hero — tab'dan mustaqil, shuning uchun tab almashganda sakramaydi */
+  .lb-hero{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:12px}
   .lb-hero-top{display:flex;align-items:center;gap:14px}
   .lb-hero-top .tx{flex:1;min-width:0}
   .lb-hero-top h3{margin:0;font-size:19px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
   .lb-hero-top small{font-size:12px;color:var(--muted);display:block;margin-top:3px}
-  .lb-clock{display:inline-flex;align-items:center;gap:7px;background:var(--card-2);border-radius:99px;
-    padding:7px 12px;font-size:11.5px;font-weight:700;color:var(--muted);margin-top:15px}
-  .lb-clock svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .lb-kick{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;
+    display:block;margin-bottom:4px}
+  /* jami o'zlashtirilgan so'z — hero'ning asosiy raqami */
+  .lb-total{display:flex;align-items:baseline;gap:8px;margin-top:16px}
+  .lb-total b{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+  .lb-total span{font-size:13px;color:var(--muted);font-weight:600}
+  /* eng yuqori liga — pastga tushish yo'q */
+  .lb-topnote{margin-top:14px;font-size:12.5px;line-height:1.5;color:var(--muted);
+    background:var(--card-2);border-radius:12px;padding:10px 12px}
+  /* hero ostidagi tinchlantiruvchi jumla */
+  .lb-sub{margin:13px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted)}
   .lb-next{margin-top:15px}
   .lb-next-lbl{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
   .lb-next-lbl span{font-size:12.5px;color:var(--muted)}
@@ -821,19 +829,38 @@
   .lb-track{height:7px;border-radius:99px;background:var(--card-2);overflow:hidden}
   .lb-track i{display:block;height:100%;border-radius:99px;
     background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .45s ease}
+  /* o'tgan hafta g'olibi — kichik chip */
+  .lb-win{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+    border-radius:13px;padding:10px 12px;margin-bottom:12px;font-size:12.5px;color:var(--muted);line-height:1.4}
+  .lb-win svg{width:16px;height:16px;flex:0 0 auto;color:var(--gold);
+    fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .lb-win b{color:var(--text);font-weight:800}
+  .lb-win.me{border-color:rgba(246,196,69,.45);background:rgba(246,196,69,.08)}
+  /* davr tablari — yopishqoq, scroll paytida ko'rinib turadi */
+  .lb-tabs-wrap{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 10px}
+  .lb-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--card-2);
+    border-radius:13px;padding:4px}
+  .lb-tab{min-height:40px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
+    border-radius:10px;background:transparent;color:var(--muted);transition:background .15s,color .15s}
+  .lb-tab.on{background:var(--card);color:var(--text);font-weight:800;box-shadow:var(--shadow)}
+  /* tab ostidagi izoh qatori (vaqt / o'yinchilar) */
+  .lb-note{display:flex;align-items:center;gap:7px;margin:10px 2px 11px;
+    font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.4}
+  .lb-note svg{width:14px;height:14px;flex:0 0 auto;
+    fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   /* ro'yxat */
-  .lb-sechead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 11px}
-  .lb-sechead h4{margin:0;font-size:14px;font-weight:800}
-  .lb-sechead span{font-size:11.5px;color:var(--muted)}
   .lb-list{display:flex;flex-direction:column;gap:7px;padding-bottom:10px}
   .lb-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
     border-radius:14px;padding:11px 13px}
-  .lb-rank{width:26px;flex:0 0 auto;text-align:center;font-size:13.5px;font-weight:800;color:var(--muted);
-    font-variant-numeric:tabular-nums}
-  .lb-row.top1 .lb-rank{color:var(--gold)}
-  .lb-row.top2 .lb-rank,.lb-row.top3 .lb-rank{color:var(--text)}
+  /* o'rin — top 3 uchun rangli pill, medal emoji ishlatilmaydi */
+  .lb-rank{width:27px;height:24px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    border-radius:8px;font-size:13px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+  .lb-row.top1 .lb-rank{color:var(--gold);background:rgba(246,196,69,.15)}
+  .lb-row.top2 .lb-rank{color:var(--silver,var(--lg-silver));background:rgba(195,202,214,.15)}
+  .lb-row.top3 .lb-rank{color:var(--bronze,var(--lg-bronze));background:rgba(205,138,74,.15)}
   .lb-av{width:34px;height:34px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-    font-size:14px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+    font-size:14px;font-weight:800;color:var(--muted);background:var(--card-2)}
+  .lb-row.me .lb-av{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
   .lb-nm{flex:1;min-width:0;display:flex;align-items:center;gap:7px}
   .lb-nm span{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .lb-pro{font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--gold);
@@ -853,10 +880,19 @@
   .lb-empty p{margin:7px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted)}
   .lb-empty button{margin-top:17px;border:none;cursor:pointer;color:#fff;font-size:14.5px;font-weight:800;
     border-radius:13px;padding:13px 20px;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  /* nol ball — xabar, ayb emas */
+  .lb-zero{background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:16px 15px;margin-top:9px}
+  .lb-zero b{font-size:13.5px;font-weight:800;display:block}
+  .lb-zero p{margin:6px 0 0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  /* 50-o'rindan pastdagi o'z qatorim — pastda yopishib turadi */
+  .lb-list-wrap.pad{padding-bottom:66px}
+  .lb-mebar{position:fixed;left:0;right:0;z-index:40;max-width:560px;margin:0 auto;padding:0 14px;
+    bottom:calc(64px + env(safe-area-inset-bottom,0px));pointer-events:none}
+  .lb-mebar .lb-row{margin:0;box-shadow:var(--shadow);pointer-events:auto}
   /* skeleton (yuklanish) */
   .lb-sk{background:var(--card);border:1px solid var(--line);border-radius:14px;height:58px;
     animation:lbPulse 1.15s ease-in-out infinite}
-  .lb-sk.hero{height:170px;border-radius:20px;margin-bottom:18px}
+  .lb-sk.hero{height:200px;border-radius:20px;margin-bottom:12px}
   @keyframes lbPulse{0%,100%{opacity:1}50%{opacity:.45}}
   @media (prefers-reduced-motion:reduce){ .lb-sk{animation:none} }
 
@@ -1388,6 +1424,7 @@
 <!-- ============ LEADERBOARD (haftalik liga) ============ -->
 <div class="page" id="pg-leaderboard">
   <button class="back" onclick="go('profile')" data-i18n="← Orqaga">← Orqaga</button>
+  <h2 data-i18n="Reyting">Reyting</h2>
   <div id="lbBody"></div>
 </div>
 
@@ -1846,36 +1883,87 @@ var I18N = {"uz":{},"ru":{"+{n} so'z o'zlashtirdingiz":"+{n} слов освое
 /* Leaderboard (liga) tarjimalari — alohida blok, asosiy lug'atga qo'shiladi.
    Shu yerda turgani uchun yuqoridagi katta lug'atga tegmasdan yangilash oson. */
 (function(){
-  var m = {
+  var ru = {
     "Reyting":"Рейтинг",
-    "Haftalik reyting":"Недельный рейтинг",
     "Haftalik {n}-o'rin":"{n}-е место за неделю",
     "{n} so'z":"{n} слов",
     "Boshlovchi":"Новичок",
     "Bronza":"Бронза",
     "Kumush":"Серебро",
     "Ustalar":"Мастера",
-    "{l} ligasi":"Лига {l}",
+    "Sizning ligangiz":"Ваша лига",
+    "so'z o'zlashtirdingiz":"слов освоено",
     "{l}gacha":"До лиги {l}",
+    "Eng yuqori liga — bu yerdan pastga yo'l yo'q":"Высшая лига — отсюда вниз пути нет",
+    "Shu hafta {n} ta so'z o'rgandingiz. Daraja va jami natija saqlanib qoladi.":"На этой неделе вы освоили {n} слов. Лига и общий результат сохраняются.",
+    "O'tgan hafta g'olibi: {u} — {n} so'z":"Победитель прошлой недели: {u} — {n} слов",
+    "O'tgan hafta siz g'olib bo'ldingiz — {n} so'z":"На прошлой неделе победили вы — {n} слов",
+    "Hafta":"Неделя",
+    "Oy":"Месяц",
+    "Umumiy":"Всего",
+    "Hafta tugashiga {n} kun":"До конца недели {n} дн",
+    "Hafta tugashiga {n} soat":"До конца недели {n} ч",
+    "Oy tugashiga {n} kun":"До конца месяца {n} дн",
+    "Oy tugashiga {n} soat":"До конца месяца {n} ч",
+    "Jami natija — hech qachon nolga tushmaydi":"Общий результат — никогда не обнуляется",
     "{n} ta o'yinchi":"{n} участников",
-    "Bu ligada hozircha yolg'izsiz":"Пока вы единственный в этой лиге",
-    "Hafta yangi boshlandi":"Неделя только началась",
-    "Bu hafta hali boshlamadingiz":"На этой неделе вы ещё не начали",
-    "Bu hafta hali hech kim boshlamagan":"На этой неделе ещё никто не начал",
-    "Birinchi bo'ling — bugun bir necha karta takrorlang.":"Будьте первым — повторите несколько карточек сегодня.",
+    "Bu hafta hali ro'yxatda yo'qsiz":"На этой неделе вас ещё нет в списке",
+    "Bitta so'z o'zlashtirsangiz ham yetadi — darhol ro'yxatga tushasiz.":"Достаточно освоить одно слово — сразу попадёте в список.",
+    "Bu oy hali ro'yxatda yo'qsiz":"В этом месяце вас ещё нет в списке",
+    "Oy uzun. Bugun bir necha karta takrorlasangiz, o'rin sizni kutadi.":"Месяц длинный. Повторите сегодня несколько карточек — место вас ждёт.",
+    "Bu ligada hozircha raqobat yo'q":"В этой лиге пока нет соперников",
+    "Birinchi bo'lib boshlang — yangi o'yinchilar qo'shilganda siz allaqachon yuqorida bo'lasiz.":"Начните первым — когда придут новые игроки, вы уже будете наверху.",
     "Mashqni boshlash":"Начать тренировку",
-    "Hafta yakuniga {n} soat":"До конца недели {n} ч",
-    "Hafta yakuniga {n} kun":"До конца недели {n} дн",
-    "o'zlashtirilgan so'z":"освоено слов",
+    "Bu hafta hali boshlamadingiz":"На этой неделе вы ещё не начали",
+    "{l} ligasi":"Лига {l}",
     "Reyting Telegram ichida ishlaydi":"Рейтинг работает внутри Telegram",
     "Ilovani Telegram'da ochsangiz haftalik reytingda qatnashasiz.":"Откройте приложение в Telegram, чтобы участвовать в рейтинге.",
-    "Internet xatosi":"Ошибка сети",
-    "Reytingni yuklab bo'lmadi.":"Не удалось загрузить рейтинг.",
+    "Reyting yuklanmadi":"Рейтинг не загрузился",
+    "Ulanishni tekshirib, qayta urinib ko'ring. Ballaringiz joyida.":"Проверьте соединение и попробуйте снова. Ваши баллы на месте.",
     "Qayta urinish":"Повторить",
     "Siz":"Вы",
     "Seyly foydalanuvchisi":"Пользователь Seyly"
   };
-  for(var k in m) if(Object.prototype.hasOwnProperty.call(m,k)) I18N.ru[k]=m[k];
+  var kz = {
+    "Reyting":"Рейтинг",
+    "Haftalik {n}-o'rin":"Аптада {n}-орын",
+    "{n} so'z":"{n} сөз",
+    "Sizning ligangiz":"Сіздің лигаңыз",
+    "so'z o'zlashtirdingiz":"сөз меңгердіңіз",
+    "{l}gacha":"{l} лигасына дейін",
+    "Eng yuqori liga — bu yerdan pastga yo'l yo'q":"Ең жоғары лига — бұдан төмен жол жоқ",
+    "Shu hafta {n} ta so'z o'rgandingiz. Daraja va jami natija saqlanib qoladi.":"Осы аптада {n} сөз меңгердіңіз. Лига мен жалпы нәтиже сақталады.",
+    "O'tgan hafta g'olibi: {u} — {n} so'z":"Өткен апта жеңімпазы: {u} — {n} сөз",
+    "O'tgan hafta siz g'olib bo'ldingiz — {n} so'z":"Өткен аптада сіз жеңдіңіз — {n} сөз",
+    "Hafta":"Апта",
+    "Oy":"Ай",
+    "Umumiy":"Барлығы",
+    "Hafta tugashiga {n} kun":"Апта аяқталуына {n} күн",
+    "Hafta tugashiga {n} soat":"Апта аяқталуына {n} сағат",
+    "Oy tugashiga {n} kun":"Ай аяқталуына {n} күн",
+    "Oy tugashiga {n} soat":"Ай аяқталуына {n} сағат",
+    "Jami natija — hech qachon nolga tushmaydi":"Жалпы нәтиже — ешқашан нөлге түспейді",
+    "{n} ta o'yinchi":"{n} ойыншы",
+    "Bu hafta hali ro'yxatda yo'qsiz":"Бұл аптада тізімде әлі жоқсыз",
+    "Bitta so'z o'zlashtirsangiz ham yetadi — darhol ro'yxatga tushasiz.":"Бір сөз меңгерсеңіз де жетеді — бірден тізімге кіресіз.",
+    "Bu oy hali ro'yxatda yo'qsiz":"Бұл айда тізімде әлі жоқсыз",
+    "Oy uzun. Bugun bir necha karta takrorlasangiz, o'rin sizni kutadi.":"Ай ұзақ. Бүгін бірнеше карта қайталасаңыз, орын сізді күтеді.",
+    "Bu ligada hozircha raqobat yo'q":"Бұл лигада әзірге бәсеке жоқ",
+    "Birinchi bo'lib boshlang — yangi o'yinchilar qo'shilganda siz allaqachon yuqorida bo'lasiz.":"Бірінші болып бастаңыз — жаңа ойыншылар қосылғанда сіз әлдеқашан жоғарыда боласыз.",
+    "Mashqni boshlash":"Жаттығуды бастау",
+    "Bu hafta hali boshlamadingiz":"Бұл аптада әлі бастамадыңыз",
+    "{l} ligasi":"{l} лигасы",
+    "Reyting Telegram ichida ishlaydi":"Рейтинг Telegram ішінде жұмыс істейді",
+    "Ilovani Telegram'da ochsangiz haftalik reytingda qatnashasiz.":"Қолданбаны Telegram-да ашсаңыз, апталық рейтингке қатысасыз.",
+    "Reyting yuklanmadi":"Рейтинг жүктелмеді",
+    "Ulanishni tekshirib, qayta urinib ko'ring. Ballaringiz joyida.":"Байланысты тексеріп, қайта көріңіз. Ұпайларыңыз орнында.",
+    "Qayta urinish":"Қайталау",
+    "Siz":"Сіз",
+    "Seyly foydalanuvchisi":"Seyly пайдаланушысы"
+  };
+  var k;
+  for(k in ru) if(Object.prototype.hasOwnProperty.call(ru,k)) I18N.ru[k]=ru[k];
+  for(k in kz) if(Object.prototype.hasOwnProperty.call(kz,k)) I18N.kz[k]=kz[k];
 })();
 
 function t(s, vars){
@@ -5589,19 +5677,28 @@ function lbInitial(name){
   return s ? s.charAt(0).toUpperCase() : '?';
 }
 
-/* 60 soniyalik kesh — Profile <-> Leaderboard sakraganda qayta so'rov ketmaydi. */
-var LB = { cache:null, at:0, busy:null };
-function lbInvalidate(){ LB.cache=null; LB.at=0; }
-function lbFetch(force){
-  var fresh = LB.cache && (Date.now() - LB.at < 60000);
-  if(fresh && !force) return Promise.resolve(LB.cache);
-  if(LB.busy) return LB.busy;
-  LB.busy = api('leaderboard').then(function(res){
-    LB.busy=null;
-    if(res && res.ok){ LB.cache=res; LB.at=Date.now(); }
+/* Uch davr: hafta / oy / umumiy. Har biri alohida keshlanadi (60 soniya),
+   chunki server ularni alohida so'rov bilan qaytaradi. */
+var LB_SCOPES = ['week','month','total'];
+var LB = { data:{}, at:{}, busy:{}, scope:'week' };
+function lbInvalidate(){ LB.data={}; LB.at={}; }
+function lbFetch(scope, force){
+  var sc = LB_SCOPES.indexOf(scope)>=0 ? scope : 'week';
+  var fresh = LB.data[sc] && (Date.now() - (LB.at[sc]||0) < 60000);
+  if(fresh && !force) return Promise.resolve(LB.data[sc]);
+  if(LB.busy[sc]) return LB.busy[sc];
+  LB.busy[sc] = api('leaderboard', { scope: sc }).then(function(res){
+    LB.busy[sc]=null;
+    if(res && res.ok){ LB.data[sc]=res; LB.at[sc]=Date.now(); }
     return res;
-  }).catch(function(e){ LB.busy=null; throw e; });
-  return LB.busy;
+  }).catch(function(e){ LB.busy[sc]=null; throw e; });
+  return LB.busy[sc];
+}
+/* Hero (liga, jami so'z, g'olib) davrga bog'liq emas — istalgan keshdan olsa bo'ladi.
+   Shu sababli tab almashganda hero sakramaydi, faqat ro'yxat yangilanadi. */
+function lbAny(){
+  for(var i=0;i<LB_SCOPES.length;i++){ var d=LB.data[LB_SCOPES[i]]; if(d) return d; }
+  return null;
 }
 
 /* ---------- Profile'dagi kirish qatori + ikkita raqam ---------- */
@@ -5610,9 +5707,9 @@ function renderLbEntry(){
   if(!mount) return;
   if(!SERVER){ mount.innerHTML=''; return; }     // mehmon rejimi — umuman ko'rinmaydi
 
-  var d=LB.cache;
+  var d=LB.data.week;
   if(!d){
-    lbFetch().then(function(){ renderLbEntry(); }).catch(function(){ mount.innerHTML=''; });
+    lbFetch('week').then(function(){ renderLbEntry(); }).catch(function(){ mount.innerHTML=''; });
     return;
   }
   var me=d.me||{};
@@ -5646,16 +5743,41 @@ function renderLeaderboard(){
       t("Ilovani Telegram'da ochsangiz haftalik reytingda qatnashasiz."), null);
     return;
   }
-  if(!LB.cache) box.innerHTML='<div class="lb-sk hero"></div><div class="lb-list">'+
-    '<div class="lb-sk"></div><div class="lb-sk"></div><div class="lb-sk"></div><div class="lb-sk"></div></div>';
 
-  lbFetch().then(function(d){
+  var sc = LB.scope;
+  var own = LB.data[sc];
+  if(own){
+    box.innerHTML=lbMarkup(own, sc, false);          // keshdan darhol
+  }else{
+    var any = lbAny();
+    box.innerHTML = any
+      ? lbMarkup(any, sc, true)                      // hero turadi, faqat ro'yxat yuklanadi
+      : '<div class="lb-sk hero"></div>'+lbSkeleton();
+  }
+
+  lbFetch(sc).then(function(d){
+    if(LB.scope !== sc) return;                      // tab tez almashdi — eski javob kerak emas
     if(!d || !d.ok) throw new Error('bad');
-    box.innerHTML=lbMarkup(d);
+    box.innerHTML=lbMarkup(d, sc, false);
   }).catch(function(){
-    box.innerHTML=lbNotice(t("Internet xatosi"), t("Reytingni yuklab bo'lmadi."),
+    if(LB.scope !== sc) return;
+    box.innerHTML=lbNotice(t("Reyting yuklanmadi"),
+      t("Ulanishni tekshirib, qayta urinib ko'ring. Ballaringiz joyida."),
       '<button onclick="lbInvalidate();renderLeaderboard()">'+escHtml(t("Qayta urinish"))+'</button>');
   });
+}
+
+/* Tab almashish — hero joyida qoladi, faqat ro'yxat qayta yuklanadi. */
+function lbTab(scope){
+  if(LB_SCOPES.indexOf(scope)<0 || LB.scope===scope) return;
+  LB.scope=scope;
+  try{ logEv('lb_tab', scope); }catch(e){}
+  renderLeaderboard();
+}
+
+function lbSkeleton(){
+  return '<div class="lb-list"><div class="lb-sk"></div><div class="lb-sk"></div>'+
+         '<div class="lb-sk"></div><div class="lb-sk"></div></div>';
 }
 
 function lbNotice(title, text, btn){
@@ -5664,69 +5786,132 @@ function lbNotice(title, text, btn){
     '<b>'+escHtml(title)+'</b><p>'+escHtml(text)+'</p>'+(btn||'')+'</div>';
 }
 
-function lbMarkup(d){
-  var me=d.me||{}, lg=d.league||{}, rows=d.rows||[];
+var LB_CLOCK  = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>';
+var LB_SHIELD = '<svg viewBox="0 0 24 24"><path d="M12 3.5 5 6.5v5c0 4.2 3 6.9 7 8.5 4-1.6 7-4.3 7-8.5v-5z"></path><path d="M9.2 12.1l1.9 1.9 3.7-3.9"></path></svg>';
+var LB_TROPHY = '<svg viewBox="0 0 24 24"><path d="M7 4h10v4.5a5 5 0 0 1-10 0z"></path><path d="M7 5.5H4.8c-.4 0-.7.4-.6.8.3 2 1.6 3.3 3.2 3.6"></path><path d="M17 5.5h2.2c.4 0 .7.4.6.8-.3 2-1.6 3.3-3.2 3.6"></path><path d="M12 13.5V17"></path><path d="M8.8 20.5h6.4L14.6 17H9.4z"></path></svg>';
 
+/* Ball o'qish — server yangi `score` maydonini beradi, eski `week_score` zaxira. */
+function lbScore(r){ return (r && r.score!=null) ? r.score : ((r && r.week_score) || 0); }
+
+/* d — javob, sc — ko'rsatilayotgan davr, loading — ro'yxat hali yuklanmoqda. */
+function lbMarkup(d, sc, loading){
+  var me=d.me||{}, lg=d.league||{}, rows=loading ? [] : (d.rows||[]);
+
+  /* ---- 1) HERO: liga + jami o'zlashtirilgan so'z (davrga bog'liq emas) ---- */
   var h='<div class="lb-hero"><div class="lb-hero-top">'+
     lbBadge(me.league||'starter', true)+
-    '<span class="tx"><h3>'+ escHtml(t("{l} ligasi",{l:lbLeagueName(me.league)})) +'</h3>'+
-    '<small>'+ escHtml(lbLeagueSub(lg.size)) +'</small></span></div>';
+    '<span class="tx"><span class="lb-kick">'+ escHtml(t("Sizning ligangiz")) +'</span>'+
+    '<h3>'+ escHtml(lbLeagueName(me.league)) +'</h3></span></div>'+
+    '<div class="lb-total"><b>'+ (me.mastered_total||0) +'</b>'+
+    '<span>'+ escHtml(t("so'z o'zlashtirdingiz")) +'</span></div>';
 
-  if(typeof d.week_ends_in_h==='number'){
-    h+='<span class="lb-clock"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle>'+
-       '<path d="M12 7.5V12l3 2"></path></svg>'+escHtml(lbTimeLeft(d.week_ends_in_h))+'</span>';
-  }
-
-  /* keyingi ligagacha progress (Ustalar'da ko'rsatilmaydi — next_league yo'q) */
+  /* keyingi ligagacha progress; Ustalar'da — pastga tushish yo'qligi haqida izoh */
   if(me.to_next_league!=null && me.next_league){
     var lo=0, hi=1;
     for(var i=0;i<LB_LEAGUES.length;i++){
       if(LB_LEAGUES[i].key===me.league) lo=LB_LEAGUES[i].min;
       if(LB_LEAGUES[i].key===me.next_league) hi=LB_LEAGUES[i].min;
     }
-    var pct = hi>lo ? Math.max(3, Math.min(100, Math.round(((me.mastered_total||0)-lo)/(hi-lo)*100))) : 0;
+    var pct = hi>lo ? Math.max(4, Math.min(100, Math.round(((me.mastered_total||0)-lo)/(hi-lo)*100))) : 0;
     h+='<div class="lb-next"><div class="lb-next-lbl">'+
        '<span>'+ escHtml(t("{l}gacha",{l:lbLeagueName(me.next_league)})) +'</span>'+
        '<b>'+ escHtml(t("{n} so'z",{n:me.to_next_league})) +'</b></div>'+
        '<div class="lb-track"><i style="width:'+pct+'%"></i></div></div>';
+  }else{
+    h+='<div class="lb-topnote">'+ escHtml(t("Eng yuqori liga — bu yerdan pastga yo'l yo'q")) +'</div>';
   }
-  h+='</div>';
+  h+='<p class="lb-sub">'+ escHtml(t("Shu hafta {n} ta so'z o'rgandingiz. Daraja va jami natija saqlanib qoladi.",
+       {n:me.week_score||0})) +'</p></div>';
+
+  /* ---- 2) O'tgan hafta g'olibi ---- */
+  var w=d.last_winner;
+  if(w){
+    var wtx = w.is_me
+      ? t("O'tgan hafta siz g'olib bo'ldingiz — {n} so'z",{n:w.score})
+      : t("O'tgan hafta g'olibi: {u} — {n} so'z",{u:(w.name||t("Seyly foydalanuvchisi")), n:w.score});
+    h+='<div class="lb-win'+(w.is_me?' me':'')+'">'+LB_TROPHY+'<span>'+escHtml(wtx)+'</span></div>';
+  }
+
+  /* ---- 3) Davr tablari (yopishqoq) + izoh qatori ---- */
+  h+='<div class="lb-tabs-wrap"><div class="lb-tabs">'+
+     lbTabBtn('week', t("Hafta"), sc)+
+     lbTabBtn('month', t("Oy"), sc)+
+     lbTabBtn('total', t("Umumiy"), sc)+
+     '</div></div>';
+  h+=lbNoteRow(d, sc, loading, lg.size);
+
+  /* ---- 4) Ro'yxat ---- */
+  if(loading) return h+lbSkeleton();
 
   if(!rows.length){
-    return h+lbNotice(t("Bu hafta hali hech kim boshlamagan"),
-      t("Birinchi bo'ling — bugun bir necha karta takrorlang."),
+    return h+lbNotice(t("Bu ligada hozircha raqobat yo'q"),
+      t("Birinchi bo'lib boshlang — yangi o'yinchilar qo'shilganda siz allaqachon yuqorida bo'lasiz."),
       '<button onclick="go(\'practice\')">'+escHtml(t("Mashqni boshlash"))+'</button>');
   }
 
-  h+='<div class="lb-sechead"><h4>'+escHtml(t("Haftalik reyting"))+'</h4>'+
-     '<span>'+escHtml(t("o'zlashtirilgan so'z"))+'</span></div><div class="lb-list">';
-
-  var prevRank=0;
+  var meRow=null, prevRank=0, list='';
   rows.forEach(function(r){
-    if(prevRank && r.rank > prevRank+1) h+='<div class="lb-gap">···</div>';
+    if(r.is_me) meRow=r;
+    if(prevRank && r.rank > prevRank+1) list+='<div class="lb-gap">···</div>';
     prevRank=r.rank;
-    var cls='lb-row'+(r.is_me?' me':'')+(r.rank<=3?' top'+r.rank:'');
-    var nm = r.is_me ? t("Siz") : (r.name || t("Seyly foydalanuvchisi"));
-    h+='<div class="'+cls+'">'+
-      '<span class="lb-rank">'+r.rank+'</span>'+
-      '<span class="lb-av">'+escHtml(lbInitial(nm))+'</span>'+
-      '<span class="lb-nm"><span>'+escHtml(nm)+'</span>'+
-      (r.pro?'<span class="lb-pro">PRO</span>':'')+'</span>'+
-      '<span class="lb-sc">'+r.week_score+'</span></div>';
+    list+=lbRow(r);
   });
-  return h+'</div>';
+
+  /* 50-o'rindan pastdagi o'z qatorim pastda ham yopishib turadi */
+  var farMe = meRow && meRow.rank>50;
+  h+='<div class="lb-list-wrap'+(farMe?' pad':'')+'"><div class="lb-list">'+list+'</div>';
+
+  /* Nol ball — ayb emas, xabar */
+  if(me.rank==null && sc!=='total') h+=lbZero(sc);
+  h+='</div>';
+
+  if(farMe) h+='<div class="lb-mebar">'+lbRow(meRow)+'</div>';
+  return h;
 }
 
-/* Liga sarlavhasi ostidagi qator — uch holat:
-   0 = hafta bo'sh (yolg'izlik da'vo qilmaymiz), 1 = yakka, >1 = o'yinchilar soni. */
-function lbLeagueSub(size){
-  if(!size)     return t("Hafta yangi boshlandi");
-  if(size===1)  return t("Bu ligada hozircha yolg'izsiz");
-  return t("{n} ta o'yinchi",{n:size});
+function lbRow(r){
+  var cls='lb-row'+(r.is_me?' me':'')+(r.rank<=3?' top'+r.rank:'');
+  var nm = r.is_me ? t("Siz") : (r.name || t("Seyly foydalanuvchisi"));
+  return '<div class="'+cls+'">'+
+    '<span class="lb-rank">'+r.rank+'</span>'+
+    '<span class="lb-av">'+escHtml(lbInitial(nm))+'</span>'+
+    '<span class="lb-nm"><span>'+escHtml(nm)+'</span>'+
+    (r.pro?'<span class="lb-pro">PRO</span>':'')+'</span>'+
+    '<span class="lb-sc">'+lbScore(r)+'</span></div>';
 }
-function lbTimeLeft(hours){
-  if(hours>=24) return t("Hafta yakuniga {n} kun",{n:Math.floor(hours/24)});
-  return t("Hafta yakuniga {n} soat",{n:hours});
+
+function lbTabBtn(key, label, cur){
+  return '<button class="lb-tab'+(key===cur?' on':'')+'" onclick="lbTab(\''+key+'\')">'+escHtml(label)+'</button>';
+}
+
+/* Tab ostidagi izoh: hafta/oy — qancha vaqt qoldi, umumiy — nolga tushmasligi. */
+function lbNoteRow(d, sc, loading, size){
+  var ic=LB_CLOCK, tx='';
+  if(sc==='total'){
+    ic=LB_SHIELD; tx=t("Jami natija — hech qachon nolga tushmaydi");
+  }else if(!loading){
+    var hrs = (typeof d.ends_in_h==='number') ? d.ends_in_h
+            : (sc==='week' && typeof d.week_ends_in_h==='number' ? d.week_ends_in_h : null);
+    if(hrs!=null) tx=lbTimeLeft(sc, hrs);
+  }
+  if(size>1) tx = tx ? tx+' · '+t("{n} ta o'yinchi",{n:size}) : t("{n} ta o'yinchi",{n:size});
+  if(!tx) return '';
+  return '<div class="lb-note">'+ic+'<span>'+escHtml(tx)+'</span></div>';
+}
+
+function lbTimeLeft(sc, hours){
+  var days=Math.floor(hours/24);
+  if(sc==='month') return days>=1 ? t("Oy tugashiga {n} kun",{n:days}) : t("Oy tugashiga {n} soat",{n:hours});
+  return days>=1 ? t("Hafta tugashiga {n} kun",{n:days}) : t("Hafta tugashiga {n} soat",{n:hours});
+}
+
+/* Nol ball holati — ayblamaydi, yo'l ko'rsatadi. */
+function lbZero(sc){
+  var ttl = sc==='month' ? t("Bu oy hali ro'yxatda yo'qsiz") : t("Bu hafta hali ro'yxatda yo'qsiz");
+  var bd  = sc==='month'
+    ? t("Oy uzun. Bugun bir necha karta takrorlasangiz, o'rin sizni kutadi.")
+    : t("Bitta so'z o'zlashtirsangiz ham yetadi — darhol ro'yxatga tushasiz.");
+  return '<div class="lb-zero"><b>'+escHtml(ttl)+'</b><p>'+escHtml(bd)+'</p></div>';
 }
 
 /* ================== SESSIYA ICHIDAGI LIGA XABARLARI (Bosqich 2) ==================
