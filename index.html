@@ -3426,6 +3426,9 @@ function cwProLockHtml(){
    Gap AYNAN `.w` bo'laklaridan yig'iladi va bosilganining tartib raqami olinadi —
    shunda server tomonda bo'lish natijasi bir xil chiqadi va so'z ikki marta
    uchrasa ham qaysi biri bosilgani aniq bo'ladi. */
+var CW_SENT_END=/[.!?…]["»)”']?$/;   // gap tugash belgisi
+var CW_MAXW=28;                      // bosilgan so'zdan bir tomonga ko'pi bilan shuncha so'z
+var CW_MAXC=260;                     // gapning belgilar chegarasi
 function cwCtxOf(el){
   var box=null;
   try{ box = el.closest('.vt-s') || el.closest('.vt-cue') || el.parentElement; }catch(e){ box = el.parentElement; }
@@ -3434,14 +3437,37 @@ function cwCtxOf(el){
   if(!ws || ws.length<2) return null;                 // yakka so'z — kontekst bermaydi
   var words=[], idx=-1;
   for(var i=0;i<ws.length;i++){
-    if(ws[i]===el) idx=words.length;
     var tx=(ws[i].textContent||'').trim();
-    if(tx) words.push(tx);
+    if(!tx) continue;
+    if(ws[i]===el) idx=words.length;
+    words.push(tx);
   }
   if(idx<0) return null;
-  var sent=words.join(' ');
-  if(sent.length<6 || sent.length>400) return sent.length>400 ? {sent:sent.slice(0,400), i:idx} : null;
-  return {sent:sent, i:idx};
+
+  /* GAP CHEGARASI — bosilgan so'zdan ikki tomonga yurib topiladi.
+     `.vt-s` idishiga ISHONMAYMIZ: u faqat BO'LAK oxiridagi nuqtada yopiladi, shuning
+     uchun avtomatik subtitrda butun abzas bitta idishga tushib qolishi mumkin.
+     (2026-08-05 real xato: abzas 400 belgida kesilgan, bosilgan "dumb" esa undan
+     keyin qolib ketgan — serverga so'zi yo'q gap ketgan.) Shuning uchun nuqtani
+     so'zlar ro'yxatining O'ZIDAN qidiramiz. */
+  var a=idx, b=idx;
+  while(a>0 && !CW_SENT_END.test(words[a-1]) && (idx-a)<CW_MAXW) a--;
+  while(b<words.length-1 && !CW_SENT_END.test(words[b]) && (b-idx)<CW_MAXW) b++;
+  var seg=words.slice(a,b+1), i2=idx-a;
+
+  /* Belgilar chegarasi: bosilgan so'zdan UZOQROQ tomondan qisqartiramiz, ya'ni
+     so'zning o'zi hech qachon kesilib qolmaydi (avvalgi xatoning ildizi shu edi). */
+  while(seg.join(' ').length>CW_MAXC && seg.length>3){
+    if((seg.length-1-i2) > i2) seg.pop(); else { seg.shift(); i2--; }
+  }
+  if(i2<0 || i2>=seg.length) return null;
+
+  /* XAVFSIZLIK QULFI: hisoblangan o'rin haqiqatan bosilgan so'zmi? Mos kelmasa
+     kontekst YUBORMAYMIZ — noto'g'ri gap ko'rsatgandan ko'ra blok chiqmagani yaxshi. */
+  if(seg[i2]!==(el.textContent||'').trim()) return null;
+
+  var sent=seg.join(' ');
+  return sent.length<6 ? null : {sent:sent, i:i2};
 }
 function cueTap(el){
   if(!SERVER) return;                       // ma'no faqat server rejimida
