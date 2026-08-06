@@ -2052,13 +2052,24 @@ function setLogo(){
    Oddiy brauzerda: mehmon rejimi (localStorage, sinxronsiz). */
 var SERVER = !!(tg && tg.initData && tg.initData.length > 0);
 var IS_OWNER = false;
-function api(action, extra){
+/* audit-56 A3: `timeoutMs` IXTIYORIY chegara.
+   Mobil tarmoqda fetch javobsiz osilib qolishi mumkin — na `then`, na `catch`
+   chaqiriladi va UI abadiy "yuklanmoqda"da qoladi. Chegara faqat SO'RALGANDA
+   qo'yiladi: define sovuq holatda 14 soniyagacha ketishi normal, ingest esa
+   undan ham uzoq — global chegara qo'yish ishlayotgan narsani sindirardi. */
+function api(action, extra, timeoutMs){
   var payload = Object.assign({ action: action, initData: tg ? tg.initData : "" }, extra || {});
-  return fetch(API_URL, {
+  var p = fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   }).then(function(r){ return r.json(); });
+  if(!timeoutMs) return p;
+  return new Promise(function(res, rej){
+    var to=setTimeout(function(){ rej(new Error('timeout')); }, timeoutMs);
+    p.then(function(v){ clearTimeout(to); res(v); },
+           function(e){ clearTimeout(to); rej(e); });
+  });
 }
 /* Ichki analitika (ADR-002): fire-and-forget, UX'ga ta'sir qilmaydi. Guest rejimda yozilmaydi. */
 function logEv(type, ref){
@@ -3378,6 +3389,9 @@ function renderCueText(text, qtoks){
    Token bilan: har tap o'z raqamini oladi, faqat ENG OXIRGI tap javobi chiziladi,
    eskirganlari jim tashlanadi. Bloklash yo'q — user istagancha bosaveradi. */
 var cwCur=null, cwTok=0;
+/* A3: sovuq define ~14 soniya ketishi mumkin (o'lchangan) — chegara unga keng
+   joy qoldiradi va faqat rostdan osilib qolgan so'rovni uzadi. */
+var CW_TIMEOUT=30000;
 function ensureCwPop(){
   if(document.getElementById('cwPop')) return;
   var s=document.createElement('style'); s.id='cwPopStyle';
@@ -3532,7 +3546,7 @@ function cueTap(el){
   var cx=cwCtxOf(el);                       // ADR-54: gap ham ketadi
   var payload={q:w, lang:lang, tap:true};
   if(cx){ payload.ctx=cx.sent; payload.ctx_i=cx.i; }
-  api('define',payload).then(function(res){
+  api('define',payload,CW_TIMEOUT).then(function(res){
     if(tok!==cwTok) return;                 // boshqa so'z bosilgan / popup yopilgan — bu javob eskirgan
     var b=document.getElementById('cwPopBody'); if(!b) return;
     if(res && (res.error==='pro' || res.error==='limit')){ b.innerHTML=cwProLockHtml(); return; }
