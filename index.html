@@ -1051,7 +1051,7 @@
 
   /* ---- Fikrlar (gorizontal karusel) ----
      CSS tayyor turadi; blok FAQAT `PP_REVIEWS` to'lganda chiziladi. */
-  .pp-revs{display:flex;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;
+  .pp-revs{display:flex;align-items:flex-start;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;
     margin:0 -18px;padding:2px 18px 6px;scrollbar-width:none}
   .pp-revs::-webkit-scrollbar{display:none}
   .pp-rev{flex:0 0 84%;max-width:340px;scroll-snap-align:start;background:var(--card);
@@ -1102,6 +1102,10 @@
   .pp-dock small{display:block;text-align:center;font-size:12px;color:var(--muted);margin-top:9px}
 
   .pp-sec{margin-top:34px}
+  /* Fikrlardan keyin darhol narx kartalari keladi; `.pp-ribbon` (top:-9px) yuqoriga
+     chiqib turgani uchun bu yerda alohida bo'shliq kerak — aks holda lenta otziv
+     kartasiga tegib, blok siqilgandek ko'rinadi. */
+  #ppRevSec{margin-bottom:30px}
   .pp-sec h2{margin:0 0 4px;font-size:18px;font-weight:800;letter-spacing:-.015em}
   .pp-lead{margin:0 0 15px;font-size:12.5px;color:var(--muted)}
   .pp-cmp{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
