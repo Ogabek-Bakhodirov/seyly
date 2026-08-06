@@ -3366,9 +3366,18 @@ function renderCueText(text, qtoks){
   return h;
 }
 /* ===== Transcript so'ziga bosish -> o'zbekcha ma'no (tap-to-define) =====
-   User to'liq perevod o'rniga istagan so'ziga bosib ma'nosini ko'radi. Keshdagi so'z
-   bepul (server: tap+cache -> limit yemaydi), yangi so'z kunlik limitga kiradi. */
-var cwCur=null, cwBusy=false;
+   User to'liq perevod o'rniga istagan so'ziga bosib ma'nosini ko'radi.
+   LIMIT SIYOSATI (Ogabek, 2026-08-06, audit-56): HAR tap kunlik limitga kiradi —
+   keshdan kelgani ham. Faqat server javob berolmagan tap bepul (limit qaytariladi). */
+/* audit-56 A2: `cwBusy` bayrog'i o'rniga SO'ROV TOKENI.
+   Eski mantiq ikki tomondan noto'g'ri edi: (1) UI busy tekshiruvidan OLDIN ochilardi,
+   ya'ni ikkinchi so'zga bosilganda popup "yuklanmoqda" bilan ochilib, so'rov esa
+   YUBORILMASDI — keyin birinchi so'zning javobi ikkinchi popupga chizilardi;
+   (2) bayroq bir marta osilib qolsa (tarmoq javobsiz), boshqa hech qaysi so'zga
+   bosib bo'lmasdi.
+   Token bilan: har tap o'z raqamini oladi, faqat ENG OXIRGI tap javobi chiziladi,
+   eskirganlari jim tashlanadi. Bloklash yo'q — user istagancha bosaveradi. */
+var cwCur=null, cwTok=0;
 function ensureCwPop(){
   if(document.getElementById('cwPop')) return;
   var s=document.createElement('style'); s.id='cwPopStyle';
@@ -3427,6 +3436,7 @@ function curPlayer(){ return (window.ytp && ytp.active && ytp.player) ? ytp.play
 function curTapLang(){ return (window.ytp && ytp.active) ? (ytp.lang||'ru') : ((window.sp && sp.lang) || 'ru'); }
 function closeCwPop(){
   var p=document.getElementById('cwPop'); if(p) p.style.display='none';
+  cwTok++;                    // audit-56 A2: yopilgandan keyin kelgan javob chizilmasin
   cwClearSel();
   /* videoni davom ettiramiz (o'rgandi, yopdi) — bepul chegara qatlami OCHIQ bo'lsa tegmaymiz.
      (hit flag emas — u orqaga surilgandan keyin ham true qolib, resume'ni buzardi) */
@@ -3518,19 +3528,20 @@ function cueTap(el){
      Pro/trial cheksiz. Bir nechta tekin "ta'm" odat quradi, keyin tabiiy konversiya. */
   body.innerHTML='<div class="cw-load">'+t("📖 Ma'nolar tayyorlanmoqda…")+'</div>';
   var lang=curTapLang();
-  if(cwBusy) return; cwBusy=true;
+  var tok=++cwTok;                          // A2: shu tapning shaxsiy raqami
   var cx=cwCtxOf(el);                       // ADR-54: gap ham ketadi
   var payload={q:w, lang:lang, tap:true};
   if(cx){ payload.ctx=cx.sent; payload.ctx_i=cx.i; }
   api('define',payload).then(function(res){
-    cwBusy=false;
+    if(tok!==cwTok) return;                 // boshqa so'z bosilgan / popup yopilgan — bu javob eskirgan
     var b=document.getElementById('cwPopBody'); if(!b) return;
     if(res && (res.error==='pro' || res.error==='limit')){ b.innerHTML=cwProLockHtml(); return; }
     var hasDef = res && res.ok && res.def && res.def.senses && res.def.senses.length;
     var hasCtx = res && res.ok && res.ctx && res.ctx.uz;
     if(hasDef || hasCtx){ renderCueWord(res.def||{word:disp,senses:[]}, lang, res.ctx, cx, res.phrase); }
     else { b.innerHTML='<div class="cw-none">'+t("Bu so'z uchun ma'no topilmadi.")+'</div>'; }
-  }).catch(function(){ cwBusy=false;
+  }).catch(function(){
+    if(tok!==cwTok) return;
     var b=document.getElementById('cwPopBody'); if(b) b.innerHTML='<div class="cw-none">'+t("Internet xatosi")+'</div>'; });
 }
 /* Kontekst bloki — javobning ASOSIY qismi (ADR-54). Gap, bosilgan so'z ajratilgan
