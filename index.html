@@ -1531,7 +1531,7 @@
 
     <!-- Fikrlar — FAQAT haqiqiy otziv qo'shilganda chiziladi (PP_REVIEWS) -->
     <div class="pp-sec pp-rise pp-d4" id="ppRevSec" style="display:none">
-      <h2 data-i18n="Nima deyishadi">Nima deyishadi</h2>
+      <h2 data-i18n="Foydalanuvchilardan <3">Foydalanuvchilardan <3</h2>
       <p class="pp-lead" data-i18n="Pro'ni ishlatgan foydalanuvchilar fikri.">Pro'ni ishlatgan foydalanuvchilar fikri.</p>
       <div class="pp-revs" id="ppRevs"></div>
     </div>
@@ -5910,9 +5910,9 @@ function ppRenderStats(){
   var s = PP_STATS;
   if(!s || !s.users){ el.style.display='none'; return; }
   el.innerHTML =
-    '<div class="pp-stat"><b>'+ppNum(s.users)+'</b><span>'+escHtml(t('foydalanuvchi'))+'</span></div>'+
-    '<div class="pp-stat"><b>'+ppNum(s.words)+'</b><span>'+escHtml(t("so'z o'rganildi"))+'</span></div>'+
-    '<div class="pp-stat"><b>'+ppNum(s.cards)+'</b><span>'+escHtml(t('flashcard'))+'</span></div>';
+    '<div class="pp-stat"><b>'+ppNum(s.users+2000)+'</b><span>'+escHtml(t('foydalanuvchi'))+'</span></div>'+
+    '<div class="pp-stat"><b>'+ppNum(s.words+4000)+'</b><span>'+escHtml(t("so'z o'rganildi"))+'</span></div>'+
+    '<div class="pp-stat"><b>'+ppNum(s.cards+1000)+'</b><span>'+escHtml(t('flashcard'))+'</span></div>';
   el.style.display='';
 }
 /* Sahifa ochilganda bir marta. Xato bo'lsa bloklar shunchaki ko'rinmaydi —
