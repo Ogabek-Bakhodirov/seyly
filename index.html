@@ -2009,6 +2009,17 @@ var CARD_Q = (function(){
     return { w:w, lang:(['ru','en','de'].indexOf(lg)>=0 ? lg : null), cid:(/^\d+$/.test(cid)?cid:null) };
   }catch(e){ return null; }
 })();
+/* Flashcard eslatmasi: ?sr=1&lang=<til> — ilovani aynan Flashcard sahifasida,
+   userga yuborilgan so'z tilida ochadi. `pc` alohida pastda o'qiladi, shuning
+   uchun bu havola push bosilishini o'lchashga halaqit bermaydi. */
+var SR_PUSH_Q = (function(){
+  try{
+    var p = new URLSearchParams(location.search);
+    if(p.get('sr')!=='1') return null;
+    var lg = (p.get('lang')||'').trim().toLowerCase();
+    return ['ru','en','de'].indexOf(lg)>=0 ? {lang:lg} : {lang:null};
+  }catch(e){ return null; }
+})();
 /* PUSH CTR (real o'lchov): push tugmasi URL'ida ?pc=<slot>.<segment>.<sana> keladi.
    Ilova shu belgi bilan ochilsa — user pushni BOSGAN. Telegram web_app bosishni bermaydi,
    shu belgi yagona halol o'lchov. Event vaqti = bosish vaqti (events.at). */
@@ -2028,6 +2039,13 @@ function runCardSearch(){
   if(inp) inp.value = cq.w;
   renderSearchLangs();
   try{ doSearch(); }catch(e){}
+  return true;
+}
+function runSrPush(){
+  if(!SR_PUSH_Q) return false;
+  var q=SR_PUSH_Q; SR_PUSH_Q=null;   // bir marta ochilsin
+  if(q.lang && S.langs && S.langs.indexOf(q.lang)>=0){ S.fdLang=q.lang; save(); }
+  go('flash');
   return true;
 }
 
@@ -7127,7 +7145,7 @@ function start(){
   applyI18n();   // statik interfeys matnlarini joriy tilga moslash
   var sp=document.getElementById('splash');
   if(sp){ sp.classList.add('hide'); setTimeout(function(){ sp.style.display='none'; }, 300); }
-  if(S.onboarded){ if(!runCardSearch()) go('home'); } else { renderOb(); go('ob'); }
+  if(S.onboarded){ if(!runCardSearch() && !runSrPush()) go('home'); } else { renderOb(); go('ob'); }
   /* Liga ma'lumotini oldindan isitamiz: Profil bosilganda qator darhol chiqsin.
      Kesh 60 soniya, shuning uchun Profil ochilishi ortiqcha so'rov qilmaydi. */
   if(SERVER && S.onboarded) lbFetch('week').catch(function(){});
